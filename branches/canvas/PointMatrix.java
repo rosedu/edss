@@ -4,8 +4,9 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 
+@SuppressWarnings("serial")
 public class PointMatrix extends JPanel {
-	final static int CELL_SIZE = 32;
+	final static int CELL_SIZE = 25;
 	double scale = 1;
 	
 	int height = 10;
