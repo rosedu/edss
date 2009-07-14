@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 public class PointMatrix extends JPanel {
 	final static int CELL_SIZE = 32;
-	int scale = 1;
+	double scale = 1;
 	
 	int height = 10;
 	int width = 16;
@@ -15,14 +15,16 @@ public class PointMatrix extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.setColor(Color.BLUE);
-		height = g.getClipBounds().height / scale / CELL_SIZE + 1;
-		width = g.getClipBounds().width / scale / CELL_SIZE + 1;
+		height = g.getClipBounds().height ;
+		width = g.getClipBounds().width;
 		
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				g.fillOval(x * CELL_SIZE * scale, y * CELL_SIZE * scale, 2, 2);
+		for (int y = g.getClipBounds().y/CELL_SIZE*CELL_SIZE; y < height + g.getClipBounds().y; y += CELL_SIZE*scale) {
+			for (int x = g.getClipBounds().x/CELL_SIZE*CELL_SIZE; x < width + g.getClipBounds().x; x += CELL_SIZE*scale) {
+				g.fillOval(x,y, 2, 2);
 			}
+			
 		}
+		System.out.println(g.getClipBounds());
 	}
 	
 }

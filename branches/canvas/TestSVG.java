@@ -1,4 +1,8 @@
+import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -8,11 +12,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
-import java.util.StringTokenizer;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.OverlayLayout;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -22,6 +26,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.batik.bridge.UpdateManagerEvent;
+import org.apache.batik.bridge.UpdateManagerListener;
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
 import org.apache.batik.dom.svg.SVGDOMImplementation;
 import org.apache.batik.swing.JSVGCanvas;
@@ -41,12 +47,18 @@ public class TestSVG {
 	static String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 	static String parser = XMLResourceDescriptor.getXMLParserClassName();
 	static SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
-	static JSVGCanvas canvas = new JSVGCanvas();
+	static JSVGCanvas canvas = new JSVGCanvas() {
+		public void paint(java.awt.Graphics g) {
+			super.paint(g);
+		};
+	};
 	static SVGDocument domFactory;
 
 	static Document document;
 	static int index = 1;
-
+	
+	static PointMatrix matrix = new PointMatrix();
+	private static double pas = PointMatrix.CELL_SIZE / matrix.scale;
 	
 	static void displayNode(Node n) {
 		System.out.println("Name: " + n.getNodeName());
@@ -108,6 +120,16 @@ public class TestSVG {
 				crtSelection = el;
 			}
 		}, true);
+		
+		t.addEventListener("click", new EventListener() {
+			
+			@Override
+			public void handleEvent(Event evt) {
+				Element el = (Element) evt.getCurrentTarget();
+				System.out.println("Mouse click on image " + el.getAttribute("id"));
+				selected = ((Element) el.getParentNode());
+			}
+		}, true);
 	}
 	
 	public static void main(String[] args) {
@@ -116,7 +138,7 @@ public class TestSVG {
 			domFactory = (SVGDocument) impl.createDocument(svgNS, "svg", null);
 
 //			appendSVG(domFactory, "file:///C:\\My Documents 1\\EDSS\\TestBatik\\BJT_NPN_symbol_(case).svg", "", index++);
-//			appendSVG(domFactory, "file:///C:\\My Documents 1\\EDSS\\TestBatik\\Comparator_symbol.svg", "", index++);
+//			appendSVG(domFactory, "file:///C:\\My Documents 1\\EDSS\\TestBatik\\Comparator_symbol.svg", "rotate(45, 100, 100) scale(5)", index++);
 			
 			writeSvg(domFactory, "export.svg");
 			
@@ -127,22 +149,34 @@ public class TestSVG {
 			};
 			
 			JFrame frame = new JFrame();
-			frame.setContentPane(panel);
-			PointMatrix matrix = new PointMatrix();
-			frame.getContentPane().setLayout(new OverlayLayout(frame.getContentPane()));
+
+			
+			JScrollPane jscr = new JScrollPane(panel);
+			jscr.setAutoscrolls(true);
+			jscr
+					.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			jscr
+					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+			
+			
+			panel.setLayout(new OverlayLayout(panel));
+			matrix = new PointMatrix();
+			matrix.setDoubleBuffered(true);
+			matrix.setBackground(null);
+			matrix.setOpaque(false);
+
+			panel.add(matrix);
+			panel.add(canvas);
+			canvas.setPreferredSize(new Dimension(2000, 2000));
+			frame.setContentPane(jscr);
 			
 			matrix.setBackground(null);
 			matrix.setOpaque(false);
 			
-			frame.getContentPane().add(matrix);
 			
-			frame.getContentPane().add(canvas);
-			System.out.println(frame.getContentPane().getLayout());
-			System.out.println(frame.getContentPane().getComponents().length);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
-			frame.pack();
-			frame.setSize(900, 900);
+			frame.setSize(2000, 2000);
 			
 			canvas.setDocumentState(JSVGCanvas.ALWAYS_DYNAMIC);
 			
@@ -168,6 +202,8 @@ public class TestSVG {
 	static Element crtSelection = null;
 	static Point crtPoint;
 	
+	static Element selected = null;
+	
 	static void registerListeners() {
 		
 		canvas.addMouseMotionListener(new MouseMotionListener() {
@@ -183,41 +219,41 @@ public class TestSVG {
 				if (crtSelection != null) {
 					// TODO : pentru update in realtime se decomenteaza codul de mai jos
 					
-//					System.out.println("Drag finished: [" + crtPoint.getX() + ", " + crtPoint.getY() + 
-//							"] to [" + arg0.getPoint().getX() + ", " + arg0.getPoint().getY() + "]");
-//					double dx = arg0.getPoint().getX() - crtPoint.getX();
-//					double dy = arg0.getPoint().getY() - crtPoint.getY();
-//					String attr = ((Element) crtSelection.getParentNode()).getAttribute("transform");
-//					if (!attr.isEmpty()) {
-//						StringTokenizer tok = new StringTokenizer(attr, "(, )");
-//						tok.nextToken();
-//						dx += Double.parseDouble(tok.nextToken());
-//						dy += Double.parseDouble(tok.nextToken());
-//					}
-//					
-//					
-//					((Element) crtSelection.getParentNode()).setAttribute("transform", "translate(" + 
-//							dx + ", " +
-//							dy + ")");
-//					
-//					canvas.repaint();
-//					crtPoint = arg0.getPoint();
-//					try {
-//						writeSvg(domFactory, "export.svg");
-//					} catch (TransformerException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+					System.out.println("Drag finished: [" + crtPoint.getX() + ", " + crtPoint.getY() + 
+							"] to [" + arg0.getPoint().getX() + ", " + arg0.getPoint().getY() + "]");
+					double dx = (arg0.getPoint().getX() - crtPoint.getX()) / matrix.scale;
+					double dy = (arg0.getPoint().getY() - crtPoint.getY()) / matrix.scale;
+					String attr = ((Element) crtSelection.getParentNode()).getAttribute("transform");
+					TransformTag transform = new TransformTag(attr);
+					if (transform.translate != null) {
+						transform.translate.x += dx;
+						transform.translate.y += dy;
+					} else {
+						transform.translate = new Translate(dx, dy);
+					}
+					
+					((Element) crtSelection.getParentNode()).setAttribute("transform", transform.toString());
+					
+					canvas.repaint();
+//					canvas.setDoubleBuffered(true);
+//					canvas.setDoubleBufferedRendering(true);
+					crtPoint = arg0.getPoint();
+					try {
+						writeSvg(domFactory, "export.svg");
+					} catch (TransformerException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			
 		});
 		canvas.addMouseListener(new MouseListener() {
 			
-			private int pas = 32;
+			private double pas = PointMatrix.CELL_SIZE / matrix.scale;
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -226,22 +262,22 @@ public class TestSVG {
 				if (crtSelection != null) {
 					System.out.println("Drag finished: [" + crtPoint.getX() + ", " + crtPoint.getY() + 
 							"] to [" + arg0.getPoint().getX() + ", " + arg0.getPoint().getY() + "]");
-					double dx = arg0.getPoint().getX() - crtPoint.getX();
-					double dy = arg0.getPoint().getY() - crtPoint.getY();
+					double dx = (arg0.getPoint().getX() - crtPoint.getX()) / matrix.scale;
+					double dy = (arg0.getPoint().getY() - crtPoint.getY()) / matrix.scale;
 					String attr = ((Element) crtSelection.getParentNode()).getAttribute("transform");
-					if (!attr.isEmpty()) {
-						StringTokenizer tok = new StringTokenizer(attr, "(, )");
-						tok.nextToken();
-						dx += Double.parseDouble(tok.nextToken());
-						dy += Double.parseDouble(tok.nextToken());
+					TransformTag transform = new TransformTag(attr);
+					if (transform.translate != null) {
+						transform.translate.x += dx;
+						transform.translate.y += dy;
+					} else {
+						transform.translate = new Translate(dx, dy);
 					}
 					
-					((Element) crtSelection.getParentNode()).setAttribute("transform", "translate(" + 
-							dx + ", " +
-							dy + ")");
+					((Element) crtSelection.getParentNode()).setAttribute("transform", transform.toString());
 					
-					canvas.setDoubleBufferedRendering(true);
+//					canvas.setDoubleBufferedRendering(true);
 
+					matrix.repaint();
 					canvas.repaint();
 					try {
 						writeSvg(domFactory, "export.svg");
@@ -265,14 +301,22 @@ public class TestSVG {
 			
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
+//				// TODO : nu aici
+//				String attr = ((Element) crtSelection.getParentNode()).getAttribute("transform");
+//				TransformTag transform = new TransformTag(attr);
+//				
+//				if (transform.scale != null) {
+//					transform.scale = new Scale(0.5);
+//				} else {
+//					transform.scale.amount *= 0.5;
+//				}
+//				
+//				((Element) crtSelection.getParentNode()).setAttribute("transform", transform.toString());
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
@@ -296,12 +340,12 @@ public class TestSVG {
 					File file = fcOpen.getSelectedFile();
 					try {
 
-						int xul = arg0.getX();
-						int yul = arg0.getY();
-						xul = xul/pas * pas;
-						yul = yul/pas*pas;
+						int xul = (int) (arg0.getX() / matrix.scale);
+						int yul = (int) (arg0.getY() / matrix.scale);
+						xul = (int) ((int) (xul / pas) * pas);
+						yul = (int) ((int) (yul / pas) * pas);
 
-						System.out.println(xul + " " + yul);
+						System.out.println(xul + " " + yul + " " + arg0.getX() + " " + arg0.getY());
 						appendSVG(domFactory, file.toURI().toURL().toString(), "translate(" + xul + ", " + yul + ")" , index++);
 						writeSvg(domFactory, "export.svg");
 
@@ -319,20 +363,206 @@ public class TestSVG {
 			}
 		});
 		
-		for (i = 1; i < document.getElementsByTagName("svg").getLength(); i++) {
-			EventTarget t = (EventTarget) document.getElementsByTagName("svg").item(i);
+		canvas.addUpdateManagerListener(new UpdateManagerListener() {
 			
-			t.addEventListener("mousedown", new EventListener() {
+			@Override
+			public void updateStarted(UpdateManagerEvent arg0) {
+				// TODO Auto-generated method stub
 				
-				@Override
-				public void handleEvent(Event evt) {
-					Element el = (Element) evt.getCurrentTarget();
-					System.out.println("Mouse down on image " + el.getAttribute("id"));
-					crtSelection = el;
+			}
+			
+			@Override
+			public void updateFailed(UpdateManagerEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void updateCompleted(UpdateManagerEvent arg0) {
+				matrix.repaint();
+				canvas.repaint();
+				
+			}
+			
+			@Override
+			public void managerSuspended(UpdateManagerEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void managerStopped(UpdateManagerEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void managerStarted(UpdateManagerEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void managerResumed(UpdateManagerEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		canvas.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				TransformTag tr;
+				String attr;
+				JSVGCanvas.ZoomAction zoomAction;
+				switch(arg0.getKeyChar()) {
+				case '-':
+					/** zoom out
+					 */
+					matrix.scale *= 1/1.1;
+					zoomAction = canvas.new ZoomAction(1/1.1);
+					zoomAction.actionPerformed(null);
+					canvas.repaint();
+					matrix.repaint();
+					pas /= matrix.scale;
+					break;
+
+				case '=':
+					/** zoom in
+					 */
+					matrix.scale *= 1.1;
+					zoomAction = canvas.new ZoomAction(1.1);
+					zoomAction.actionPerformed(null);
+					canvas.repaint();
+					matrix.repaint();
+					pas /= matrix.scale;
+					break;
+					
+				case 'e':
+					System.out.println(selected);
+					if (selected != null) {
+						attr = selected.getAttribute("transform");
+						tr = new TransformTag(attr);
+						
+						if (tr.rotate == null) {
+							tr.rotate = new Rotate(90, 0, 0);
+						} else {
+							tr.rotate.angle += 90;
+							tr.rotate.angle %= 360;
+						}
+						
+						if (tr.rotate.angle == 0) {
+							tr.rotate = null;
+						} else {
+							// TODO : eventual de gasit centrul
+//							tr.rotate.x = 32;
+//							tr.rotate.y = 32;
+						}
+						
+						selected.setAttribute("transform", tr.toString());
+					}
+					break;
+					
+				case 'q':
+					System.out.println(selected);
+					if (selected != null) {
+						attr = selected.getAttribute("transform");
+						tr = new TransformTag(attr);
+						
+						if (tr.rotate == null) {
+							tr.rotate = new Rotate(-90, 0, 0);
+						} else {
+							tr.rotate.angle += -90;
+							tr.rotate.angle %= 360;
+						}
+						
+						if (tr.rotate.angle == 0) {
+							tr.rotate = null;
+						} else {
+							tr.rotate.x = 32;
+							tr.rotate.y = 32;
+						}
+						
+						selected.setAttribute("transform", tr.toString());
+					}
+					break;
+
+				default: break;
 				}
-			}, true);
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		for (i = 1; i < document.getElementsByTagName("svg").getLength(); i++) {
+			registerEvent(i);
 		}
 		
+		
+	}
+
+	static void registerEvent(int index) {
+		EventTarget t = (EventTarget) document.getElementsByTagName("svg").item(index);
+		
+		t.addEventListener("click", new EventListener() {
+				
+			@Override
+			public void handleEvent(Event evt) {
+				Element el = (Element) evt.getCurrentTarget();
+				System.out.println("Mouse click on image " + el.getAttribute("id"));
+				selected = ((Element) el.getParentNode());
+			}
+		}, true);
+		
+		t.addEventListener("mousedown", new EventListener() {
+			
+			@Override
+			public void handleEvent(Event evt) {
+				Element el = (Element) evt.getCurrentTarget();
+				System.out.println("Mouse down on image " + el.getAttribute("id"));
+				crtSelection = el;
+			}
+		}, true);
+		
+		t.addEventListener("mouseover", new EventListener() {
+
+			@Override
+			public void handleEvent(Event evt) {
+//				// TODO : de vazut
+//				String attr = ((Element) ((Element) evt.getCurrentTarget()).getParentNode()).getAttribute("transform");
+//				TransformTag transform = new TransformTag(attr);
+//				
+//				if (transform.scale != null) {
+//					transform.scale = new Scale(1.5);
+//				} else {
+//					transform.scale.amount *= 1.5;
+//				}
+//				
+//				((Element) ((Element) evt.getCurrentTarget()).getParentNode()).setAttribute("transform", transform.toString());
+				
+			}
+			
+		}, true);
+		
+		t.addEventListener("mouseout", new EventListener() {
+
+			@Override
+			public void handleEvent(Event evt) {
+				
+			}
+			
+		}, true);
 	}
 
 }
