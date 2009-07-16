@@ -1,0 +1,30 @@
+<pinInfo>
+	<component type="Q">
+		<pin>E</pin>
+		<pin>B</pin>
+		<pin>C</pin>
+	</component>
+
+	<component type="V">
+		<pin>1</pin>
+		<pin>2</pin>
+	</component>
+
+	<component type="R">
+		<pin>1</pin>
+		<pin>2</pin>
+	</component>
+
+	<component type="D">
+		<pin>A</pin>
+		<pin>K</pin>
+	</component>
+
+	<component type="G">
+		<pin>G</pin>
+	</component>
+
+	<component type="N">
+		<pin>N</pin>
+	</component>
+</pinInfo>
