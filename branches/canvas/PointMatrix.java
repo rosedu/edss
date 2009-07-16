@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 public class PointMatrix extends JPanel {
 	final static int CELL_SIZE = 25;
 	double scale = 1;
-	
+	double ratio = 1.1;
 	int height = 10;
 	int width = 16;
 	
@@ -25,7 +25,7 @@ public class PointMatrix extends JPanel {
 			}
 			
 		}
-		System.out.println(g.getClipBounds());
+		//System.out.println(g.getClipBounds());
 	}
 	
 }
