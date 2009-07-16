@@ -1,5 +1,7 @@
+import java.io.Serializable;
 
-public class Connection {
+
+public class Connection implements Serializable {
 
 	private Pin pin;
 	private Wire wire;

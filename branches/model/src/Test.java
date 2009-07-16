@@ -19,6 +19,8 @@ public class Test {
 		scheme.addWire("N1", "N", "Q1", "B");
 		scheme.addWire("N1", "N", "R2", "1");
 		
+		scheme.save("schema.sch");
+		
 		//scheme.removeComponent("N1");
 		/*scheme.addComponent(new PieceModel(PieceModel.RESISTOR, 50, 50, "1K"));
 		scheme.addComponent(new PieceModel(PieceModel.RESISTOR, 70, 70, "1K"));

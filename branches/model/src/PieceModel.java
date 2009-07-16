@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,7 +16,7 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 
-public class PieceModel {
+public class PieceModel implements Serializable {
 	protected String svgURI;
 	protected String id;
 	

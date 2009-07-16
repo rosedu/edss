@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Pin {
+public class Pin implements Serializable {
 	protected int x, y;
 	protected int globalX, globalY;
 	protected String id;

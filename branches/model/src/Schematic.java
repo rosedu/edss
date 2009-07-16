@@ -1,9 +1,16 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 
-public class Schematic {
+public class Schematic implements Serializable {
 	private Map<String, PieceModel> components;
 	private Map<String, Wire> wires;
 	private double scaled = 1;
@@ -126,6 +133,43 @@ public class Schematic {
 			this.addWire(w.getPin1().getPiece().getId(), w.getPin1().getId(), w.getPin2().getPiece().getId(), w.getPin2().getId());
 		}
 	}*/
+	
+	public void save(String filename) {
+		FileOutputStream fos = null;
+		ObjectOutputStream out = null;
+		
+		try {
+			fos = new FileOutputStream(filename);
+			out = new ObjectOutputStream(fos);
+			out.writeObject(this);
+			out.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static Schematic load(String filename) {
+		Schematic scheme = null;
+		FileInputStream fis = null;
+		ObjectInputStream in = null;
+		
+		try {
+			fis = new FileInputStream(filename);
+			in = new ObjectInputStream(fis);
+			scheme = (Schematic)in.readObject();
+			in.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return scheme;
+	}
 	
 	public String toString()
 	{

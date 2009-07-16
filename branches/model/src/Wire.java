@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Wire {
+public class Wire implements Serializable {
 	private Pin pin1;
 	private Pin pin2;
 	private String id;
