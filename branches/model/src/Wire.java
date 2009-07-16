@@ -12,7 +12,7 @@ public class Wire {
 		pin2 = p2;
 		
 		int i;
-		for (i = 1; ;i++)
+		for (i = 1; ; i++)
 			if (usedIDs.get("W" + i) == null)
 				break;
 		id = "W" + i;

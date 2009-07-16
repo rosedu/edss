@@ -1,7 +1,9 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -12,12 +14,13 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+
 public class PieceModel {
 	protected String svgURI;
 	protected String id;
 	
 	protected String name;
-	protected String model;
+	protected String value;
 	
 	protected String type;
 	public static final String DC_VOLTAGE_SRC = "V";
@@ -42,7 +45,7 @@ public class PieceModel {
 		this.type = type;
 		this.x = x;
 		this.y = y;
-		this.model = model;
+		this.value = model;
 		pins = new HashMap<String, Pin>();
 
 		Map<String, Boolean> usedIDs;
@@ -57,7 +60,7 @@ public class PieceModel {
 			instances.put(type, m2);
 		} else {
 			int i;
-			for (i = 1;;i++) {
+			for (i = 1; ; i++) {
 				if (usedIDs.get(type+i) == null)
 					break;
 			}
@@ -158,31 +161,31 @@ public class PieceModel {
 	public String getId() {
 		return id;
 	}
-
+	
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getModel() {
-		return model;
+	
+	public String getValue() {
+		return value;
 	}
-
-	public void setModel(String model) {
-		this.model = model;
+	
+	public void setValue(String value) {
+		this.value = value;
 	}
 	
 	public String getType() {
 		return type;
 	}
-
+	
 	public void setType(String type) {
 		this.type = type;
 	}
