@@ -1,0 +1,3 @@
+- scriere in xml
+- ascultatori provizori pt fiecare buton
+- customize
