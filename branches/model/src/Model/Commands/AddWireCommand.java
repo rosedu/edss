@@ -1,9 +1,11 @@
 package Model.Commands;
+import java.io.Serializable;
+
 import Model.Schematic;
 
 
 
-public class AddWireCommand implements Command {
+public class AddWireCommand implements Command, Serializable {
 	Schematic scheme;
 	String piece1;
 	String pin1;

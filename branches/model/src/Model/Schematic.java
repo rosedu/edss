@@ -8,13 +8,17 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import Model.Commands.AddComponentCommand;
 import Model.Commands.AddWireCommand;
 import Model.Commands.CommandManager;
 import Model.Commands.RemoveComponentCommand;
+import Model.Commands.RemoveMultipleComponentsCommand;
 import Model.Commands.RemoveWireCommand;
+import Model.Commands.RotateComponentCommand;
 
 
 public class Schematic implements Serializable {
@@ -22,6 +26,7 @@ public class Schematic implements Serializable {
 	private Map<String, Wire> wires;
 	private double scaled = 1;
 	private CommandManager commMan;
+	
 	
 	public Schematic() {
 		components = new HashMap<String, PieceModel>();
@@ -61,6 +66,25 @@ public class Schematic implements Serializable {
 
 		System.out.println("Deleted: " + id);
 	}
+	
+	public void removeMultipleComponents(List<String> selected){
+		commMan.doCommand(new RemoveMultipleComponentsCommand(this, selected));
+	}
+	
+	public void removeMultipleComponentsWithoutUndo(List<PieceModel> auxComps, List<Wire>auxWires){		
+		Iterator<PieceModel> itp = auxComps.iterator();
+		while (itp.hasNext()){
+			removeComp(itp.next().getId());
+		}
+		
+		Iterator<Wire> itw = auxWires.iterator();
+		while (itw.hasNext()){
+			Wire w = itw.next();
+			if (wires.get(w.getId()) != null){
+				removeWireWithoutUndo(w.getId());
+			}
+		}
+	}
 
 	public void addWire(String piece1, String pin1, String piece2, String pin2) {
 		commMan.doCommand(new AddWireCommand(this, piece1, pin1, piece2, pin2));
@@ -77,6 +101,16 @@ public class Schematic implements Serializable {
 		
 		p1.addConnection(p2, w);
 		p2.addConnection(p1, w);
+	}
+	
+	public void addWireWithoutUndo(Wire w) {
+		Pin p1 = w.getPin1();
+		Pin p2 = w.getPin2();
+		
+		p1.addConnection(p2, w);
+		p2.addConnection(p1, w);
+		
+		wires.put(w.getId(), w);
 	}
 	
 	public void removeWire(String id) {
@@ -105,6 +139,10 @@ public class Schematic implements Serializable {
 		w.getPin2().removeConnection(w.getPin1());
 		wires.remove(id);
 		Wire.usedIDs.remove(id);
+	}
+	
+	public void rotateComponent(String id, int r){
+		commMan.doCommand(new RotateComponentCommand(this, id, r));
 	}
 	
 	public Map<String, PieceModel> getComponents() {

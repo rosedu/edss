@@ -1,10 +1,12 @@
 package Model.Commands;
+import java.io.Serializable;
+
 import Model.PieceModel;
 import Model.Schematic;
 
 
 
-public class AddComponentCommand implements Command {
+public class AddComponentCommand implements Command, Serializable {
 	Schematic scheme;
 	PieceModel piece;
 	

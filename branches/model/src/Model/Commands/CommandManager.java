@@ -1,9 +1,10 @@
 package Model.Commands;
 
+import java.io.Serializable;
 import java.util.Stack;
 
 
-public class CommandManager {
+public class CommandManager implements Serializable {
 	private Stack<Command> undoStack;
 	private Stack<Command> redoStack;
 	
