@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 public class PointMatrix extends JPanel {
 	final static int CELL_SIZE = 25;
 	double scale = 1;
-	double ratio = 1.1;
+	double ratio = 1.25;
 	int height = 10;
 	int width = 16;
 	

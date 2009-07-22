@@ -1,21 +1,14 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.LayoutManager;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowStateListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -38,8 +31,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.batik.bridge.UpdateManagerAdapter;
 import org.apache.batik.bridge.UpdateManagerEvent;
-import org.apache.batik.bridge.UpdateManagerListener;
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
 import org.apache.batik.dom.svg.SVGDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -47,16 +40,10 @@ import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.swing.JSVGCanvas.ScrollAction;
 import org.apache.batik.swing.JSVGCanvas.ZoomAction;
 import org.apache.batik.util.XMLResourceDescriptor;
-import org.w3c.dom.Attr;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.TypeInfo;
-import org.w3c.dom.UserDataHandler;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
@@ -64,41 +51,8 @@ import org.w3c.dom.svg.SVGDocument;
 
 @SuppressWarnings("serial")
 public class TestSVG {
-	static class PanelScroll extends JPanel implements Scrollable
-	{
-		@Override
-		public Dimension getPreferredScrollableViewportSize() {
-			// TODO Auto-generated method stub
-			return getPreferredSize();
-		}
+	
 
-		@Override
-		public int getScrollableBlockIncrement(Rectangle visibleRect,
-				int orientation, int direction) {
-			// TODO Auto-generated method stub
-			return 70;
-		}
-
-		@Override
-		public boolean getScrollableTracksViewportHeight() {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		@Override
-		public boolean getScrollableTracksViewportWidth() {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		@Override
-		public int getScrollableUnitIncrement(Rectangle visibleRect,
-				int orientation, int direction) {
-			// TODO Auto-generated method stub
-			return 20;
-		}
-
-	}
 	static String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 	static String parser = XMLResourceDescriptor.getXMLParserClassName();
 	static SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
@@ -106,7 +60,8 @@ public class TestSVG {
 		public void paint(java.awt.Graphics g) {
 			super.paint(g);
 			g.setColor(Color.RED);
-			g.drawRect(0, 0, g.getClipBounds().width - 1, g.getClipBounds().height - 1);
+			g.drawRect(0, 0, g.getClipBounds().width - 1,
+					g.getClipBounds().height - 1);
 		};
 	};
 	static SVGDocument domFactory;
@@ -117,9 +72,11 @@ public class TestSVG {
 			return false;
 		}
 	};
-	static JFrame frame = new JFrame();
+	static int zoomX = 0;
+	static int zoomY = 0;
+	static JFrame frame = new JFrame("Canvas");
 	static PointMatrix matrix = new PointMatrix();
-	private static double pas = PointMatrix.CELL_SIZE / matrix.scale;
+	private static double pas = PointMatrix.CELL_SIZE * matrix.scale;
 
 	static SVGGraphics2D svgGenerator;
 
@@ -131,7 +88,7 @@ public class TestSVG {
 	}
 
 	static void writeSvg(Document doc, String fileName)
-	throws TransformerException, IOException {
+			throws TransformerException, IOException {
 		TransformerFactory transFactory = TransformerFactory.newInstance();
 		Transformer trans = transFactory.newTransformer();
 		trans.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -192,22 +149,23 @@ public class TestSVG {
 
 	public static void main(String[] args) {
 		try {
-			//init canvas
-			DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
+			// init canvas
+			DOMImplementation impl = SVGDOMImplementation
+					.getDOMImplementation();
 			domFactory = (SVGDocument) impl.createDocument(svgNS, "svg", null);
 			writeSvg(domFactory, "export.svg");
 
 			svgGenerator = new SVGGraphics2D(domFactory);
-			
+
 			// TODO : de setat stroke
-			svgGenerator.setStroke(new Stroke() {
-				
-				@Override
-				public Shape createStrokedShape(Shape arg0) {
-					// TODO Auto-generated method stub
-					return null;
-				}
-			});
+			// svgGenerator.setStroke(new Stroke() {
+			//				
+			// @Override
+			// public Shape createStrokedShape(Shape arg0) {
+			// // TODO Auto-generated method stub
+			// return null;
+			// }
+			// });
 
 			canvas.setPreferredSize(new Dimension(2500, 2500));
 			canvas.setDocumentState(JSVGCanvas.ALWAYS_DYNAMIC);
@@ -218,13 +176,13 @@ public class TestSVG {
 
 			document = domFactory;
 
-			//init matrix
+			// init matrix
 			matrix = new PointMatrix();
 			matrix.setDoubleBuffered(true);
 			matrix.setBackground(null);
 			matrix.setOpaque(false);
 
-			//init panel
+			// init panel
 
 			panel.setLayout(new OverlayLayout(panel));
 			panel.add(matrix);
@@ -232,11 +190,11 @@ public class TestSVG {
 			JScrollPane scrollPane = new JScrollPane(panel);
 			scrollPane.setAutoscrolls(true);
 			scrollPane
-			.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+					.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 			scrollPane
-			.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-			//init frame
+			// init frame
 
 			frame.setVisible(true);
 			frame.setSize(800, 800);
@@ -272,34 +230,32 @@ public class TestSVG {
 	static Point crtPoint;
 	static Element selected = null;
 	static boolean wireMode = false;
-	static void registerListeners() {
 
+	static void registerListeners() {
 
 		canvas.addMouseMotionListener(new MouseMotionListener() {
 
 			@Override
 			public void mouseMoved(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				//System.out.println("x = " + arg0.getX()+ " y = " + arg0.getY());
+				// System.err.println("x = " + arg0.getX()+ " y = " +
+				// arg0.getY());
 			}
 
 			@Override
 			public void mouseDragged(MouseEvent arg0) {
 				if (!wireMode) {
 					if (crtSelection != null) {
-						// TODO : pentru update in realtime se decomenteaza codul de
-						// mai jos
-
 						System.out.println("Drag finished: [" + crtPoint.getX()
 								+ ", " + crtPoint.getY() + "] to ["
 								+ arg0.getPoint().getX() + ", "
 								+ arg0.getPoint().getY() + "]");
 						double dx = (arg0.getPoint().getX() - crtPoint.getX())
-						/ matrix.scale;
+								/ matrix.scale;
 						double dy = (arg0.getPoint().getY() - crtPoint.getY())
-						/ matrix.scale;
+								/ matrix.scale;
 						String attr = ((Element) crtSelection.getParentNode())
-						.getAttribute("transform");
+								.getAttribute("transform");
 						TransformTag transform = new TransformTag(attr);
 						if (transform.translate != null) {
 							transform.translate.x += dx;
@@ -326,21 +282,89 @@ public class TestSVG {
 						}
 					}
 				} else {
-					if (Math.abs(arg0.getX() - crtPoint.x) >= matrix.CELL_SIZE * matrix.scale || 
-							Math.abs(arg0.getY() - crtPoint.y) >= matrix.CELL_SIZE * matrix.scale) {
+					// if (Math.abs(arg0.getX() - crtPoint.x * matrix.scale) >=
+					// PointMatrix.CELL_SIZE * matrix.scale ||
+					// Math.abs(arg0.getY() - crtPoint.y * matrix.scale) >=
+					// PointMatrix.CELL_SIZE * matrix.scale) {
+					// System.out.println(arg0.getPoint()+ " " + crtPoint + " "
+					// + matrix.scale);
+					// System.out.print(arg0.getX() - crtPoint.x *
+					// matrix.scale);
+					// System.out.print( " ");
+					// System.out.println(arg0.getY() - crtPoint.y *
+					// matrix.scale);
+					//
+					// int roundX = (int) Math.round ( Math.round(arg0.getX()-
+					// (arg0.getX()) % (PointMatrix.CELL_SIZE * matrix.scale))/
+					// matrix.scale);
+					// int roundY = (int) Math.round ( Math.round(arg0.getY() -
+					// (arg0.getY()) % (PointMatrix.CELL_SIZE * matrix.scale))/
+					// matrix.scale);
+					// if (Math.abs(arg0.getX() - crtPoint.x * matrix.scale) >=
+					// PointMatrix.CELL_SIZE * matrix.scale &&
+					// Math.abs(arg0.getY() - crtPoint.y * matrix.scale) >=
+					// PointMatrix.CELL_SIZE * matrix.scale) {
+					// svgGenerator.drawLine(crtPoint.x, crtPoint.y, roundX,
+					// crtPoint.y);
+					// svgGenerator.drawLine(roundX, crtPoint.y, roundX,
+					// roundY);
+					// } else //if(crtPoint.x == roundX || crtPoint.y == roundY
+					// ){
+					// {
+					// System.out.println("=============================");
+					// svgGenerator.drawLine(crtPoint.x, crtPoint.y, roundX,
+					// roundY);
+					// // }
+					// // else
+					// // {
+					// System.out.println(roundX + " "+roundY + " "+ crtPoint.x+
+					// " " +crtPoint.y);
+					// System.err.println("=============================");
+					// }
+					// Element root = domFactory.getDocumentElement();
+					// svgGenerator.getRoot(root);
+					// crtPoint = new Point(roundX, roundY);
+					// canvas.repaint();
+					// }
+					// int roundX = (int) ((int) (arg0.getX() - arg0.getX()%
+					// (PointMatrix.CELL_SIZE * matrix.scale))/ matrix.scale);
+					// int roundY = (int) ((int) (arg0.getY() - arg0.getY()%
+					// (PointMatrix.CELL_SIZE * matrix.scale))/ matrix.scale);
+					// System.out.println(crtPoint + " " + roundX + " " + roundY
+					// + " " + matrix.scale);
+					// svgGenerator.drawLine(crtPoint.x, crtPoint.y, roundX,
+					// roundY);
+					//
+					// Element root = domFactory.getDocumentElement();
+					// svgGenerator.getRoot(root);
+					// crtPoint = new Point(roundX, roundY);
+					// System.out.println(crtPoint + " " + matrix.scale);
 
-						int roundX = (int) (arg0.getX() - (arg0.getX() - crtPoint.x) % (matrix.CELL_SIZE * matrix.scale));
-						int roundY = (int) (arg0.getY() - (arg0.getY() - crtPoint.y) % (matrix.CELL_SIZE * matrix.scale));
-						if (Math.abs(arg0.getX() - crtPoint.x) >= matrix.CELL_SIZE * matrix.scale && 
-								Math.abs(arg0.getY() - crtPoint.y) >= matrix.CELL_SIZE * matrix.scale) {
-							svgGenerator.drawLine(crtPoint.x, crtPoint.y, roundX, crtPoint.y);
-							svgGenerator.drawLine(roundX, crtPoint.y, roundX, roundY);
+					// test 2
+					int dX = (int) (arg0.getX() / matrix.scale - crtPoint.x);	// la scara 1:1
+					int dY = (int) (arg0.getY() / matrix.scale - crtPoint.y);
+					// roundX roundY la scara 1:1
+					int roundX = (int) Math.round(Math.round(arg0.getX() - (arg0.getX()) % 
+							(PointMatrix.CELL_SIZE * matrix.scale))	/ matrix.scale);
+					int roundY = (int) Math.round(Math.round(arg0.getY() - (arg0.getY()) % 
+							(PointMatrix.CELL_SIZE * matrix.scale))	/ matrix.scale);
+					System.out.println(roundX + " " + roundY);
+					System.out.println(crtPoint);
+					
+					if (dX >= PointMatrix.CELL_SIZE /* * matrix.scale*/
+							|| dY >= PointMatrix.CELL_SIZE /* * matrix.scale*/) {
+						if (dX > dY) {
+							svgGenerator.drawLine((int) (crtPoint.x * matrix.scale), (int) (crtPoint.y * matrix.scale),
+									(int) (roundX * matrix.scale), (int) (crtPoint.y * matrix.scale));
+							crtPoint.x = roundX;
 						} else {
-							svgGenerator.drawLine(crtPoint.x, crtPoint.y, roundX, roundY);
+							svgGenerator.drawLine((int) (crtPoint.x * matrix.scale), (int) (crtPoint.y * matrix.scale),
+									(int) (crtPoint.x * matrix.scale), (int) (roundY * matrix.scale));
+							crtPoint.y = roundY;
 						}
+
 						Element root = domFactory.getDocumentElement();
 						svgGenerator.getRoot(root);
-						crtPoint = new Point(roundX, roundY);
 						canvas.repaint();
 					}
 				}
@@ -348,8 +372,6 @@ public class TestSVG {
 
 		});
 		canvas.addMouseListener(new MouseListener() {
-
-			//	private double pas = PointMatrix.CELL_SIZE / matrix.scale;
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -364,11 +386,11 @@ public class TestSVG {
 								+ arg0.getPoint().getX() + ", "
 								+ arg0.getPoint().getY() + "]");
 						double dx = (arg0.getPoint().getX() - crtPoint.getX())
-						/ matrix.scale;
+								/ matrix.scale;
 						double dy = (arg0.getPoint().getY() - crtPoint.getY())
-						/ matrix.scale;
+								/ matrix.scale;
 						String attr = ((Element) crtSelection.getParentNode())
-						.getAttribute("transform");
+								.getAttribute("transform");
 						TransformTag transform = new TransformTag(attr);
 						if (transform.translate != null) {
 							transform.translate.x += dx;
@@ -396,7 +418,7 @@ public class TestSVG {
 						crtSelection = null;
 					}
 				} else {
-
+					crtPoint = null;
 				}
 
 			}
@@ -406,11 +428,14 @@ public class TestSVG {
 				if (!wireMode) {
 					crtPoint = arg0.getPoint();
 				} else {
-					int roundX = (int) (arg0.getX() - (arg0.getX()) % (matrix.CELL_SIZE * matrix.scale));
-					int roundY = (int) (arg0.getY() - (arg0.getY()) % (matrix.CELL_SIZE * matrix.scale));
+					int roundX = (int) ((int) (arg0.getX() - (arg0.getX())
+							% (int) (PointMatrix.CELL_SIZE * matrix.scale)) / matrix.scale);
+					int roundY = (int) ((int) (arg0.getY() - (arg0.getY())
+							% (int) (PointMatrix.CELL_SIZE * matrix.scale)) / matrix.scale);
 					crtPoint = new Point(roundX, roundY);
+					// System.out.println(arg0.getPoint());
+					System.out.println(roundX + " " + roundY);
 				}
-
 
 			}
 
@@ -465,11 +490,13 @@ public class TestSVG {
 
 							int xul = arg0.getX();
 							int yul = arg0.getY();
-							xul = (xul - xul %(int) pas);
-							yul = (yul - yul %(int) pas);
-							System.out.println("pun piesa la coord: " + xul + ", " + yul + ". pas " + pas);
-							appendSVG(domFactory, file.toURI().toURL().toString(),
-									"translate(" + xul + ", " + yul + ")", index++);
+							xul = (xul - xul % (int) pas);
+							yul = (yul - yul % (int) pas);
+							System.out.println("pun piesa la coord: " + xul
+									+ ", " + yul + ". pas " + pas);
+							appendSVG(domFactory, file.toURI().toURL()
+									.toString(), "translate(" + xul + ", "
+									+ yul + ")", index++);
 							writeSvg(domFactory, "export.svg");
 
 						} catch (MalformedURLException e) {
@@ -489,53 +516,15 @@ public class TestSVG {
 			}
 		});
 
-		canvas.addUpdateManagerListener(new UpdateManagerListener() {
-
-			@Override
-			public void updateStarted(UpdateManagerEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void updateFailed(UpdateManagerEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
+		canvas.addUpdateManagerListener(new UpdateManagerAdapter() {
 			@Override
 			public void updateCompleted(UpdateManagerEvent arg0) {
 				matrix.repaint();
 				canvas.repaint();
-
-			}
-
-			@Override
-			public void managerSuspended(UpdateManagerEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void managerStopped(UpdateManagerEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void managerStarted(UpdateManagerEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void managerResumed(UpdateManagerEvent arg0) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
-		canvas.addKeyListener(new KeyListener() {
+		canvas.addKeyListener(new KeyAdapter() {
 
 			@Override
 			public void keyTyped(KeyEvent arg0) {
@@ -549,37 +538,39 @@ public class TestSVG {
 					/**
 					 * zoom out
 					 */
-					matrix.scale *= 1 / matrix.ratio;
-					sa1 = canvas.new ScrollDownAction((int)(canvas.getHeight()*(matrix.ratio - 1)/2));
-					sa1.actionPerformed(null);
-					sa2 = canvas.new ScrollRightAction((int)(canvas.getWidth()*(matrix.ratio - 1)/2));
-					sa2.actionPerformed(null);
+
+					matrix.scale /= matrix.ratio;
+
+					// canvas.getRenderingTransform().scale(5, 5);
+
 					zoomAction = canvas.new ZoomAction(1 / matrix.ratio);
 					zoomAction.actionPerformed(null);
+					sa1 = canvas.new ScrollDownAction((int) (canvas.getHeight()
+							* (matrix.ratio - 1) / 2));
+					sa1.actionPerformed(null);
+					sa2 = canvas.new ScrollRightAction((int) (canvas.getWidth()
+							* (matrix.ratio - 1) / 2));
+					sa2.actionPerformed(null);
 
-					try {
-						appendSVG(domFactory, "file:///C:\\My Documents 1\\EDSS\\TestBatik\\7.svg", "", index++);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					canvH = (int)(canvas.getHeight()/ matrix.ratio);
-					canvW = (int)(canvas.getWidth() / matrix.ratio);
-					//					canvas.setSize((int) (canvas.getWidth() / matrix.ratio), (int) (canvas.getHeight() / matrix.ratio));
+					canvH = (int) (canvas.getHeight() / matrix.ratio);
+					canvW = (int) (canvas.getWidth() / matrix.ratio);
+					// canvas.setSize((int) (canvas.getWidth() / matrix.ratio),
+					// (int) (canvas.getHeight() / matrix.ratio));
 					canvas.setSize(canvW, canvH);
-					//					panel.setSize((int) (canvas.getWidth() / matrix.ratio), (int) (canvas.getHeight() / matrix.ratio));
-					//					canvas.setPreferredSize(new Dimension(canvW, canvH));
-					//					panel.setPreferredSize(new Dimension(canvW, canvH));
-					//					((JScrollPane)frame.getContentPane()).revalidate();
-					panel.setPreferredSize(new Dimension((int)(panel.getWidth() / matrix.ratio), (int) (panel.getHeight()/ matrix.ratio)));
+					// panel.setSize((int) (canvas.getWidth() / matrix.ratio),
+					// (int) (canvas.getHeight() / matrix.ratio));
+					// canvas.setPreferredSize(new Dimension(canvW, canvH));
+					// panel.setPreferredSize(new Dimension(canvW, canvH));
+					// ((JScrollPane)frame.getContentPane()).revalidate();
+
+					// TODO : aici creste memoria mult
+					// panel.setPreferredSize(new
+					// Dimension((int)(panel.getWidth() / matrix.ratio), (int)
+					// (panel.getHeight()/ matrix.ratio)));
 					panel.revalidate();
 					canvas.repaint();
 					matrix.repaint();
 					pas /= matrix.ratio;
-
-
-
-
 					break;
 
 				case '=':
@@ -589,15 +580,20 @@ public class TestSVG {
 					matrix.scale *= matrix.ratio;
 					zoomAction = canvas.new ZoomAction(matrix.ratio);
 					zoomAction.actionPerformed(null);
-					sa1 = canvas.new ScrollUpAction((int)(canvas.getHeight()*(matrix.ratio - 1)/2));
+					sa1 = canvas.new ScrollUpAction((int) (canvas.getHeight()
+							* (matrix.ratio - 1) / 2));
 					sa1.actionPerformed(null);
-					sa2 = canvas.new ScrollLeftAction((int)(canvas.getWidth()*(matrix.ratio - 1)/2));
+					sa2 = canvas.new ScrollLeftAction((int) (canvas.getWidth()
+							* (matrix.ratio - 1) / 2));
 					sa2.actionPerformed(null);
-					canvH = (int)(canvas.getHeight()* matrix.ratio);
-					canvW = (int)(canvas.getWidth() * matrix.ratio);
+					canvH = (int) (canvas.getHeight() * matrix.ratio);
+					canvW = (int) (canvas.getWidth() * matrix.ratio);
 					canvas.setSize(canvW, canvH);
-					//	panel.setPreferredSize(new Dimension(canvW, canvH));
-					panel.setPreferredSize(new Dimension((int)(panel.getWidth() * matrix.ratio), (int) (panel.getHeight()* matrix.ratio)));
+
+					// TODO : aici creste memoria mult
+					// panel.setPreferredSize(new
+					// Dimension((int)(panel.getWidth() * matrix.ratio), (int)
+					// (panel.getHeight()* matrix.ratio)));
 					panel.revalidate();
 					canvas.repaint();
 					matrix.repaint();
@@ -605,7 +601,8 @@ public class TestSVG {
 					break;
 
 				case 'e':
-					/** rotate clockwise
+					/**
+					 * rotate clockwise
 					 */
 					System.out.println(selected);
 					if (selected != null) {
@@ -632,7 +629,8 @@ public class TestSVG {
 					break;
 
 				case 'q':
-					/** rotate counter-clockwise
+					/**
+					 * rotate counter-clockwise
 					 */
 					System.out.println(selected);
 					if (selected != null) {
@@ -649,7 +647,7 @@ public class TestSVG {
 						if (tr.rotate.angle == 0) {
 							tr.rotate = null;
 						} else {
-							//nu stiu ce era 32
+							// nu stiu ce era 32
 							tr.rotate.x = PointMatrix.CELL_SIZE;
 							tr.rotate.y = PointMatrix.CELL_SIZE;
 						}
@@ -665,18 +663,6 @@ public class TestSVG {
 					break;
 				}
 			}
-
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
 		});
 
 		for (int i = 1; i < document.getElementsByTagName("svg").getLength(); i++) {
@@ -687,7 +673,7 @@ public class TestSVG {
 
 	static void registerEvent(int index) {
 		EventTarget t = (EventTarget) document.getElementsByTagName("svg")
-		.item(index);
+				.item(index);
 
 		t.addEventListener("click", new EventListener() {
 
@@ -733,15 +719,42 @@ public class TestSVG {
 			}
 
 		}, true);
+	}
 
-		t.addEventListener("mouseout", new EventListener() {
+}
 
-			@Override
-			public void handleEvent(Event evt) {
+@SuppressWarnings("serial")
+class PanelScroll extends JPanel implements Scrollable {
+	@Override
+	public Dimension getPreferredScrollableViewportSize() {
+		// TODO Auto-generated method stub
+		return getPreferredSize();
+	}
 
-			}
+	@Override
+	public int getScrollableBlockIncrement(Rectangle visibleRect,
+			int orientation, int direction) {
+		// TODO Auto-generated method stub
+		return 70;
+	}
 
-		}, true);
+	@Override
+	public boolean getScrollableTracksViewportHeight() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getScrollableTracksViewportWidth() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getScrollableUnitIncrement(Rectangle visibleRect,
+			int orientation, int direction) {
+		// TODO Auto-generated method stub
+		return 20;
 	}
 
 }
