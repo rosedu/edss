@@ -6,11 +6,12 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class PointMatrix extends JPanel {
-	final static int CELL_SIZE = 25;
+	final static int CELL_SIZE = 24;
 	double scale = 1;
-	double ratio = 1.25;
+	final double ratio = 2;
 	int height = 10;
 	int width = 16;
+	private int step;
 	
 	@Override
 	public void paint(Graphics g) {
@@ -18,13 +19,14 @@ public class PointMatrix extends JPanel {
 		g.setColor(Color.BLUE);
 		height = g.getClipBounds().height ;
 		width = g.getClipBounds().width;
-		
-		for (int y = g.getClipBounds().y/CELL_SIZE*CELL_SIZE; y < height + g.getClipBounds().y; y += CELL_SIZE*scale) {
-			for (int x = g.getClipBounds().x/CELL_SIZE*CELL_SIZE; x < width + g.getClipBounds().x; x += CELL_SIZE*scale) {
+		//y = g.getClipBounds().y/CELL_SIZE*CELL_SIZE
+		step = (int)(CELL_SIZE*scale);
+		for (int y = Math.round(g.getClipBounds().y/step*step); y < height + g.getClipBounds().y; y += Math.round(CELL_SIZE * scale) ) {
+			for (int x = Math.round(g.getClipBounds().x/step*step); x < width + g.getClipBounds().x; x += Math.round(CELL_SIZE*scale)) {
 				g.fillOval(x,y, 2, 2);
 			}
-			
 		}
+		System.out.println(g.getClipBounds());
 		//System.out.println(g.getClipBounds());
 	}
 	

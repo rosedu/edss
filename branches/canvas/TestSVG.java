@@ -1,7 +1,12 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -9,6 +14,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -59,9 +68,9 @@ public class TestSVG {
 	static JSVGCanvas canvas = new JSVGCanvas() {
 		public void paint(java.awt.Graphics g) {
 			super.paint(g);
-			g.setColor(Color.RED);
-			g.drawRect(0, 0, g.getClipBounds().width - 1,
-					g.getClipBounds().height - 1);
+//			g.setColor(Color.RED);
+//			g.drawRect(0, 0, g.getClipBounds().width - 1,
+//					g.getClipBounds().height - 1);
 		};
 	};
 	static SVGDocument domFactory;
@@ -157,17 +166,11 @@ public class TestSVG {
 
 			svgGenerator = new SVGGraphics2D(domFactory);
 
-			// TODO : de setat stroke
-			// svgGenerator.setStroke(new Stroke() {
-			//				
-			// @Override
-			// public Shape createStrokedShape(Shape arg0) {
-			// // TODO Auto-generated method stub
-			// return null;
-			// }
-			// });
+			//TODO : de setat stroke
+			svgGenerator.setStroke(new BasicStroke(2));
+			svgGenerator.setColor(Color.red);
 
-			canvas.setPreferredSize(new Dimension(2500, 2500));
+			canvas.setPreferredSize(new Dimension(2048, 2048));
 			canvas.setDocumentState(JSVGCanvas.ALWAYS_DYNAMIC);
 			canvas.setDocument(domFactory);
 			canvas.setBorder(BorderFactory.createTitledBorder("THE canvas"));
@@ -187,12 +190,24 @@ public class TestSVG {
 			panel.setLayout(new OverlayLayout(panel));
 			panel.add(matrix);
 			panel.add(canvas);
-			JScrollPane scrollPane = new JScrollPane(panel);
+			final JScrollPane scrollPane = new JScrollPane(panel);
 			scrollPane.setAutoscrolls(true);
 			scrollPane
 					.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 			scrollPane
 					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			
+			scrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+				
+				
+				@Override
+				public void adjustmentValueChanged(AdjustmentEvent e) {
+//					matrix.revalidate();
+					//int pas = (int) (PointMatrix.CELL_SIZE * matrix.scale);
+					//scrollPane.getVerticalScrollBar().setValue((int)Math.round((0.5 + e.getValue() / pas) * pas));
+					matrix.repaint();
+				}
+			});
 
 			// init frame
 
@@ -200,20 +215,20 @@ public class TestSVG {
 			frame.setSize(800, 800);
 			frame.setContentPane(scrollPane);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.addWindowFocusListener(new WindowFocusListener() {
-
-				@Override
-				public void windowLostFocus(WindowEvent arg0) {
-					// TODO Auto-generated method stub
-					System.err.println("fasdfs");
-				}
-
-				@Override
-				public void windowGainedFocus(WindowEvent arg0) {
-					// TODO Auto-generated method stub
-
-				}
-			});
+//			frame.addWindowFocusListener(new WindowFocusListener() {
+//
+//				@Override
+//				public void windowLostFocus(WindowEvent arg0) {
+//					// TODO Auto-generated method stub
+//					System.err.println("fasdfs");
+//				}
+//
+//				@Override
+//				public void windowGainedFocus(WindowEvent arg0) {
+//					// TODO Auto-generated method stub
+//
+//				}
+//			});
 			registerListeners();
 
 		} catch (IOException e) {
@@ -230,6 +245,8 @@ public class TestSVG {
 	static Point crtPoint;
 	static Element selected = null;
 	static boolean wireMode = false;
+	static boolean dragMode = false;
+	static boolean occupied = false;
 
 	static void registerListeners() {
 
@@ -245,15 +262,18 @@ public class TestSVG {
 			@Override
 			public void mouseDragged(MouseEvent arg0) {
 				if (!wireMode) {
+					if((Math.abs(arg0.getX() - crtPoint.x)) > PointMatrix.CELL_SIZE || Math.abs((arg0.getY() - crtPoint.y)) > PointMatrix.CELL_SIZE )
 					if (crtSelection != null) {
 						System.out.println("Drag finished: [" + crtPoint.getX()
 								+ ", " + crtPoint.getY() + "] to ["
 								+ arg0.getPoint().getX() + ", "
 								+ arg0.getPoint().getY() + "]");
-						double dx = (arg0.getPoint().getX() - crtPoint.getX())
-								/ matrix.scale;
-						double dy = (arg0.getPoint().getY() - crtPoint.getY())
-								/ matrix.scale;
+//						double dx = (arg0.getX() - crtPoint.getX())
+//								/ (PointMatrix.CELL_SIZE * matrix.scale) * PointMatrix.CELL_SIZE;
+//						double dy = (arg0.getY() - crtPoint.getY())
+//								/ (PointMatrix.CELL_SIZE * matrix.scale) * PointMatrix.CELL_SIZE;
+						int dx = roundAtStep((arg0.getX() - crtPoint.getX())/matrix.scale, PointMatrix.CELL_SIZE);
+						int dy = roundAtStep((arg0.getY() - crtPoint.getY())/matrix.scale, PointMatrix.CELL_SIZE);
 						String attr = ((Element) crtSelection.getParentNode())
 								.getAttribute("transform");
 						TransformTag transform = new TransformTag(attr);
@@ -282,84 +302,26 @@ public class TestSVG {
 						}
 					}
 				} else {
-					// if (Math.abs(arg0.getX() - crtPoint.x * matrix.scale) >=
-					// PointMatrix.CELL_SIZE * matrix.scale ||
-					// Math.abs(arg0.getY() - crtPoint.y * matrix.scale) >=
-					// PointMatrix.CELL_SIZE * matrix.scale) {
-					// System.out.println(arg0.getPoint()+ " " + crtPoint + " "
-					// + matrix.scale);
-					// System.out.print(arg0.getX() - crtPoint.x *
-					// matrix.scale);
-					// System.out.print( " ");
-					// System.out.println(arg0.getY() - crtPoint.y *
-					// matrix.scale);
-					//
-					// int roundX = (int) Math.round ( Math.round(arg0.getX()-
-					// (arg0.getX()) % (PointMatrix.CELL_SIZE * matrix.scale))/
-					// matrix.scale);
-					// int roundY = (int) Math.round ( Math.round(arg0.getY() -
-					// (arg0.getY()) % (PointMatrix.CELL_SIZE * matrix.scale))/
-					// matrix.scale);
-					// if (Math.abs(arg0.getX() - crtPoint.x * matrix.scale) >=
-					// PointMatrix.CELL_SIZE * matrix.scale &&
-					// Math.abs(arg0.getY() - crtPoint.y * matrix.scale) >=
-					// PointMatrix.CELL_SIZE * matrix.scale) {
-					// svgGenerator.drawLine(crtPoint.x, crtPoint.y, roundX,
-					// crtPoint.y);
-					// svgGenerator.drawLine(roundX, crtPoint.y, roundX,
-					// roundY);
-					// } else //if(crtPoint.x == roundX || crtPoint.y == roundY
-					// ){
-					// {
-					// System.out.println("=============================");
-					// svgGenerator.drawLine(crtPoint.x, crtPoint.y, roundX,
-					// roundY);
-					// // }
-					// // else
-					// // {
-					// System.out.println(roundX + " "+roundY + " "+ crtPoint.x+
-					// " " +crtPoint.y);
-					// System.err.println("=============================");
-					// }
-					// Element root = domFactory.getDocumentElement();
-					// svgGenerator.getRoot(root);
-					// crtPoint = new Point(roundX, roundY);
-					// canvas.repaint();
-					// }
-					// int roundX = (int) ((int) (arg0.getX() - arg0.getX()%
-					// (PointMatrix.CELL_SIZE * matrix.scale))/ matrix.scale);
-					// int roundY = (int) ((int) (arg0.getY() - arg0.getY()%
-					// (PointMatrix.CELL_SIZE * matrix.scale))/ matrix.scale);
-					// System.out.println(crtPoint + " " + roundX + " " + roundY
-					// + " " + matrix.scale);
-					// svgGenerator.drawLine(crtPoint.x, crtPoint.y, roundX,
-					// roundY);
-					//
-					// Element root = domFactory.getDocumentElement();
-					// svgGenerator.getRoot(root);
-					// crtPoint = new Point(roundX, roundY);
-					// System.out.println(crtPoint + " " + matrix.scale);
-
+				
 					// test 2
-					int dX = (int) (arg0.getX() / matrix.scale - crtPoint.x);	// la scara 1:1
-					int dY = (int) (arg0.getY() / matrix.scale - crtPoint.y);
-					// roundX roundY la scara 1:1
-					int roundX = (int) Math.round(Math.round(arg0.getX() - (arg0.getX()) % 
-							(PointMatrix.CELL_SIZE * matrix.scale))	/ matrix.scale);
-					int roundY = (int) Math.round(Math.round(arg0.getY() - (arg0.getY()) % 
-							(PointMatrix.CELL_SIZE * matrix.scale))	/ matrix.scale);
-					System.out.println(roundX + " " + roundY);
-					System.out.println(crtPoint);
+					int dX = Math.abs((int) Math.round(arg0.getX() / matrix.scale - crtPoint.x));	// la scara 1:1
+					int dY = Math.abs((int) Math.round(arg0.getY() / matrix.scale - crtPoint.y));
 					
-					if (dX >= PointMatrix.CELL_SIZE /* * matrix.scale*/
-							|| dY >= PointMatrix.CELL_SIZE /* * matrix.scale*/) {
+
+					
+					int roundX = roundAtStep((int) (arg0.getX() / matrix.scale), PointMatrix.CELL_SIZE);
+					int roundY = roundAtStep((int) (arg0.getY() / matrix.scale), PointMatrix.CELL_SIZE);
+					
+					System.out.println(roundX + " " + roundY);
+					System.out.println(crtPoint +"  scale: " + matrix.scale);
+					
+					if (dX>= PointMatrix.CELL_SIZE
+							|| dY >= PointMatrix.CELL_SIZE) {
 						if (dX > dY) {
-							svgGenerator.drawLine((int) (crtPoint.x * matrix.scale), (int) (crtPoint.y * matrix.scale),
-									(int) (roundX * matrix.scale), (int) (crtPoint.y * matrix.scale));
+							svgGenerator.drawLine(crtPoint.x, crtPoint.y, roundX, crtPoint.y);
 							crtPoint.x = roundX;
 						} else {
-							svgGenerator.drawLine((int) (crtPoint.x * matrix.scale), (int) (crtPoint.y * matrix.scale),
-									(int) (crtPoint.x * matrix.scale), (int) (roundY * matrix.scale));
+							svgGenerator.drawLine(crtPoint.x, crtPoint.y, crtPoint.x, roundY);
 							crtPoint.y = roundY;
 						}
 
@@ -379,16 +341,14 @@ public class TestSVG {
 					/**
 					 * realizeaza translatia piesei
 					 */
-
+					if(Math.abs((arg0.getX() - crtPoint.x)) > PointMatrix.CELL_SIZE || Math.abs((arg0.getY() - crtPoint.y)) > PointMatrix.CELL_SIZE )
 					if (crtSelection != null) {
 						System.out.println("Drag finished: [" + crtPoint.getX()
 								+ ", " + crtPoint.getY() + "] to ["
 								+ arg0.getPoint().getX() + ", "
 								+ arg0.getPoint().getY() + "]");
-						double dx = (arg0.getPoint().getX() - crtPoint.getX())
-								/ matrix.scale;
-						double dy = (arg0.getPoint().getY() - crtPoint.getY())
-								/ matrix.scale;
+						int dx = roundAtStep(arg0.getX() / matrix.scale, PointMatrix.CELL_SIZE);
+						int dy = roundAtStep(arg0.getY() / matrix.scale, PointMatrix.CELL_SIZE);
 						String attr = ((Element) crtSelection.getParentNode())
 								.getAttribute("transform");
 						TransformTag transform = new TransformTag(attr);
@@ -402,7 +362,6 @@ public class TestSVG {
 						((Element) crtSelection.getParentNode()).setAttribute(
 								"transform", transform.toString());
 
-						// canvas.setDoubleBufferedRendering(true);
 
 						matrix.repaint();
 						canvas.repaint();
@@ -428,12 +387,12 @@ public class TestSVG {
 				if (!wireMode) {
 					crtPoint = arg0.getPoint();
 				} else {
-					int roundX = (int) ((int) (arg0.getX() - (arg0.getX())
-							% (int) (PointMatrix.CELL_SIZE * matrix.scale)) / matrix.scale);
-					int roundY = (int) ((int) (arg0.getY() - (arg0.getY())
-							% (int) (PointMatrix.CELL_SIZE * matrix.scale)) / matrix.scale);
+
+					
+					
+					int roundX = roundAtStep(arg0.getX() / matrix.scale, PointMatrix.CELL_SIZE);
+					int roundY = roundAtStep(arg0.getY() / matrix.scale, PointMatrix.CELL_SIZE);
 					crtPoint = new Point(roundX, roundY);
-					// System.out.println(arg0.getPoint());
 					System.out.println(roundX + " " + roundY);
 				}
 
@@ -441,20 +400,6 @@ public class TestSVG {
 
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				// // TODO : nu aici
-				// String attr = ((Element)
-				// crtSelection.getParentNode()).getAttribute("transform");
-				// TransformTag transform = new TransformTag(attr);
-				//				
-				// if (transform.scale != null) {
-				// transform.scale = new Scale(0.5);
-				// } else {
-				// transform.scale.amount *= 0.5;
-				// }
-				//				
-				// ((Element)
-				// crtSelection.getParentNode()).setAttribute("transform",
-				// transform.toString());
 
 			}
 
@@ -533,6 +478,7 @@ public class TestSVG {
 				int canvH, canvW;
 				ZoomAction zoomAction;
 				ScrollAction sa1, sa2;
+				AffineTransform at;
 				switch (arg0.getKeyChar()) {
 				case '-':
 					/**
@@ -542,32 +488,17 @@ public class TestSVG {
 					matrix.scale /= matrix.ratio;
 
 					// canvas.getRenderingTransform().scale(5, 5);
+					at = new AffineTransform();
+					at.scale(matrix.scale, matrix.scale);
+					canvas.setRenderingTransform(at);
+					canvas.repaint();
 
-					zoomAction = canvas.new ZoomAction(1 / matrix.ratio);
-					zoomAction.actionPerformed(null);
-					sa1 = canvas.new ScrollDownAction((int) (canvas.getHeight()
-							* (matrix.ratio - 1) / 2));
-					sa1.actionPerformed(null);
-					sa2 = canvas.new ScrollRightAction((int) (canvas.getWidth()
-							* (matrix.ratio - 1) / 2));
-					sa2.actionPerformed(null);
 
-					canvH = (int) (canvas.getHeight() / matrix.ratio);
-					canvW = (int) (canvas.getWidth() / matrix.ratio);
-					// canvas.setSize((int) (canvas.getWidth() / matrix.ratio),
-					// (int) (canvas.getHeight() / matrix.ratio));
+					canvH = (int) Math.round(canvas.getHeight() / matrix.ratio);
+					canvW = (int) Math.round(canvas.getWidth() / matrix.ratio);
+					System.out.println(canvW + " " + canvH);
 					canvas.setSize(canvW, canvH);
-					// panel.setSize((int) (canvas.getWidth() / matrix.ratio),
-					// (int) (canvas.getHeight() / matrix.ratio));
-					// canvas.setPreferredSize(new Dimension(canvW, canvH));
-					// panel.setPreferredSize(new Dimension(canvW, canvH));
-					// ((JScrollPane)frame.getContentPane()).revalidate();
-
-					// TODO : aici creste memoria mult
-					// panel.setPreferredSize(new
-					// Dimension((int)(panel.getWidth() / matrix.ratio), (int)
-					// (panel.getHeight()/ matrix.ratio)));
-					panel.revalidate();
+					canvas.setPreferredSize(new Dimension(canvW, canvH));
 					canvas.repaint();
 					matrix.repaint();
 					pas /= matrix.ratio;
@@ -578,22 +509,17 @@ public class TestSVG {
 					 * zoom in
 					 */
 					matrix.scale *= matrix.ratio;
-					zoomAction = canvas.new ZoomAction(matrix.ratio);
-					zoomAction.actionPerformed(null);
-					sa1 = canvas.new ScrollUpAction((int) (canvas.getHeight()
-							* (matrix.ratio - 1) / 2));
-					sa1.actionPerformed(null);
-					sa2 = canvas.new ScrollLeftAction((int) (canvas.getWidth()
-							* (matrix.ratio - 1) / 2));
-					sa2.actionPerformed(null);
-					canvH = (int) (canvas.getHeight() * matrix.ratio);
-					canvW = (int) (canvas.getWidth() * matrix.ratio);
-					canvas.setSize(canvW, canvH);
+					
+					at = new AffineTransform();
+					at.scale(matrix.scale, matrix.scale);
+					canvas.setRenderingTransform(at);
+					canvas.repaint();
 
-					// TODO : aici creste memoria mult
-					// panel.setPreferredSize(new
-					// Dimension((int)(panel.getWidth() * matrix.ratio), (int)
-					// (panel.getHeight()* matrix.ratio)));
+					canvH = (int) Math.round(canvas.getHeight() * matrix.ratio);
+					canvW = (int) Math.round(canvas.getWidth() * matrix.ratio);
+					canvas.setSize(canvW, canvH);
+					canvas.setPreferredSize(new Dimension(canvW, canvH));
+
 					panel.revalidate();
 					canvas.repaint();
 					matrix.repaint();
@@ -701,26 +627,37 @@ public class TestSVG {
 
 			@Override
 			public void handleEvent(Event evt) {
-				// // TODO : de vazut
-				// String attr = ((Element) ((Element)
-				// evt.getCurrentTarget()).getParentNode()).getAttribute("transform");
-				// TransformTag transform = new TransformTag(attr);
-				//				
-				// if (transform.scale != null) {
-				// transform.scale = new Scale(1.5);
-				// } else {
-				// transform.scale.amount *= 1.5;
-				// }
-				//				
-				// ((Element) ((Element)
-				// evt.getCurrentTarget()).getParentNode()).setAttribute("transform",
-				// transform.toString());
+				if (dragMode) {
+					occupied = true;
+				}
+
+			}
+
+		}, true);
+		
+		t.addEventListener("mouseout", new EventListener() {
+
+			@Override
+			public void handleEvent(Event evt) {
+				if (dragMode) {
+					occupied = false;
+				}
 
 			}
 
 		}, true);
 	}
 
+	static int roundAtStep(double x, int step) {
+		int result;
+		int offset = (int) (x % step);
+		result = (int) (x - offset);
+		if (offset > step / 2) {
+			result += step; 
+		}
+		return result;
+		
+	}
 }
 
 @SuppressWarnings("serial")
