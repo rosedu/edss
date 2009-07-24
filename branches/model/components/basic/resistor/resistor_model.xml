@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resistor_model>
+	<model name="1K">
+		<resistance>1K</resistance>
+		<tolerance>0.05</tolerance>
+		<power>100</power>
+	</model>
+</resistor_model>

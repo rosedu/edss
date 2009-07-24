@@ -2,13 +2,13 @@ package Model.Commands;
 
 import java.io.Serializable;
 
-import Model.PieceModel;
+import Model.Piece;
 import Model.Schematic;
 
 public class RemoveComponentCommand implements Command, Serializable {
 	Schematic scheme;
 	String id;
-	PieceModel piece;
+	Piece piece;
 	
 	public RemoveComponentCommand(Schematic scheme, String id) {
 		this.scheme = scheme;

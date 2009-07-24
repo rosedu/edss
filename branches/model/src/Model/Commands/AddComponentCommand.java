@@ -1,16 +1,16 @@
 package Model.Commands;
 import java.io.Serializable;
 
-import Model.PieceModel;
+import Model.Piece;
 import Model.Schematic;
 
 
 
 public class AddComponentCommand implements Command, Serializable {
 	Schematic scheme;
-	PieceModel piece;
+	Piece piece;
 	
-	public AddComponentCommand(Schematic scheme, PieceModel piece) {
+	public AddComponentCommand(Schematic scheme, Piece piece) {
 		this.scheme = scheme;
 		this.piece = piece;
 	}

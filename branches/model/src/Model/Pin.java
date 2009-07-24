@@ -6,9 +6,10 @@ public class Pin implements Serializable {
 	protected int x, y;
 	protected int globalX, globalY;
 	protected String id;
+	protected String name;
 	
 	protected List<Connection> connections;
-	protected PieceModel piece;
+	protected Piece piece;
 	
 	public String getId() {
 		return id;
@@ -18,9 +19,11 @@ public class Pin implements Serializable {
 		this.id = id;
 	}
 	
-	public Pin(String id, PieceModel piece){
+	public Pin(String id, String name, Piece piece){
 		this.id = id;
 		this.piece = piece;
+		this.name = name;
+		
 		connections = new LinkedList<Connection>();
 	}
 	
@@ -117,11 +120,11 @@ public class Pin implements Serializable {
 		return sb.toString();
 	}
 	
-	public PieceModel getPiece() {
+	public Piece getPiece() {
 		return piece;
 	}
 	
-	public void setPiece(PieceModel piece) {
+	public void setPiece(Piece piece) {
 		this.piece = piece;
 	}
 	
@@ -130,7 +133,8 @@ public class Pin implements Serializable {
 		
 		/**/
 		
-		sb.append("[").append(getPiece().getId()).append(" ").append(id).append("]");
+		sb.append("[").append(getPiece().getId()).append(" ").append(id).append("-")
+			.append(name).append("]");
 		return sb.toString();
 	}
 }

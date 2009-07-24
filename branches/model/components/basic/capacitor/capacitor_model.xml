@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<capacitor_model>
+	<model name="1u">
+		<capacitance>1u</capacitance>
+		<tolerance>0.05</tolerance>
+		<voltage>100</voltage>
+	</model>
+</capacitor_model>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bjt_npn>
+	<svg> bjt_npn.svg </svg>
+	<pinInfo>
+		<pin number="1"> E </pin>
+		<pin number="2"> B </pin>
+		<pin number="3"> C </pin>
+	</pinInfo>
+	<id>Q</id>
+	<properties>
+		<property name="BF"/>
+		<property name="IS"/>
+		<property name="VAF"/>
+	</properties>
+</bjt_npn>

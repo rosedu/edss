@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diode>
+	<svg> diode.svg </svg>
+	<pinInfo>
+		<pin number="1"> A </pin>
+		<pin number="2"> K </pin>
+	</pinInfo>
+	<id>D</id>
+	<properties>
+		<property name="IS"/>
+		<property name="RS"/>
+		<property name="N"/>
+	</properties>
+</diode>

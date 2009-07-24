@@ -6,19 +6,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Model.Connection;
-import Model.PieceModel;
+import Model.Piece;
 import Model.Pin;
 import Model.Schematic;
 import Model.Wire;
 
 public class RemoveMultipleComponentsCommand implements Command, Serializable {
 	Schematic scheme;
-	List<PieceModel> pieces;
+	List<Piece> pieces;
 	List<Wire> wires;
 	
 	public RemoveMultipleComponentsCommand(Schematic scheme, List<String> selected){
 		this.scheme = scheme;
-		pieces = new LinkedList<PieceModel>();
+		pieces = new LinkedList<Piece>();
 		wires = new LinkedList<Wire>();
 		
 		
@@ -27,7 +27,7 @@ public class RemoveMultipleComponentsCommand implements Command, Serializable {
 		while (it.hasNext()){
 			String id = it.next();
 			Wire w = null;
-			PieceModel pc = null;
+			Piece pc = null;
 			if ((w = scheme.getWires().get(id)) != null){
 				wires.add(w);
 			} else {
@@ -36,10 +36,10 @@ public class RemoveMultipleComponentsCommand implements Command, Serializable {
 			}
 		}
 		
-		Iterator<PieceModel> itp = pieces.iterator();
+		Iterator<Piece> itp = pieces.iterator();
 		
 		while (itp.hasNext()){
-			PieceModel pm = itp.next();
+			Piece pm = itp.next();
 			Iterator<Pin> itpins = pm.getPins().values().iterator();
 			
 			while (itpins.hasNext()){
@@ -63,9 +63,9 @@ public class RemoveMultipleComponentsCommand implements Command, Serializable {
 
 	@Override
 	public void unExecute() {
-		Iterator<PieceModel> itp = pieces.iterator();
+		Iterator<Piece> itp = pieces.iterator();
 		while(itp.hasNext()){
-			PieceModel pm = itp.next();
+			Piece pm = itp.next();
 			scheme.addComp(pm);
 		}
 		

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mos_dp_model>
+	<model name="generic_mos_dp">
+		<KP>20</KP>
+		<VT0>0</VT0>
+	</model>
+</mos_dp_model>

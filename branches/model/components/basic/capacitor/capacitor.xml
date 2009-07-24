@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<capacitor>
+	<svg> capacitor.svg </svg>
+	<pinInfo>
+		<pin number="1"> 1 </pin>
+		<pin number="2"> 2 </pin>
+	</pinInfo>
+	<id>C</id>
+	<properties>
+		<property name="capacitance"/>
+		<property name="tolerance"/>
+		<property name="voltage"/>
+	</properties>
+</capacitor>

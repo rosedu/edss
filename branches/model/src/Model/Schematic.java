@@ -22,23 +22,23 @@ import Model.Commands.RotateComponentCommand;
 
 
 public class Schematic implements Serializable {
-	private Map<String, PieceModel> components;
+	private Map<String, Piece> components;
 	private Map<String, Wire> wires;
 	private double scaled = 1;
 	private CommandManager commMan;
 	
 	
 	public Schematic() {
-		components = new HashMap<String, PieceModel>();
+		components = new HashMap<String, Piece>();
 		wires = new HashMap<String, Wire>();
 		commMan = new CommandManager();
 	}
 	
-	public void addComponent(PieceModel piece) {
+	public void addComponent(Piece piece) {
 		commMan.doCommand(new AddComponentCommand(this, piece));
 	}
 	
-	public void addComp(PieceModel piece) {
+	public void addComp(Piece piece) {
 		components.put(piece.getId(), piece);
 	}
 	
@@ -47,7 +47,7 @@ public class Schematic implements Serializable {
 	}
 	
 	public void removeComp(String id){
-		PieceModel piece = components.get(id);
+		Piece piece = components.get(id);
 
 		Iterator<Pin> it = piece.getPins().values().iterator();
 		
@@ -62,7 +62,7 @@ public class Schematic implements Serializable {
 		}
 		
 		components.remove(id);
-		PieceModel.instances.get(piece.getType()).remove(id);
+		Piece.instances.get(piece.getType()).remove(id);
 
 		System.out.println("Deleted: " + id);
 	}
@@ -71,8 +71,8 @@ public class Schematic implements Serializable {
 		commMan.doCommand(new RemoveMultipleComponentsCommand(this, selected));
 	}
 	
-	public void removeMultipleComponentsWithoutUndo(List<PieceModel> auxComps, List<Wire>auxWires){		
-		Iterator<PieceModel> itp = auxComps.iterator();
+	public void removeMultipleComponentsWithoutUndo(List<Piece> auxComps, List<Wire>auxWires){		
+		Iterator<Piece> itp = auxComps.iterator();
 		while (itp.hasNext()){
 			removeComp(itp.next().getId());
 		}
@@ -91,8 +91,8 @@ public class Schematic implements Serializable {
 	}
 	
 	public void addWireWithoutUndo(String piece1, String pin1, String piece2, String pin2) {
-		PieceModel pm1 = components.get(piece1);
-		PieceModel pm2 = components.get(piece2);
+		Piece pm1 = components.get(piece1);
+		Piece pm2 = components.get(piece2);
 		Pin p1 = pm1.getPins().get(pin1);
 		Pin p2 = pm2.getPins().get(pin2);
 
@@ -118,8 +118,8 @@ public class Schematic implements Serializable {
 	}
 	
 	public void removeWireWithoutUndo(String piece1, String pin1, String piece2, String pin2){
-		PieceModel pm1 = components.get(piece1);
-		PieceModel pm2 = components.get(piece2);
+		Piece pm1 = components.get(piece1);
+		Piece pm2 = components.get(piece2);
 
 		Pin p1 = pm1.getPins().get(pin1);
 		Pin p2 = pm2.getPins().get(pin2);
@@ -145,7 +145,7 @@ public class Schematic implements Serializable {
 		commMan.doCommand(new RotateComponentCommand(this, id, r));
 	}
 	
-	public Map<String, PieceModel> getComponents() {
+	public Map<String, Piece> getComponents() {
 		return components;
 	}
 	
@@ -244,12 +244,12 @@ public class Schematic implements Serializable {
 	
 	public String toString()
 	{
-		Iterator<PieceModel> itp = components.values().iterator();
+		Iterator<Piece> itp = components.values().iterator();
 		Iterator<Wire> itw = wires.values().iterator();
 		StringBuffer sb = new StringBuffer();
 		
 		while (itp.hasNext()) {
-			PieceModel pm = itp.next();
+			Piece pm = itp.next();
 			
 			sb.append(pm.toString()).append("\n");
 		}

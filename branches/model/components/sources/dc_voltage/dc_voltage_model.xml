@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc_voltage_model>
+	<model name="5V">
+		<value>5V</value>
+	</model>
+	<model name="12V">
+		<value>12V</value>
+	</model>
+	<model name="3V">
+		<value>3V</value>
+	</model>
+	<model name="15V">
+		<value>15V</value>
+	</model>
+	<model name="10V">
+		<value>10V</value>
+	</model>
+</dc_voltage_model>

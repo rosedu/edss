@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ground>
+	<svg> ground.svg </svg>
+	<pinInfo>
+		<pin number="1"> G </pin>
+	</pinInfo>
+	<id>G</id>
+</ground>
