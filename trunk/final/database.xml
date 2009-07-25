@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<database>
+	<category name="c1">
+		<subcategory name="sc11">
+			<piece>name1</piece>
+			<piece>name2</piece>
+		</subcategory>
+		<subcategory name="sc12">
+			<piece>name3</piece>
+			<piece>name4</piece>
+		</subcategory>
+	</category>		
+	<category name="c2">
+		<subcategory name="sc21">
+			<piece>name5</piece>
+			<piece>name6</piece>
+		</subcategory>
+		<subcategory name="sc22">
+			<piece>name7</piece>
+			<piece>name8</piece>
+			<piece>name9</piece>
+		</subcategory>
+	</category>	
+	<category name="c3">
+		<subcategory name="sc31">
+			<piece>name10</piece>
+			<piece>name11</piece>
+		</subcategory>
+		<subcategory name="sc32">
+			<piece>name12</piece>
+			<piece>name13</piece>
+			<piece>name14</piece>
+		</subcategory>
+		<subcategory name="sc33">
+			<piece>name15</piece>
+			<piece>name16</piece>
+			<piece>name17</piece>
+		</subcategory>
+	</category>		
+</database>
