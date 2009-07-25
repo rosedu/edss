@@ -1,4 +1,4 @@
-
+package edss.gui;
 public class Piece {
 	private String name;
 	private String categ;

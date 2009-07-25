@@ -1,4 +1,4 @@
-
+package edss.gui;
 public class Tree {
 
 	String value;

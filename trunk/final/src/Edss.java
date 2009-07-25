@@ -1,9 +1,12 @@
+import javax.swing.*;
+import org.jvnet.substance.skin.*;
+
 
 public class Edss {
 	
 	public static void main(String args[])
 	{
-				Configuration cf = new Configuration("config.xml");
+				edss.gui.Configuration cf = new edss.gui.Configuration("config.xml");
 		int skin = cf.skinId;
 		// ParseDatabase dataBase = new ParseDatabase("database.xml");
 		try {
@@ -45,11 +48,9 @@ public class Edss {
 			@Override
 			public void run() {
 
-				Gui window = new Gui();
+				edss.gui.Gui window = new edss.gui.Gui();
 		
 			}
 		});
 	}
-	}
-
 }

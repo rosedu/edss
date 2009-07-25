@@ -1,3 +1,4 @@
+package edss.gui;
 import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.Color;

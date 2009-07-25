@@ -1,3 +1,4 @@
+package edss.gui;
 import javax.swing.JDesktopPane;
 
 
