@@ -1,5 +1,5 @@
 
-public class Gui {
+public class Edss {
 	
 	public static void main(String args[])
 	{
