@@ -1,4 +1,5 @@
 package Model;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -7,12 +8,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -35,8 +34,8 @@ public class Piece implements Serializable {
 	
 	protected Map<String, Pin> pins;
 	
-	protected Piece() {
-	}
+/*	protected Piece() {
+	}*/
 	
 	public Piece(String category, String subCategory, int x, int y, String model) {
 		this.x = x;

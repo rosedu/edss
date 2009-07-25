@@ -1,8 +1,5 @@
 package Model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Test4 {
 	public static void main(String[] args) {
 		Schematic scheme = new Schematic();
@@ -15,6 +12,7 @@ public class Test4 {
 		scheme.addComponent(new Piece("transistors", "mos_dn", 50, 50, "generic"));
 		scheme.addWire("Q2", "pin3", "Q1", "pin1");
 		
+		scheme.save("schema.sch");
 		System.out.println(scheme);
 	}
 }

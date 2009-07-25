@@ -23,6 +23,6 @@ public class AddComponentCommand implements Command, Serializable {
 
 	@Override
 	public void unExecute() {
-		scheme.removeComponent(piece.getId());
+		scheme.removeComp(piece.getId());
 	}
 }

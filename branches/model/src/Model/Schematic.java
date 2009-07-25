@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +25,6 @@ public class Schematic implements Serializable {
 	private Map<String, Wire> wires;
 	private double scaled = 1;
 	private CommandManager commMan;
-	
 	
 	public Schematic() {
 		components = new HashMap<String, Piece>();
