@@ -2,5 +2,30 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-anim.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-awt-util.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-bridge.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-codec.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-css.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-dom.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-ext.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-extension.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-gui-util.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-gvt.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-parser.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-script.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-svg-dom.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-svggen.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-swing.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-transcoder.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-util.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/batik-xml.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/js.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/pdf-transcoder.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/substance.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/xalan-2.6.0.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/xerces_2_5_0.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="/home/student/edss/edss/trunk/final/lib/xml-apis-ext.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
