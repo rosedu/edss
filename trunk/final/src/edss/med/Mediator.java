@@ -26,5 +26,10 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 		canvas.scale(factor);
 		
 	}
+	
+	@Override
+	public void registerCanvas(Canvas canvas) {
+		this.canvas = canvas;
+	}
 
 }

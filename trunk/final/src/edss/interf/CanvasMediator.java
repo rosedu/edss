@@ -8,5 +8,5 @@ public interface CanvasMediator {
 	 * @param Id
 	 */
 	public void editPieceProperties(String id);
-
+	public void registerCanvas(Canvas canvas);
 }
