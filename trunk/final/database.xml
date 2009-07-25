@@ -1,40 +1,49 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <database>
-	<category name="c1">
-		<subcategory name="sc11">
-			<piece>name1</piece>
-			<piece>name2</piece>
+	<category name="transistors">
+		<subcategory name="mos_dp">
+			<piece>generic_mos_dp</piece>
 		</subcategory>
-		<subcategory name="sc12">
-			<piece>name3</piece>
-			<piece>name4</piece>
+		<subcategory name="bjt_pnp">
+			<piece>generic</piece>
 		</subcategory>
-	</category>		
-	<category name="c2">
-		<subcategory name="sc21">
-			<piece>name5</piece>
-			<piece>name6</piece>
+		<subcategory name="bjt_npn">
+			<piece>generic</piece>
 		</subcategory>
-		<subcategory name="sc22">
-			<piece>name7</piece>
-			<piece>name8</piece>
-			<piece>name9</piece>
+		<subcategory name="mos_dn">
+			<piece>generic_mos_dn</piece>
 		</subcategory>
-	</category>	
-	<category name="c3">
-		<subcategory name="sc31">
-			<piece>name10</piece>
-			<piece>name11</piece>
+	</category>
+	<category name="basic">
+		<subcategory name="capacitor">
+			<piece>1u</piece>
 		</subcategory>
-		<subcategory name="sc32">
-			<piece>name12</piece>
-			<piece>name13</piece>
-			<piece>name14</piece>
+		<subcategory name="resistor">
+			<piece>1K</piece>
 		</subcategory>
-		<subcategory name="sc33">
-			<piece>name15</piece>
-			<piece>name16</piece>
-			<piece>name17</piece>
+	</category>
+	<category name="node">
+	</category>
+	<category name="diodes">
+		<subcategory name="diode">
+			<piece>generic</piece>
+			<piece>1N5711</piece>
+			<piece>1N5712</piece>
 		</subcategory>
-	</category>		
+		<subcategory name="led">
+		</subcategory>
+		<subcategory name="zener">
+		</subcategory>
+	</category>
+	<category name="sources">
+		<subcategory name="ground">
+		</subcategory>
+		<subcategory name="dc_voltage">
+			<piece>5V</piece>
+			<piece>12V</piece>
+			<piece>3V</piece>
+			<piece>15V</piece>
+			<piece>10V</piece>
+		</subcategory>
+	</category>
 </database>
