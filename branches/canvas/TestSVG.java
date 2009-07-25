@@ -1,5 +1,6 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -42,8 +43,10 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.batik.bridge.UpdateManagerAdapter;
 import org.apache.batik.bridge.UpdateManagerEvent;
+import org.apache.batik.dom.events.DOMMouseEvent;
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
 import org.apache.batik.dom.svg.SVGDOMImplementation;
+import org.apache.batik.dom.util.ListNodeList;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.swing.JSVGCanvas.ScrollAction;
@@ -53,6 +56,7 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
@@ -88,6 +92,7 @@ public class TestSVG {
 	private static double pas = PointMatrix.CELL_SIZE * matrix.scale;
 
 	static SVGGraphics2D svgGenerator;
+	static Element line;
 
 	static void displayNode(Node n) {
 		System.out.println("Name: " + n.getNodeName());
@@ -119,6 +124,8 @@ public class TestSVG {
 		SVGDocument doc1 = (SVGDocument) f.createDocument(uri1);
 
 		doc1.getRootElement().setAttribute("id", "svg" + index);
+		
+		
 
 		// adaug un tag group
 		Element g = doc1.createElementNS(svgNS, "g");
@@ -141,6 +148,58 @@ public class TestSVG {
 				System.out.println("Mouse down on image "
 						+ el.getAttribute("id"));
 				crtSelection = el;
+//				pinSelected = el;
+				
+				Element pin = (Element) evt.getTarget();
+				System.out.println(pin.getAttribute("id"));
+				if (pin.getAttribute("id").contains("pin")) {
+					System.out.println("pin down");
+					pinSelected = pin;
+					
+		
+					
+				}
+			}
+		}, true);
+		
+		t.addEventListener("mouseup", new EventListener() {
+
+			@Override
+			public void handleEvent(Event evt) {
+				Element el = (Element) evt.getCurrentTarget();
+				Element pin = (Element) evt.getTarget();
+//				if (pinSelected != pin) {
+					
+					System.out.println("mouseUUUp");
+					pinSelected = null;
+//				}
+
+			}
+		}, true);
+		
+		t.addEventListener("mouseover", new EventListener() {
+
+			@Override
+			public void handleEvent(Event evt) {
+				Element pin = (Element) evt.getTarget();
+				if (pin.getAttribute("id").contains("pin")) {
+					System.out.println("schimba");
+					frame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+					pinSelected = pin;
+				}
+			}
+		}, true);
+		
+		t.addEventListener("mouseout", new EventListener() {
+
+			@Override
+			public void handleEvent(Event evt) {
+				Element pin = (Element) evt.getTarget();
+				if (pin.getAttribute("id").contains("pin")) {
+					System.out.println("unschimba");
+					frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					pinSelected = pin;
+				}
 			}
 		}, true);
 
@@ -151,9 +210,48 @@ public class TestSVG {
 				Element el = (Element) evt.getCurrentTarget();
 				System.out.println("Mouse click on image "
 						+ el.getAttribute("id"));
+				System.out.println(selected);
 				selected = ((Element) el.getParentNode());
+				System.out.println(selected);
+				
 			}
 		}, true);
+		
+//		EventTarget pin;
+////		for (int i = 1; ; i++) {
+////			pin = (EventTarget) target.getElementById("pin" + i);
+//			pin = (EventTarget) target.getElementById("path2524");
+//			if (pin == null) {
+////				break;
+//			}
+//			
+////			System.out.println("Pin" + i);
+//			
+//			pin.addEventListener("mousedown", new EventListener() {
+//				
+//				@Override
+//				public void handleEvent(Event evt) {
+//					Element el = (Element) evt.getCurrentTarget();
+//					pinSelected = el;
+//					System.out.println("down on pin");
+//				}
+//			}, true);
+//			
+//			pin.addEventListener("mouseup", new EventListener() {
+//
+//				@Override
+//				public void handleEvent(Event evt) {
+//					System.out.println("up on pin");
+//					Element el = (Element) evt.getCurrentTarget();
+//					if (pinSelected != el) {
+//						pinSelected = null;
+//					}
+//
+//				}
+//			}, true);
+////		}
+		
+		
 	}
 
 	public static void main(String[] args) {
@@ -176,7 +274,7 @@ public class TestSVG {
 			canvas.setBorder(BorderFactory.createTitledBorder("THE canvas"));
 
 			canvas.setRecenterOnResize(true);
-
+			canvas.setDisableInteractions(true);
 			document = domFactory;
 
 			// init matrix
@@ -215,20 +313,6 @@ public class TestSVG {
 			frame.setSize(800, 800);
 			frame.setContentPane(scrollPane);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//			frame.addWindowFocusListener(new WindowFocusListener() {
-//
-//				@Override
-//				public void windowLostFocus(WindowEvent arg0) {
-//					// TODO Auto-generated method stub
-//					System.err.println("fasdfs");
-//				}
-//
-//				@Override
-//				public void windowGainedFocus(WindowEvent arg0) {
-//					// TODO Auto-generated method stub
-//
-//				}
-//			});
 			registerListeners();
 
 		} catch (IOException e) {
@@ -244,6 +328,9 @@ public class TestSVG {
 	static Element crtSelection = null;
 	static Point crtPoint;
 	static Element selected = null;
+	static Element pinSelected = null;
+	static WirePoints wireSelected = null;
+	static Segment segmentSelected = null;
 	static boolean wireMode = false;
 	static boolean dragMode = false;
 	static boolean occupied = false;
@@ -262,6 +349,12 @@ public class TestSVG {
 			@Override
 			public void mouseDragged(MouseEvent arg0) {
 				if (!wireMode) {
+					if (wireSelected != null) {
+						int dx = roundAtStep((arg0.getX() - crtPoint.getX())/matrix.scale, PointMatrix.CELL_SIZE);
+						int dy = roundAtStep((arg0.getY() - crtPoint.getY())/matrix.scale, PointMatrix.CELL_SIZE);
+//						sada.
+						return;
+					}
 					if((Math.abs(arg0.getX() - crtPoint.x)) > PointMatrix.CELL_SIZE || Math.abs((arg0.getY() - crtPoint.y)) > PointMatrix.CELL_SIZE )
 					if (crtSelection != null) {
 						System.out.println("Drag finished: [" + crtPoint.getX()
@@ -302,32 +395,28 @@ public class TestSVG {
 						}
 					}
 				} else {
-				
-					// test 2
-					int dX = Math.abs((int) Math.round(arg0.getX() / matrix.scale - crtPoint.x));	// la scara 1:1
-					int dY = Math.abs((int) Math.round(arg0.getY() / matrix.scale - crtPoint.y));
-					
+					if (pinSelected != null) {
+						// test 2
+						int dX = Math.abs((int) Math.round(arg0.getX() / matrix.scale - crtPoint.x));	// la scara 1:1
+						int dY = Math.abs((int) Math.round(arg0.getY() / matrix.scale - crtPoint.y));
 
-					
-					int roundX = roundAtStep((int) (arg0.getX() / matrix.scale), PointMatrix.CELL_SIZE);
-					int roundY = roundAtStep((int) (arg0.getY() / matrix.scale), PointMatrix.CELL_SIZE);
-					
-					System.out.println(roundX + " " + roundY);
-					System.out.println(crtPoint +"  scale: " + matrix.scale);
-					
-					if (dX>= PointMatrix.CELL_SIZE
-							|| dY >= PointMatrix.CELL_SIZE) {
-						if (dX > dY) {
-							svgGenerator.drawLine(crtPoint.x, crtPoint.y, roundX, crtPoint.y);
-							crtPoint.x = roundX;
-						} else {
-							svgGenerator.drawLine(crtPoint.x, crtPoint.y, crtPoint.x, roundY);
-							crtPoint.y = roundY;
+						int roundX = roundAtStep((int) (arg0.getX() / matrix.scale), PointMatrix.CELL_SIZE);
+						int roundY = roundAtStep((int) (arg0.getY() / matrix.scale), PointMatrix.CELL_SIZE);
+
+						System.out.println(roundX + " " + roundY);
+						System.out.println(crtPoint +"  scale: " + matrix.scale);
+
+						if (dX>= PointMatrix.CELL_SIZE
+								|| dY >= PointMatrix.CELL_SIZE) {
+							if (dX > dY) {
+								drawLine(line, roundX, crtPoint.y);
+								crtPoint.x = roundX;
+							} else {
+								drawLine(line, crtPoint.x, roundY);
+								crtPoint.y = roundY;
+							}
+							canvas.repaint();
 						}
-
-						Element root = domFactory.getDocumentElement();
-						svgGenerator.getRoot(root);
-						canvas.repaint();
 					}
 				}
 			}
@@ -388,12 +477,76 @@ public class TestSVG {
 					crtPoint = arg0.getPoint();
 				} else {
 
-					
+		
 					
 					int roundX = roundAtStep(arg0.getX() / matrix.scale, PointMatrix.CELL_SIZE);
 					int roundY = roundAtStep(arg0.getY() / matrix.scale, PointMatrix.CELL_SIZE);
 					crtPoint = new Point(roundX, roundY);
 					System.out.println(roundX + " " + roundY);
+					// TODO : de mutat in mousedown
+					//					<polyline points="0,0 0,20 20,20 20,40 40,40 40,60"
+					//					style="fill:white;stroke:red;stroke-width:2"/>
+
+
+					Element g = domFactory.createElementNS(svgNS, "g");
+
+					line = domFactory.createElementNS(svgNS, "polyline");
+					line.setAttributeNS(null, "stroke", "blue");
+					line.setAttributeNS(null, "stroke-width", "2");
+					line.setAttributeNS(null, "fill", "none");
+					g.appendChild(line);
+					domFactory.getRootElement().appendChild(g);
+
+					//				EventTarget t = (EventTarget) target.getElementById("svg" + index);
+					//				t.addEventListener("mousedown", new EventListener() {
+					//
+					//					@Override
+					//					public void handleEvent(Event evt) {
+					//						Element el = (Element) evt.getCurrentTarget();
+					//						System.out.println("Mouse down on image "
+					//								+ el.getAttribute("id"));
+					//						crtSelection = el;
+					////						pinSelected = el;
+					//						
+					//						Element pin = (Element) evt.getTarget();
+					//						System.out.println(pin.getAttribute("id"));
+					//						if (pin.getAttribute("id").contains("pin")) {
+					//							System.out.println("pin down");
+					//							pinSelected = pin;
+					//							
+					//				
+					//							
+					//						}
+					//					}
+					//				}, true);
+
+					NodeList nl = domFactory.getRootElement().getElementsByTagName("polyline");
+					EventTarget t = (EventTarget) nl.item(nl.getLength() - 1).getParentNode();
+					t.addEventListener("click", new EventListener() {
+
+						@Override
+						public void handleEvent(Event evt) {
+							System.out.println("click pa fir");
+							selected = ((Element) evt.getCurrentTarget());
+
+						}
+					}, true);
+					
+					t.addEventListener("mousedown", new EventListener() {
+
+						@Override
+						public void handleEvent(Event evt) {
+							System.out.println("fir selectat");
+							wireSelected = new WirePoints(((Element) evt.getCurrentTarget()).getAttribute("points"));
+							DOMMouseEvent mouseEvent = (DOMMouseEvent) evt;
+							segmentSelected = wireSelected.getSegment(mouseEvent.getClientX(), mouseEvent.getClientY());
+						}
+					}, true);
+					
+					System.out.println(domFactory.getRootElement().getChildNodes().getLength());
+
+
+					drawLine(line, roundX, roundY);
 				}
 
 			}
@@ -442,15 +595,12 @@ public class TestSVG {
 							appendSVG(domFactory, file.toURI().toURL()
 									.toString(), "translate(" + xul + ", "
 									+ yul + ")", index++);
-							writeSvg(domFactory, "export.svg");
+							
 
 						} catch (MalformedURLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (TransformerException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -476,8 +626,6 @@ public class TestSVG {
 				TransformTag tr;
 				String attr;
 				int canvH, canvW;
-				ZoomAction zoomAction;
-				ScrollAction sa1, sa2;
 				AffineTransform at;
 				switch (arg0.getKeyChar()) {
 				case '-':
@@ -487,7 +635,6 @@ public class TestSVG {
 
 					matrix.scale /= matrix.ratio;
 
-					// canvas.getRenderingTransform().scale(5, 5);
 					at = new AffineTransform();
 					at.scale(matrix.scale, matrix.scale);
 					canvas.setRenderingTransform(at);
@@ -498,7 +645,8 @@ public class TestSVG {
 					canvW = (int) Math.round(canvas.getWidth() / matrix.ratio);
 					System.out.println(canvW + " " + canvH);
 					canvas.setSize(canvW, canvH);
-					canvas.setPreferredSize(new Dimension(canvW, canvH));
+//					canvas.setPreferredSize(new Dimension(canvW, canvH));
+					panel.revalidate();
 					canvas.repaint();
 					matrix.repaint();
 					pas /= matrix.ratio;
@@ -518,7 +666,7 @@ public class TestSVG {
 					canvH = (int) Math.round(canvas.getHeight() * matrix.ratio);
 					canvW = (int) Math.round(canvas.getWidth() * matrix.ratio);
 					canvas.setSize(canvW, canvH);
-					canvas.setPreferredSize(new Dimension(canvW, canvH));
+//					canvas.setPreferredSize(new Dimension(canvW, canvH));
 
 					panel.revalidate();
 					canvas.repaint();
@@ -546,8 +694,8 @@ public class TestSVG {
 							tr.rotate = null;
 						} else {
 							// TODO : eventual de gasit centrul
-							// tr.rotate.x = 32;
-							// tr.rotate.y = 32;
+							tr.rotate.x = PointMatrix.CELL_SIZE;
+							tr.rotate.y = PointMatrix.CELL_SIZE;
 						}
 
 						selected.setAttribute("transform", tr.toString());
@@ -584,10 +732,35 @@ public class TestSVG {
 
 				case 'w':
 					wireMode = !wireMode;
-
+					break;
+					
+				case 127 :
+					if(selected != null)
+					{
+//						selected.getParentNode().removeChild(selected);
+						NodeList nl = selected.getChildNodes();
+						System.out.println(nl.getLength());
+						selected.removeChild(selected.getFirstChild());
+						canvas.repaint();
+						selected = null;
+					}
+					break;
+				case 's':
+					try {
+						writeSvg(domFactory, "export.svg");
+					} catch (TransformerException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
 				default:
 					break;
 				}
+				
+				
 			}
 		});
 
@@ -608,7 +781,10 @@ public class TestSVG {
 				Element el = (Element) evt.getCurrentTarget();
 				System.out.println("Mouse click on image "
 						+ el.getAttribute("id"));
+				System.out.println(selected);
 				selected = ((Element) el.getParentNode());
+				System.out.println(selected);
+				
 			}
 		}, true);
 
@@ -642,7 +818,6 @@ public class TestSVG {
 				if (dragMode) {
 					occupied = false;
 				}
-
 			}
 
 		}, true);
@@ -658,6 +833,30 @@ public class TestSVG {
 		return result;
 		
 	}
+
+	static void drawLine(Element line, int x, int y) {
+//		<polyline points="0,0 0,20 20,20 20,40 40,40 40,60"
+//			style="fill:white;stroke:red;stroke-width:2"/>
+		
+//		Element g = domFactory.createElementNS(svgNS, "g");
+//		g.setAttributeNS(null, "stroke", "blue");
+//		g.setAttributeNS(null, "stroke-width", "2");
+		
+//		Element line = domFactory.createElementNS(svgNS, "line");
+//		line.setAttributeNS(null, "x1", x1 + "");
+//		line.setAttributeNS(null, "y1", y1 + "");
+//		line.setAttributeNS(null, "x2", x2 + "");
+//		line.setAttributeNS(null, "y2", y2 + "");
+
+//		g.appendChild(line);
+//		domFactory.getRootElement().appendChild(line);
+//		return line;
+		
+		WirePoints points = new WirePoints(line.getAttribute("points"));
+		points.addPoint(x, y);
+		line.setAttribute("points", points.toString());
+	}
+	
 }
 
 @SuppressWarnings("serial")
