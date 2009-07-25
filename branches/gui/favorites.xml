@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<favorites>
+	<piece>
+		<category>c1</category>
+		<subcategory>sc11</subcategory>
+		<name>name1</name>
+	</piece>
+	<piece>
+		<category>c2</category>
+		<subcategory>sc22</subcategory>
+		<name>name9</name>
+	</piece>
+	<piece>
+		<category>c3</category>
+		<subcategory>sc31</subcategory>
+		<name>name11</name>
+	</piece>
+	<piece>
+		<category>c3</category>
+		<subcategory>sc33</subcategory>
+		<name>name15</name>
+	</piece>
+	<piece>
+		<category>c2</category>
+		<subcategory>sc21</subcategory>
+		<name>name6</name>
+	</piece>
+</favorites>
