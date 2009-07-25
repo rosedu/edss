@@ -10,6 +10,11 @@ public class ModelImpl implements Model {
 	private Schematic scheme;
 	private edss.model.Piece selectedPiece;
 	
+	public ModelImpl(ModelMediator med) {
+		this.med = med;
+		med.registerModel(this);
+	}
+	
 	@Override
 	public Piece getPiece(String id) {
 		return scheme.getComponents().get(id);

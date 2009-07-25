@@ -10,6 +10,11 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	private Canvas canvas;
 	
 	@Override
+	public void registerModel(Model model) {
+		this.model = model;
+	}
+	
+	@Override
 	public void editPieceProperties(String id) {
 		Piece piece = model.getPiece(id);
 		gui.editPieceProperties(piece);
@@ -24,7 +29,6 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	@Override
 	public void scale(int factor) {
 		canvas.scale(factor);
-		
 	}
 	
 	@Override
