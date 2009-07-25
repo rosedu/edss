@@ -1,4 +1,4 @@
-import javax.swing.*;
+/*import javax.swing.*;
 import org.jvnet.substance.skin.*;
 
 
@@ -48,9 +48,10 @@ public class Edss {
 			@Override
 			public void run() {
 
-				edss.gui.Gui window = new edss.gui.Gui();
+				Gui window = new GuiImpl();
 		
 			}
 		});
 	}
 }
+*/

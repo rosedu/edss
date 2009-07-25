@@ -16,13 +16,14 @@ public class CanvasImpl implements Canvas {
 
 	@Override
 	public void scale(int factor) {
-		// TODO Auto-generated method stub
 		
 	}
 	
 	public CanvasImpl(CanvasMediator mediator) {
+		
 		this.mediator = mediator;
 		mediator.registerCanvas(this);
+		
 	}
 
 }

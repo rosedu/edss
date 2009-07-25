@@ -40,4 +40,9 @@
 		<subcategory>dc_voltage</subcategory>
 		<name>5V</name>
 	</piece>
+	<piece>
+		<category>sources</category>
+		<subcategory>dc_voltage</subcategory>
+		<name>10V</name>
+	</piece>
 </favorites>
