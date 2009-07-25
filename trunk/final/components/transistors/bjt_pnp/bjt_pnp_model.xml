@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bjt_pnp_model>
-	<model name="generic">
+	<model name="generic_pnp">
 		<BF>100</BF>
 		<IS>1E-16</IS>
 		<VAF>1E+16</VAF>

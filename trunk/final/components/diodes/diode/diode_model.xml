@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <diode_model>
-	<model name="generic">
+	<model name="generic_diode">
 		<IS>1E-14</IS>
 		<RS>0</RS>
 		<N>1</N>
