@@ -31,12 +31,12 @@ public class LibrarySelection {
 	private JDialog libraryFrame;
 	private Vector <Piece> currentTable = new Vector <Piece> ();
 	private Vector <Piece> favoritesTable = new Vector <Piece> ();
+	final static Vector <Integer> last = new Vector <Integer> ();
 	
 	public LibrarySelection(JFrame f, final JList current, final JList favorites, final Vector v1, final Vector v2)
 	{	
 		currentTable = v1;
 		favoritesTable = v2;
-		
 		libraryFrame = new JDialog(f, "Library", true);
 		libraryFrame.setLayout(new BorderLayout());
 		libraryFrame.setSize(600,500);
@@ -228,6 +228,8 @@ public class LibrarySelection {
 						currentTable.add(pSS); //MODIFICAT
 					}
 				}
+			last.removeAllElements();
+			last.add(0);
 			}
 		});
 		
@@ -265,6 +267,8 @@ public class LibrarySelection {
 						favoritesTable.add(pSS); //MODIFICAT
 					}
 				}
+			last.removeAllElements();
+			last.add(1);
 			}
 		});
 		

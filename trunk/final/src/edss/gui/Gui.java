@@ -51,6 +51,8 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -82,7 +84,7 @@ import org.jvnet.substance.skin.SubstanceTwilightLookAndFeel;
 
 
 // Main Class
-public class Gui {
+public class Gui implements edss.interf.Gui{
 	
 	public Vector v = new Vector();
 	public int i = 0;
@@ -115,9 +117,10 @@ public class Gui {
 	Vector <Piece> favoritesVector = new Vector <Piece> ();	
 	
 	// constructor method
-	public Gui()
+	public Gui(edss.interf.GuiMediator mediator)
 	{
-
+		mediator.registerGui(this);
+			
 		ParseFavorites p = new ParseFavorites("favorites.xml");
 		favoritesVector = p.getPiece();
 		
@@ -274,6 +277,11 @@ public class Gui {
 					if((NewInternalFrame) centerPanel.getSelectedFrame() != null)
 					{
 						((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor() + 10);
+						if(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor()<25)
+							((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(25);
+						if(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor()>400)
+							((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(400);
+						((NewInternalFrame) centerPanel.getSelectedFrame()).zoomSlider.setValue(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 						med.zoom(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 						System.out.println("Zoom = " + ((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 					}	
@@ -290,6 +298,11 @@ public class Gui {
 					if((NewInternalFrame) centerPanel.getSelectedFrame() != null)
 					{
 						((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor() - 10);
+						if(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor()<25)
+							((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(25);
+						if(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor()>400)
+							((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(400);
+						((NewInternalFrame) centerPanel.getSelectedFrame()).zoomSlider.setValue(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 						med.zoom(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 						System.out.println("Zoom = " + ((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 					}
@@ -570,9 +583,33 @@ public class Gui {
 		lCurrent = new JList(new DefaultListModel());
 		lCurrent.setName("Current");
 		lFavorites = new JList(new DefaultListModel());
+
+		
 		for(int i=0; i<favoritesVector.size(); i++)
 			((DefaultListModel)lFavorites.getModel()).addElement((favoritesVector).get(i).getName());
 		lFavorites.setName("Favorites");
+	
+		lCurrent.addListSelectionListener(new ListSelectionListener()
+		{
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(lCurrent.isSelectionEmpty() == false)
+					lFavorites.clearSelection();
+			}
+			
+		});
+		
+		lFavorites.addListSelectionListener(new ListSelectionListener()
+		{
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(lFavorites.isSelectionEmpty() == false)
+					lCurrent.clearSelection();
+			}
+			
+		});
 		
 		preview = new JPanel();
 		preview.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 4, true)); 
@@ -613,24 +650,27 @@ public class Gui {
 			{
 				if(lCurrent.getSelectedIndex()!= - 1)
 				{
-					// currentVector.remove(((DefaultListModel)lCurrent.getModel()).getElementAt(lCurrent.getSelectedIndex()));
-					for(int i=0; i<currentVector.size(); i++)
-					{
-						if(currentVector.get(i).getName().equals((((DefaultListModel)lCurrent.getModel()).getElementAt(lCurrent.getSelectedIndex()))))
-							currentVector.remove(i);
-							break;
-					}
+					currentVector.remove(lCurrent.getSelectedIndex());
+//					// currentVector.remove(((DefaultListModel)lCurrent.getModel()).getElementAt(lCurrent.getSelectedIndex()));
+//					for(int i=0; i<currentVector.size(); i++)
+//					{
+//						if(currentVector.get(i).getName().equals((((DefaultListModel)lCurrent.getModel()).getElementAt(lCurrent.getSelectedIndex()))))
+//							currentVector.remove(i);
+//							break;
+//					}
 					((DefaultListModel)lCurrent.getModel()).removeElementAt(lCurrent.getSelectedIndex());				
 				}
 				if(lFavorites.getSelectedIndex()!= - 1)
 				{
-					// favoritesVector.remove(((DefaultListModel)lFavorites.getModel()).getElementAt(lFavorites.getSelectedIndex()));
-					for(int i=0; i<favoritesVector.size(); i++)
-					{
-						if(favoritesVector.get(i).getName().equals(((DefaultListModel)lFavorites.getModel()).getElementAt(lFavorites.getSelectedIndex())))
-							favoritesVector.remove(i);
-							break;
-					}
+					favoritesVector.remove(lFavorites.getSelectedIndex());
+//					// favoritesVector.remove(((DefaultListModel)lFavorites.getModel()).getElementAt(lFavorites.getSelectedIndex()));
+//					for(int i=0; i<favoritesVector.size(); i++)
+//					{
+//						if(favoritesVector.get(i).getName().equals(((DefaultListModel)lFavorites.getModel()).getElementAt(lFavorites.getSelectedIndex())))
+//							favoritesVector.remove(i);
+//							break;
+//					}
+//					System.out.println("am sters " + ((DefaultListModel)lFavorites.getModel()).get(lFavorites.getSelectedIndex()));
 					((DefaultListModel)lFavorites.getModel()).removeElementAt(lFavorites.getSelectedIndex());	
 				}
 			}
@@ -665,6 +705,14 @@ public class Gui {
 		M.setPreferredSize(new Dimension(WIDTH/10, s));
 		M.setBorder(BorderFactory.createRaisedBevelBorder());
 		
+		final JToggleButton P = new JToggleButton("P");
+		P.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+	    P.setMaximumSize(new Dimension(WIDTH/10, s));
+	    P.setMinimumSize(new Dimension(WIDTH/10, s));
+		P.setSize(WIDTH/10, s);
+		P.setPreferredSize(new Dimension(WIDTH/10, s));
+		P.setBorder(BorderFactory.createRaisedBevelBorder());
+		
 		final JToggleButton L = new JToggleButton("L");
 		L.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 	    L.setMaximumSize(new Dimension(WIDTH/10, s));
@@ -676,8 +724,21 @@ public class Gui {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				buttonGroup.setSelected((JToggleButton.ToggleButtonModel) M.getModel(),true);
 				LibrarySelection l = new LibrarySelection(mainFrame, lCurrent, lFavorites, currentVector, favoritesVector);
+				if(l.last.isEmpty() == false)
+				{
+					if(l.last.get(0) == 0)
+					{
+						lCurrent.setSelectedIndex(((DefaultListModel)lCurrent.getModel()).getSize() - 1);
+						lFavorites.clearSelection();
+					}
+					if(l.last.get(0) == 1)
+					{
+						lFavorites.setSelectedIndex(((DefaultListModel)lFavorites.getModel()).getSize() - 1);
+						lCurrent.clearSelection();
+					}
+				}
+				buttonGroup.setSelected((JToggleButton.ToggleButtonModel) P.getModel(),true);
 			}
 		});
 		
@@ -688,14 +749,6 @@ public class Gui {
 		D.setSize(WIDTH/10, s);
 		D.setPreferredSize(new Dimension(WIDTH/10, s));
 		D.setBorder(BorderFactory.createRaisedBevelBorder());
-		
-		JToggleButton P = new JToggleButton("P");
-		P.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-	    P.setMaximumSize(new Dimension(WIDTH/10, s));
-	    P.setMinimumSize(new Dimension(WIDTH/10, s));
-		P.setSize(WIDTH/10, s);
-		P.setPreferredSize(new Dimension(WIDTH/10, s));
-		P.setBorder(BorderFactory.createRaisedBevelBorder());
 		
 		JToggleButton G = new JToggleButton("G");
 		G.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -748,6 +801,7 @@ public class Gui {
 			f.write("<favorites>\n");
 			for(int i=0; i<favoritesVector.size(); i++)
 			{
+				System.out.println("Scriem " + favoritesVector.get(i).getName());
 				f.write("\t<piece>\n");
 				f.write("\t\t<category>" + favoritesVector.get(i).getCategory() + "</category>\n");
 				f.write("\t\t<subcategory>" + favoritesVector.get(i).getSubCategory() + "</subcategory>\n");
@@ -771,54 +825,61 @@ public class Gui {
         while (t1-t0<1000);
 	}
 	// main
-	public static void main(String args[])
-	{	
-		Configuration cf = new Configuration("config.xml");
-		int skin = cf.skinId;
-		// ParseDatabase dataBase = new ParseDatabase("database.xml");
-		try {
-			switch(skin)
-			{
-			case 0 : UIManager.setLookAndFeel(new SubstanceAutumnLookAndFeel()); break;
-			case 1 : UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel()); break;
-			case 2 : UIManager.setLookAndFeel(new SubstanceBusinessBlueSteelLookAndFeel()); break;
-			case 3 : UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel()); break;
-			case 4 : UIManager.setLookAndFeel(new SubstanceChallengerDeepLookAndFeel()); break;
-			case 5 : UIManager.setLookAndFeel(new SubstanceCremeLookAndFeel()); break;
-			case 6 : UIManager.setLookAndFeel(new SubstanceCremeCoffeeLookAndFeel()); break;
-			case 7 : UIManager.setLookAndFeel(new SubstanceDustLookAndFeel()); break;
-			case 8 : UIManager.setLookAndFeel(new SubstanceDustCoffeeLookAndFeel()); break;
-			case 9 : UIManager.setLookAndFeel(new SubstanceEmeraldDuskLookAndFeel()); break;
-			case 10 : UIManager.setLookAndFeel(new SubstanceMagmaLookAndFeel()); break;
-			case 11 : UIManager.setLookAndFeel(new SubstanceMistAquaLookAndFeel()); break;
-			case 12 : UIManager.setLookAndFeel(new SubstanceMistSilverLookAndFeel()); break;
-			case 13 : UIManager.setLookAndFeel(new SubstanceModerateLookAndFeel()); break;
-			case 14 : UIManager.setLookAndFeel(new SubstanceNebulaLookAndFeel()); break;
-			case 15 : UIManager.setLookAndFeel(new SubstanceNebulaBrickWallLookAndFeel()); break;
-			case 16 : UIManager.setLookAndFeel(new SubstanceOfficeBlue2007LookAndFeel()); break;
-			case 17 : UIManager.setLookAndFeel(new SubstanceOfficeSilver2007LookAndFeel()); break;
-			case 18 : UIManager.setLookAndFeel(new SubstanceRavenLookAndFeel()); break;
-			case 19 : UIManager.setLookAndFeel(new SubstanceRavenGraphiteLookAndFeel()); break;
-			case 20 : UIManager.setLookAndFeel(new SubstanceRavenGraphiteGlassLookAndFeel()); break;
-			case 21 : UIManager.setLookAndFeel(new SubstanceSaharaLookAndFeel()); break;
-			case 22 : UIManager.setLookAndFeel(new SubstanceTwilightLookAndFeel()); break;
-			default : UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
-			}
-			
-			//UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
-		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JFrame.setDefaultLookAndFeelDecorated(true);
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
+//	public static void main(String args[])
+//	{	
+//		Configuration cf = new Configuration("config.xml");
+//		int skin = cf.skinId;
+//		// ParseDatabase dataBase = new ParseDatabase("database.xml");
+//		try {
+//			switch(skin)
+//			{
+//			case 0 : UIManager.setLookAndFeel(new SubstanceAutumnLookAndFeel()); break;
+//			case 1 : UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel()); break;
+//			case 2 : UIManager.setLookAndFeel(new SubstanceBusinessBlueSteelLookAndFeel()); break;
+//			case 3 : UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel()); break;
+//			case 4 : UIManager.setLookAndFeel(new SubstanceChallengerDeepLookAndFeel()); break;
+//			case 5 : UIManager.setLookAndFeel(new SubstanceCremeLookAndFeel()); break;
+//			case 6 : UIManager.setLookAndFeel(new SubstanceCremeCoffeeLookAndFeel()); break;
+//			case 7 : UIManager.setLookAndFeel(new SubstanceDustLookAndFeel()); break;
+//			case 8 : UIManager.setLookAndFeel(new SubstanceDustCoffeeLookAndFeel()); break;
+//			case 9 : UIManager.setLookAndFeel(new SubstanceEmeraldDuskLookAndFeel()); break;
+//			case 10 : UIManager.setLookAndFeel(new SubstanceMagmaLookAndFeel()); break;
+//			case 11 : UIManager.setLookAndFeel(new SubstanceMistAquaLookAndFeel()); break;
+//			case 12 : UIManager.setLookAndFeel(new SubstanceMistSilverLookAndFeel()); break;
+//			case 13 : UIManager.setLookAndFeel(new SubstanceModerateLookAndFeel()); break;
+//			case 14 : UIManager.setLookAndFeel(new SubstanceNebulaLookAndFeel()); break;
+//			case 15 : UIManager.setLookAndFeel(new SubstanceNebulaBrickWallLookAndFeel()); break;
+//			case 16 : UIManager.setLookAndFeel(new SubstanceOfficeBlue2007LookAndFeel()); break;
+//			case 17 : UIManager.setLookAndFeel(new SubstanceOfficeSilver2007LookAndFeel()); break;
+//			case 18 : UIManager.setLookAndFeel(new SubstanceRavenLookAndFeel()); break;
+//			case 19 : UIManager.setLookAndFeel(new SubstanceRavenGraphiteLookAndFeel()); break;
+//			case 20 : UIManager.setLookAndFeel(new SubstanceRavenGraphiteGlassLookAndFeel()); break;
+//			case 21 : UIManager.setLookAndFeel(new SubstanceSaharaLookAndFeel()); break;
+//			case 22 : UIManager.setLookAndFeel(new SubstanceTwilightLookAndFeel()); break;
+//			default : UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
+//			}
+//			
+//			//UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
+//		} catch (UnsupportedLookAndFeelException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		JFrame.setDefaultLookAndFeelDecorated(true);
+//		SwingUtilities.invokeLater(new Runnable() {
+//			@Override
+//			public void run() {
+//
+//				Gui window = new Gui();
+//		
+//			}
+//		});
+//	}
 
-				Gui window = new Gui();
+
+	@Override
+	public void editPieceProperties(edss.interf.Piece piece) {
+		// TODO Auto-generated method stub
 		
-			}
-		});
 	}
 	
 

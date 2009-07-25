@@ -12,7 +12,7 @@ import javax.swing.JSlider;
 
 public class NewInternalFrame extends JInternalFrame {
 	
-	private JSlider zoomSlider;
+	JSlider zoomSlider;
 	private JPanel internalPanel;
 	private int zoomFactor = 100;
 //	private JSVGCanvas canvas;
