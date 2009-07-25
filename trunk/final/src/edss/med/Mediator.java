@@ -36,4 +36,10 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 		this.canvas = canvas;
 	}
 
+	@Override
+	public void registerGui(Gui gui) {
+		this.gui = gui;
+		
+	}
+
 }
