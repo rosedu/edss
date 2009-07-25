@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mos_dn>
+	<svg> mos_dn.svg </svg>
+	<pinInfo>
+		<pin number="1"> S </pin>
+		<pin number="2"> G </pin>
+		<pin number="3"> D </pin>
+	</pinInfo>
+	<id>Q</id>
+	<properties>
+		<property name="KP"/>
+		<property name="VT0"/>
+	</properties>
+</mos_dn>

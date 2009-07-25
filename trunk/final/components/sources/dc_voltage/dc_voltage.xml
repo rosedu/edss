@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc_voltage>
+	<svg> dc_voltage.svg </svg>
+	<pinInfo>
+		<pin number="1"> 1 </pin>
+		<pin number="2"> 2 </pin>
+	</pinInfo>
+	<id>V</id>
+	<properties>
+		<property name="value"/>
+	</properties>
+</dc_voltage>

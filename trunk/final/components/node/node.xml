@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+	<svg> node.svg </svg>
+	<pinInfo>
+		<pin number="1"> N </pin>
+	</pinInfo>
+	<id>N</id>
+	<properties></properties>
+</node>
