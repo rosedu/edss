@@ -1,0 +1,9 @@
+Genereaza baza de date pentru proiectul edss,
+pe baza folderelor de piese.
+Considera primul nivel de foldere ca fiind categoriile,
+al doilea nivel ca fiind subcategoriile, iar in fisierele 
+de pe cel de al-treilea nivel cauta tagul model si gaseste 
+numele pieselor
+
+Rulare: java Generator cale_catre_str_foldere nume_baza_de_date
+
