@@ -17,7 +17,7 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 
-public class Piece implements Serializable {
+public class Piece implements Serializable, edss.interf.Piece {
 	protected String svgURI;
 	protected String id;
 	
