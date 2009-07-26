@@ -262,7 +262,7 @@ public class GuiImpl implements edss.interf.Gui{
 		
 		// static menu building
 		JMenu file = new JMenu("File");
-			JMenuItem fNew = new JMenuItem("New",new ImageIcon("Icons\\new.jpg"));
+			JMenuItem fNew = new JMenuItem("New",new ImageIcon("Icons/new.jpg"));
 				fNew.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -282,7 +282,7 @@ public class GuiImpl implements edss.interf.Gui{
 			KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK);
 			fNew.setAccelerator(key);
 			
-			JMenuItem fOpen = new JMenuItem("Open",new ImageIcon("Icons\\open.jpg"));
+			JMenuItem fOpen = new JMenuItem("Open",new ImageIcon("Icons/open.jpg"));
 				fOpen.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -300,7 +300,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK);
 			fOpen.setAccelerator(key);
 			
-			JMenuItem fSave = new JMenuItem("Save",new ImageIcon("Icons\\save.jpg"));
+			JMenuItem fSave = new JMenuItem("Save",new ImageIcon("Icons/save.jpg"));
 				fSave.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -310,7 +310,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
 			fSave.setAccelerator(key);
 				
-			JMenuItem fSaveAs = new JMenuItem("Save as",new ImageIcon("Icons\\saveas.jpg"));
+			JMenuItem fSaveAs = new JMenuItem("Save as",new ImageIcon("Icons/saveas.jpg"));
 				fSaveAs.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -320,7 +320,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
 			fSaveAs.setAccelerator(key);
 			
-			JMenuItem fExportToPdf = new JMenuItem("Export to pdf", new ImageIcon("Icons\\exportToPdf.jpg"));
+			JMenuItem fExportToPdf = new JMenuItem("Export to pdf", new ImageIcon("Icons/exportToPdf.jpg"));
 			fExportToPdf.addActionListener(new ActionListener() 
 			{	public void actionPerformed(ActionEvent e)
 				{
@@ -330,7 +330,7 @@ public class GuiImpl implements edss.interf.Gui{
 		key = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK);
 		fExportToPdf.setAccelerator(key);
 		
-			JMenuItem fExit = new JMenuItem("Exit",new ImageIcon("Icons\\exit.jpg"));
+			JMenuItem fExit = new JMenuItem("Exit",new ImageIcon("Icons/exit.jpg"));
 				fExit.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -356,7 +356,7 @@ public class GuiImpl implements edss.interf.Gui{
 			add(fExit);
 			
 		JMenu view = new JMenu("View");
-			JMenuItem vZoomIn = new JMenuItem("Zoom in",new ImageIcon("Icons\\zoomin.jpg"));
+			JMenuItem vZoomIn = new JMenuItem("Zoom in",new ImageIcon("Icons/zoomin.jpg"));
 				vZoomIn.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -387,7 +387,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, InputEvent.CTRL_MASK);
 			vZoomIn.setAccelerator(key);
 			
-			JMenuItem vZoomOut = new JMenuItem("Zoom out",new ImageIcon("Icons\\zoomout.jpg"));
+			JMenuItem vZoomOut = new JMenuItem("Zoom out",new ImageIcon("Icons/zoomout.jpg"));
 				vZoomOut.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -424,7 +424,7 @@ public class GuiImpl implements edss.interf.Gui{
 			add(vZoomOut);
 			
 		JMenu edit = new JMenu("Edit");
-			JMenuItem eUndo = new JMenuItem("Undo",new ImageIcon("Icons\\undo.jpg"));
+			JMenuItem eUndo = new JMenuItem("Undo",new ImageIcon("Icons/undo.jpg"));
 				eUndo.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -434,7 +434,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK);
 			eUndo.setAccelerator(key);
 			
-			JMenuItem eRedo = new JMenuItem("Redo",new ImageIcon("Icons\\redo.jpg"));
+			JMenuItem eRedo = new JMenuItem("Redo",new ImageIcon("Icons/redo.jpg"));
 				eRedo.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -444,7 +444,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK);
 			eRedo.setAccelerator(key);
 				
-			JMenuItem eFind = new JMenuItem("Find",new ImageIcon("Icons\\find.jpg"));
+			JMenuItem eFind = new JMenuItem("Find",new ImageIcon("Icons/find.jpg"));
 				eFind.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -454,7 +454,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK);
 			eFind.setAccelerator(key);
 				
-			JMenuItem eCut = new JMenuItem("Cut",new ImageIcon("Icons\\cut.jpg"));
+			JMenuItem eCut = new JMenuItem("Cut",new ImageIcon("Icons/cut.jpg"));
 				eCut.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -464,7 +464,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK);
 			eCut.setAccelerator(key);
 				
-			JMenuItem eCopy = new JMenuItem("Copy",new ImageIcon("Icons\\copy.jpg"));
+			JMenuItem eCopy = new JMenuItem("Copy",new ImageIcon("Icons/copy.jpg"));
 				eCopy.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 				{
@@ -474,7 +474,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK);
 			eCopy.setAccelerator(key);
 				
-			JMenuItem ePaste = new JMenuItem("Paste",new ImageIcon("Icons\\paste.jpg"));
+			JMenuItem ePaste = new JMenuItem("Paste",new ImageIcon("Icons/paste.jpg"));
 				ePaste.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -484,7 +484,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK);
 			ePaste.setAccelerator(key);
 			
-			JMenuItem eCustomize = new JMenuItem("Customize",new ImageIcon("Icons\\customize.jpg"));
+			JMenuItem eCustomize = new JMenuItem("Customize",new ImageIcon("Icons/customize.jpg"));
 				eCustomize.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
@@ -538,7 +538,7 @@ public class GuiImpl implements edss.interf.Gui{
 			add(eCustomize);
 			
 		JMenu library = new JMenu("Library");
-			JMenuItem lOpenLibrary = new JMenuItem("Open library",new ImageIcon("Icons\\openlibrary.jpg"));
+			JMenuItem lOpenLibrary = new JMenuItem("Open library",new ImageIcon("Icons/openlibrary.jpg"));
 			lOpenLibrary.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -549,7 +549,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK);
 			lOpenLibrary.setAccelerator(key);
 			
-			JMenuItem lLibraryManager = new JMenuItem("Library manager",new ImageIcon("Icons\\librarymanager.jpg"));
+			JMenuItem lLibraryManager = new JMenuItem("Library manager",new ImageIcon("Icons/librarymanager.jpg"));
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_MASK);
 			lLibraryManager.setAccelerator(key);
 			
@@ -560,7 +560,7 @@ public class GuiImpl implements edss.interf.Gui{
 			add(lLibraryManager);
 			
 		JMenu tools = new JMenu("Tools");
-			JMenuItem tRotateLeft = new JMenuItem("Rotate left",new ImageIcon("Icons\\rotateleft.jpg"));
+			JMenuItem tRotateLeft = new JMenuItem("Rotate left",new ImageIcon("Icons/rotateleft.jpg"));
 			tRotateLeft.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -571,7 +571,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_MASK);
 			tRotateLeft.setAccelerator(key);
 			
-			JMenuItem tRotateRight = new JMenuItem("Rotate right",new ImageIcon("Icons\\rotateright.jpg"));
+			JMenuItem tRotateRight = new JMenuItem("Rotate right",new ImageIcon("Icons/rotateright.jpg"));
 			tRotateRight.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -582,7 +582,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, InputEvent.CTRL_MASK);
 			tRotateRight.setAccelerator(key);
 			
-			JMenuItem tPiece = new JMenuItem("Place piece",new ImageIcon("Icons\\piece.jpg"));
+			JMenuItem tPiece = new JMenuItem("Place piece",new ImageIcon("Icons/piece.jpg"));
 			tPiece.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e)
@@ -593,7 +593,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke('p');
 			tPiece.setAccelerator(key);
 			
-			JMenuItem tWire = new JMenuItem("Wire",new ImageIcon("Icons\\wire.jpg"));
+			JMenuItem tWire = new JMenuItem("Wire",new ImageIcon("Icons/wire.jpg"));
 			tWire.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e)
@@ -604,7 +604,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke('w');
 			tWire.setAccelerator(key);
 			
-			JMenuItem tSelect = new JMenuItem("Mouse",new ImageIcon("Icons\\mouse.jpg"));
+			JMenuItem tSelect = new JMenuItem("Mouse",new ImageIcon("Icons/mouse.jpg"));
 			tSelect.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e)
@@ -615,7 +615,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke('m');
 			tSelect.setAccelerator(key);
 			
-			JMenuItem tDrag = new JMenuItem("Drag",new ImageIcon("Icons\\drag.jpg"));
+			JMenuItem tDrag = new JMenuItem("Drag",new ImageIcon("Icons/drag.jpg"));
 			tDrag.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e)
@@ -626,7 +626,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke('g');
 			tDrag.setAccelerator(key);
 			
-			JMenuItem tDelete = new JMenuItem("Delete",new ImageIcon("Icons\\delete.jpg"));
+			JMenuItem tDelete = new JMenuItem("Delete",new ImageIcon("Icons/delete.jpg"));
 			tDelete.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e)
@@ -655,8 +655,8 @@ public class GuiImpl implements edss.interf.Gui{
 			
 			
 		JMenu help = new JMenu("Help");
-			JMenuItem hIndex = new JMenuItem("Index",new ImageIcon("Icons\\info.jpg"));
-			JMenuItem hAbout = new JMenuItem("About",new ImageIcon("Icons\\about.jpg"));
+			JMenuItem hIndex = new JMenuItem("Index",new ImageIcon("Icons/info.jpg"));
+			JMenuItem hAbout = new JMenuItem("About",new ImageIcon("Icons/about.jpg"));
 			
 			help.add(hIndex);
 			add(hIndex);
