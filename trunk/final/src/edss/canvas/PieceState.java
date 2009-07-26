@@ -1,13 +1,12 @@
+package edss.canvas;
+
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 
 import org.apache.batik.dom.events.DOMMouseEvent;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
 
 
 public class PieceState extends State {

@@ -1,3 +1,5 @@
+package edss.canvas;
+
 import javax.swing.JPanel;
 
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory;

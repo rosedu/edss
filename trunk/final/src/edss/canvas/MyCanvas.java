@@ -1,3 +1,5 @@
+package edss.canvas;
+
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.AdjustmentEvent;

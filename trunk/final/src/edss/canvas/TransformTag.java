@@ -1,3 +1,5 @@
+package edss.canvas;
+
 import java.util.StringTokenizer;
 
 
