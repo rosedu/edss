@@ -13,6 +13,7 @@ import org.w3c.dom.events.EventTarget;
 public class StateManager {
 	private static WireState wireState = new WireState();
 	private static PieceState pieceState = new PieceState();
+	private static InsertState insertState = new InsertState();
 
 	State crtState = pieceState;
 	
@@ -22,6 +23,10 @@ public class StateManager {
 	
 	public void enterPieceState() {
 		crtState = pieceState;
+	}
+	
+	public void enterInsertState() {
+		crtState = insertState;
 	}
 
 	public void getMouseDownElementListener(Event evt) {

@@ -74,6 +74,10 @@ public class MyCanvas {
 					Constant.stateManager.enterPieceState();
 					break;
 					
+				case 'i':
+					Constant.stateManager.enterInsertState();
+					break;
+					
 				default:
 					break;
 					

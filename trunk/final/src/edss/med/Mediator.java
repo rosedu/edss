@@ -1,5 +1,8 @@
 package edss.med;
 
+import java.io.File;
+import java.io.IOException;
+
 import edss.canvas.MyCanvas;
 import edss.canvas.StateConstant;
 import edss.interf.*;
@@ -79,7 +82,16 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 
 	@Override
 	public String getSVG() {
-		return model.getSVG();
+//		String crtDir = ;
+		try {
+			String res = new File("svg/" + model.getSVG()).getCanonicalPath();
+			System.out.println(res);
+			return "file:///" + res;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 
