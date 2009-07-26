@@ -4,11 +4,17 @@
 		<subcategory name="mos_dp">
 			<piece>generic_mos_dp</piece>
 		</subcategory>
+		<subcategory name="mos_en">
+			<piece>generic_mos_en</piece>
+		</subcategory>
 		<subcategory name="bjt_pnp">
-			<piece>generic</piece>
+			<piece>generic_pnp</piece>
+		</subcategory>
+		<subcategory name="mos_ep">
+			<piece>generic_mos_ep</piece>
 		</subcategory>
 		<subcategory name="bjt_npn">
-			<piece>generic</piece>
+			<piece>generic_npn</piece>
 		</subcategory>
 		<subcategory name="mos_dn">
 			<piece>generic_mos_dn</piece>
@@ -23,20 +29,28 @@
 		</subcategory>
 	</category>
 	<category name="node">
+		<subcategory name="node">
+			<piece>node</piece>
+		</subcategory>
 	</category>
 	<category name="diodes">
 		<subcategory name="diode">
-			<piece>generic</piece>
-			<piece>1N5711</piece>
-			<piece>1N5712</piece>
+			<piece>generic_diode</piece>
 		</subcategory>
 		<subcategory name="led">
 		</subcategory>
+		<subcategory name="schottky">
+			<piece>1N5711</piece>
+			<piece>1N5712</piece>
+		</subcategory>
 		<subcategory name="zener">
+			<piece>generic_zener</piece>
+			<piece>1N4370A</piece>
 		</subcategory>
 	</category>
 	<category name="sources">
 		<subcategory name="ground">
+			<piece>ground</piece>
 		</subcategory>
 		<subcategory name="dc_voltage">
 			<piece>5V</piece>
