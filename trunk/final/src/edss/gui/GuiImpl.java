@@ -115,17 +115,16 @@ public class GuiImpl implements edss.interf.Gui{
 	Vector <NewInternalFrame> w = new Vector <NewInternalFrame> ();  
 	
 	int coordonates = 1;
-	Mediator med = new Mediator();
+	// Mediator med = new Mediator();
 	
 	Vector <Piece> currentVector = new Vector <Piece> ();
 	Vector <Piece> favoritesVector = new Vector <Piece> ();	
-	
-	
 	
 	GuiMediator mediator;
 	// constructor method
 	public GuiImpl(final edss.interf.GuiMediator mediator)
 	{
+		// this.mediator = mediator;
 		edss.gui.Configuration cf = new edss.gui.Configuration("config.xml");
 		int skin = cf.skinId;
 		// ParseDatabase dataBase = new ParseDatabase("database.xml");
@@ -196,7 +195,7 @@ public class GuiImpl implements edss.interf.Gui{
 		
 		mainMenu();
 		
-		med.registerDesktop(centerPanel);
+		// med.registerDesktop(centerPanel);
 		
 		Configuration config = new Configuration(CONFIG_FILE);
 		// config.show();
@@ -310,7 +309,7 @@ public class GuiImpl implements edss.interf.Gui{
 				System.out.println("SExport to pdf");
 				}					
 			});
-		key = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.SHIFT_MASK);
+		key = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK);
 		fExportToPdf.setAccelerator(key);
 		
 			JMenuItem fExit = new JMenuItem("Exit",new ImageIcon("Icons\\exit.jpg"));
@@ -352,7 +351,7 @@ public class GuiImpl implements edss.interf.Gui{
 						if(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor()>400)
 							((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(400);
 						((NewInternalFrame) centerPanel.getSelectedFrame()).zoomSlider.setValue(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
-						med.zoom(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
+						mediator.scale(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 						System.out.println("Zoom = " + ((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 					}	
 					}
@@ -373,7 +372,7 @@ public class GuiImpl implements edss.interf.Gui{
 						if(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor()>400)
 							((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(400);
 						((NewInternalFrame) centerPanel.getSelectedFrame()).zoomSlider.setValue(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
-						med.zoom(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
+						mediator.scale(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 						System.out.println("Zoom = " + ((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 					}
 					}					
@@ -871,7 +870,7 @@ public class GuiImpl implements edss.interf.Gui{
 			f.write("<favorites>\n");
 			for(int i=0; i<favoritesVector.size(); i++)
 			{
-				System.out.println("Scriem " + favoritesVector.get(i).getName());
+				// System.out.println("Scriem " + favoritesVector.get(i).getName());
 				f.write("\t<piece>\n");
 				f.write("\t\t<category>" + favoritesVector.get(i).getCategory() + "</category>\n");
 				f.write("\t\t<subcategory>" + favoritesVector.get(i).getSubCategory() + "</subcategory>\n");
@@ -886,6 +885,7 @@ public class GuiImpl implements edss.interf.Gui{
 			e.printStackTrace();
 		}
 	}
+	
 	public static void wait (int n){
         long t0,t1;
         t0=System.currentTimeMillis();
@@ -895,63 +895,32 @@ public class GuiImpl implements edss.interf.Gui{
         while (t1-t0<1000);
 	}
 
-	// main
-//	public static void main(String args[])
-//	{	
-//		Configuration cf = new Configuration("config.xml");
-//		int skin = cf.skinId;
-//		// ParseDatabase dataBase = new ParseDatabase("database.xml");
-//		try {
-//			switch(skin)
-//			{
-//			case 0 : UIManager.setLookAndFeel(new SubstanceAutumnLookAndFeel()); break;
-//			case 1 : UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel()); break;
-//			case 2 : UIManager.setLookAndFeel(new SubstanceBusinessBlueSteelLookAndFeel()); break;
-//			case 3 : UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel()); break;
-//			case 4 : UIManager.setLookAndFeel(new SubstanceChallengerDeepLookAndFeel()); break;
-//			case 5 : UIManager.setLookAndFeel(new SubstanceCremeLookAndFeel()); break;
-//			case 6 : UIManager.setLookAndFeel(new SubstanceCremeCoffeeLookAndFeel()); break;
-//			case 7 : UIManager.setLookAndFeel(new SubstanceDustLookAndFeel()); break;
-//			case 8 : UIManager.setLookAndFeel(new SubstanceDustCoffeeLookAndFeel()); break;
-//			case 9 : UIManager.setLookAndFeel(new SubstanceEmeraldDuskLookAndFeel()); break;
-//			case 10 : UIManager.setLookAndFeel(new SubstanceMagmaLookAndFeel()); break;
-//			case 11 : UIManager.setLookAndFeel(new SubstanceMistAquaLookAndFeel()); break;
-//			case 12 : UIManager.setLookAndFeel(new SubstanceMistSilverLookAndFeel()); break;
-//			case 13 : UIManager.setLookAndFeel(new SubstanceModerateLookAndFeel()); break;
-//			case 14 : UIManager.setLookAndFeel(new SubstanceNebulaLookAndFeel()); break;
-//			case 15 : UIManager.setLookAndFeel(new SubstanceNebulaBrickWallLookAndFeel()); break;
-//			case 16 : UIManager.setLookAndFeel(new SubstanceOfficeBlue2007LookAndFeel()); break;
-//			case 17 : UIManager.setLookAndFeel(new SubstanceOfficeSilver2007LookAndFeel()); break;
-//			case 18 : UIManager.setLookAndFeel(new SubstanceRavenLookAndFeel()); break;
-//			case 19 : UIManager.setLookAndFeel(new SubstanceRavenGraphiteLookAndFeel()); break;
-//			case 20 : UIManager.setLookAndFeel(new SubstanceRavenGraphiteGlassLookAndFeel()); break;
-//			case 21 : UIManager.setLookAndFeel(new SubstanceSaharaLookAndFeel()); break;
-//			case 22 : UIManager.setLookAndFeel(new SubstanceTwilightLookAndFeel()); break;
-//			default : UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
-//			}
-//			
-//			//UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
-//		} catch (UnsupportedLookAndFeelException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		JFrame.setDefaultLookAndFeelDecorated(true);
-//		SwingUtilities.invokeLater(new Runnable() {
-//			@Override
-//			public void run() {
-//
-//				Gui window = new Gui();
-//		
-//			}
-//		});
-//	}
-
-
 	@Override
 	public void editPieceProperties(edss.interf.Piece piece) {
 		// TODO Auto-generated method stub
 		
 	}
-	
 
+	@Override
+	public JPanel getCenterPanel() {
+		for(int i=0; i<centerPanel.getComponents().length; i++)
+		{
+			NewInternalFrame nj = (NewInternalFrame)centerPanel.getComponents()[i];
+			if(nj.isSelected() == true)
+				return nj.getPanel();		
+		}
+		return null;
+	}
+
+	@Override
+	public JPanel getLeftPreview() {
+		return preview;
+	}
+	
+	@Override
+	public boolean hasFrames() {
+		if(centerPanel.getComponentCount() == 0)
+			return false;
+		return true;
+	}
 }

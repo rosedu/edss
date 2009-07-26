@@ -78,4 +78,9 @@ public class NewInternalFrame extends JInternalFrame {
 		zoomFactor = z;
 	}
 	
+	public JPanel getPanel()
+	{
+		return internalPanel;
+	}
+	
 }
