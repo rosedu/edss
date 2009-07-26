@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schottky_model>
+	<model name="1N5711">
+		<BV>70</BV>
+		<IBV>1E-5</IBV>
+		<IS>3.15E-7</IS>
+		<N>2.03</N>
+	</model>
+	<model name="1N5712">
+		<BV>20</BV>
+		<IBV>0</IBV>
+		<IS>6.8E-10</IS>
+		<N>1.003</N>
+	</model>
+</schottky_model>

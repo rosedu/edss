@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diode_model>
+	<model name="generic_zener">
+		<BV>5</BV>
+		<IBV>0.02</IBV>
+		<IS>1E-12</IS>
+		<N>1</N>
+	</model>
+	<model name="1N4370A">
+		<BV>2.41</BV>
+		<IBV>0.04386</IBV>
+		<IS>2.524E-16</IS>
+		<N>1</N>
+	</model>
+</diode_model>

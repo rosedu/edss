@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schottky>
+	<svg> schottky.svg </svg>
+	<pinInfo>
+		<pin number="1"> A </pin>
+		<pin number="2"> K </pin>
+	</pinInfo>
+	<id>D</id>
+	<properties>
+		<property name="BV"/>
+		<property name="IBV"/>
+		<property name="IS"/>
+		<property name="N"/>
+	</properties>
+</schottky>

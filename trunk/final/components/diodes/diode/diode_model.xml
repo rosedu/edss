@@ -5,14 +5,4 @@
 		<RS>0</RS>
 		<N>1</N>
 	</model>
-	<model name="1N5711">
-		<IS>3.15E-7</IS>
-		<RS>2.8</RS>
-		<N>2.03</N>
-	</model>
-	<model name="1N5712">
-		<IS>6.8E-10</IS>
-		<RS>12</RS>
-		<N>1.003</N>
-	</model>
 </diode_model>
