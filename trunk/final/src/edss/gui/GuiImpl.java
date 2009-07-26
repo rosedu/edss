@@ -10,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.SplashScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -299,7 +300,7 @@ public class GuiImpl implements edss.interf.Gui{
 					System.out.println("Save as");
 					}					
 				});
-			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.SHIFT_MASK);
+			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
 			fSaveAs.setAccelerator(key);
 			
 			JMenuItem fExportToPdf = new JMenuItem("Export to pdf", new ImageIcon("Icons\\exportToPdf.jpg"));
@@ -893,6 +894,7 @@ public class GuiImpl implements edss.interf.Gui{
         }
         while (t1-t0<1000);
 	}
+
 	// main
 //	public static void main(String args[])
 //	{	
