@@ -302,6 +302,16 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.SHIFT_MASK);
 			fSaveAs.setAccelerator(key);
 			
+			JMenuItem fExportToPdf = new JMenuItem("Export to pdf", new ImageIcon("Icons\\exportToPdf.jpg"));
+			fExportToPdf.addActionListener(new ActionListener() 
+			{	public void actionPerformed(ActionEvent e)
+				{
+				System.out.println("SExport to pdf");
+				}					
+			});
+		key = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.SHIFT_MASK);
+		fExportToPdf.setAccelerator(key);
+		
 			JMenuItem fExit = new JMenuItem("Exit",new ImageIcon("Icons\\exit.jpg"));
 				fExit.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
@@ -322,6 +332,8 @@ public class GuiImpl implements edss.interf.Gui{
 			add(fSave);
 			file.add(fSaveAs);
 			add(fSaveAs);
+			file.add(fExportToPdf);
+			add(fExportToPdf);
 			file.add(fExit);
 			add(fExit);
 			
