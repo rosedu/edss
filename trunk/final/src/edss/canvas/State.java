@@ -1,32 +1,71 @@
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.svg.SVGDocument;
 
 public class State {
+	public void getMouseDownElementListener(Event evt) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	public EventListener getMouseDownElement()
-	{
-		return null;
+	public void getMousePressedCanvasListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
-	public EventListener getMouseUpElement()
-	{
-		return null;
+
+	public void getMouseExitedCanvasListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
-	public EventListener getMouseClickElement()
-	{
-		return null;
+
+	public void getMouseReleasedCanvasListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
-	public MouseListener getMouseListenerCanvas()
-	{
-		return null;
+
+	public void getMouseDraggedListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
-	
-	public MouseMotionListener getMouseMotionListenerCanvas()
-	{
-		return null;
+
+	public void getMouseEnteredCanvasListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void getMouseClickedCanvasListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void getMouseMovedListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void getMouseClickElementListener(Event evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void getMouseUpElementListener(Event evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void getMouseOutElementListener(Event evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void getMouseOverElementListener(Event evt) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

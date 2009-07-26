@@ -26,9 +26,9 @@ public class Wire extends SchematicElement{
 		points = new WirePoints(cursorX, cursorY);
 		
 		EventTarget target = (EventTarget)g;
-		target.addEventListener("mousedown", Constant.stateManager.getMouseDownElement(), true);
-		target.addEventListener("mouseup", Constant.stateManager.getMouseUpElement(), true);
-		target.addEventListener("click", Constant.stateManager.getMouseClickElement(), true);
+		target.addEventListener("mousedown", EventListenerImpl.mouseDownListener, true);
+		target.addEventListener("mouseup", EventListenerImpl.mouseUpListener, true);
+		target.addEventListener("click", EventListenerImpl.mouseClickListener, true);
 		
 		
 /*		//event listener pe line

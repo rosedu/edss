@@ -14,125 +14,84 @@ public class WireState extends State {
 	 */
 
 	static Wire wire;
+	
+	public void getMouseDownElementListener(Event evt) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	public static EventListener mouseDown = new EventListener() {
+	public void getMousePressedCanvasListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
-		@Override
-		public void handleEvent(Event evt) {
-		}
-	};
+	public void getMouseExitedCanvasListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	public static EventListener mouseUp = new EventListener() {
+	public void getMouseReleasedCanvasListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
-		@Override
-		public void handleEvent(Event evt) {
-		}
-	};
+	public void getMouseDraggedListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	public static EventListener mouseClick = new EventListener() {
+	public void getMouseEnteredCanvasListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
-		@Override
-		public void handleEvent(Event evt) {
-			Element pin = (Element) evt.getTarget();
-			if (pin.getAttribute("id").contains("pin")) {
-				DOMMouseEvent mouseEvent = (DOMMouseEvent) evt;
-				if (wire == null) {
-					wire = new Wire(Constant.domFactory, mouseEvent.getClientX(), mouseEvent.getClientY(), null);
-					wire.startPin = pin;
+	public void getMouseClickedCanvasListener(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void getMouseMovedListener(MouseEvent arg0) {
+		if (wire != null) {
+			wire.draw(arg0.getX(), arg0.getY());
+		}		
+	}
+
+	public void getMouseClickElementListener(Event evt) {
+		Element pin = (Element) evt.getTarget();
+		if (pin.getAttribute("id").contains("pin")) {
+			DOMMouseEvent mouseEvent = (DOMMouseEvent) evt;
+			if (wire == null) {
+				wire = new Wire(Constant.domFactory, mouseEvent.getClientX(), mouseEvent.getClientY(), null);
+				wire.startPin = pin;
+				return;
+			} else {
+				wire.endPin = pin;
+				if (wire.startPin != wire.endPin) {
+					wire.draw(mouseEvent.getClientX(), mouseEvent.getClientY());
+					wire = null;
 					return;
-				} else {
-					wire.endPin = pin;
-					if (wire.startPin != wire.endPin) {
-						wire.draw(mouseEvent.getClientX(), mouseEvent.getClientY());
-						wire = null;
-						return;
-						// TODO eventual sa nu mai fac draw aici
-					}
+					// TODO eventual sa nu mai fac draw aici
 				}
 			}
-		}
-	};
-
-	public static EventListener mouseOut = new EventListener() {
-
-		@Override
-		public void handleEvent(Event evt) {
-			Element pin = (Element) evt.getTarget();
-			if (pin.getAttribute("id").contains("pin")) {
-				Constant.panel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-		}
-	};
-
-	public static EventListener mouseOver = new EventListener() {
-
-		@Override
-		public void handleEvent(Event evt) {
-			Element pin = (Element) evt.getTarget();
-			if (pin.getAttribute("id").contains("pin")) {
-				Constant.panel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-			}
-		}
-	};
-
-
-	public static MouseMotionListener mouseMotionCanvas = new MouseMotionListener() {
-
-		@Override
-		public void mouseMoved(MouseEvent arg0) {
-			if (wire != null) {
-				wire.draw(arg0.getX(), arg0.getY());
-			}
-		}
-
-		@Override
-		public void mouseDragged(MouseEvent arg0) {
-		}
-	};
-
-	public static MouseListener mouseCanvas = new MouseListener() {
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-		}
-	};
-
-	public EventListener getMouseDownElement()
-	{
-		return mouseDown;
-	}
-	public EventListener getMouseUpElement()
-	{
-		return mouseUp;
-	}
-	public EventListener getMouseClickElement()
-	{
-		return mouseClick;
+		}		
 	}
 
-	public MouseListener getMouseListenerCanvas()
-	{
-		return mouseCanvas;
+	public void getMouseUpElementListener(Event evt) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public MouseMotionListener getMouseMotionListenerCanvas()
-	{
-		return mouseMotionCanvas;
+	public void getMouseOutElementListener(Event evt) {
+		Element pin = (Element) evt.getTarget();
+		if (pin.getAttribute("id").contains("pin")) {
+			Constant.panel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		}		
+	}
+
+	public void getMouseOverElementListener(Event evt) {
+		Element pin = (Element) evt.getTarget();
+		if (pin.getAttribute("id").contains("pin")) {
+			Constant.panel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+		}		
 	}
 }

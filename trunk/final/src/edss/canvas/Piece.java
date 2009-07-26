@@ -1,8 +1,12 @@
 import java.awt.Point;
 import java.io.IOException;
 
+import javax.xml.transform.TransformerException;
+
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.svg.SVGDocument;
 
@@ -29,10 +33,10 @@ public class Piece extends SchematicElement {
 		Node x = document.importNode(g, true);
 		document.getDocumentElement().appendChild(x);
 		
-		EventTarget target = (EventTarget)g;
-		target.addEventListener("mousedown", Constant.stateManager.getMouseDownElement(), true);
-		target.addEventListener("mouseup", Constant.stateManager.getMouseUpElement(), true);
-		target.addEventListener("click", Constant.stateManager.getMouseClickElement(), true);
+		EventTarget target = (EventTarget) document.getElementById(id);
+		target.addEventListener("mousedown", EventListenerImpl.mouseDownListener, true);
+		target.addEventListener("mouseup", EventListenerImpl.mouseUpListener, true);
+		target.addEventListener("click", EventListenerImpl.mouseClickListener, true);
 		
 
 	}
@@ -60,10 +64,19 @@ public class Piece extends SchematicElement {
 
 				((Element) domElement.getParentNode()).setAttribute("transform", transform.toString());
 
-//				canvas.repaint();
+			//	Constant.canvas.repaint();
 				// canvas.setDoubleBuffered(true);
 				// canvas.setDoubleBufferedRendering(true);
 				crtPoint.setLocation(x, y);
+				try {
+					MyCanvas.writeSvg(Constant.domFactory, "export.svg");
+				} catch (TransformerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 
