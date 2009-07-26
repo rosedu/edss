@@ -127,6 +127,10 @@ public class GuiImpl implements edss.interf.Gui{
 	Vector <Piece> currentVector = new Vector <Piece> ();
 	Vector <Piece> favoritesVector = new Vector <Piece> ();	
 	
+	final JToggleButton P = new JToggleButton("P");
+	final JToggleButton N = new JToggleButton("W");
+	final JToggleButton M = new JToggleButton("M");
+	
 	GuiMediator mediator;
 	
 	// constructor method
@@ -234,16 +238,13 @@ public class GuiImpl implements edss.interf.Gui{
 		mainFrame.add(customPanel, BorderLayout.NORTH);
 		// panel definition
 		
-		leftPanel = new JPanel(new BorderLayout());//new GridLayout(3,1));
+		rightPanel = new JPanel(new FlowLayout());
+		rightPanel();
 		
-		// leftPanel.setBackground(Color.RED);
+		leftPanel = new JPanel(new BorderLayout());
 		leftPanel();
 		
-		//centerPanel.setBackground(Color.CYAN);
-		
-		rightPanel = new JPanel(new FlowLayout());
-		// rightPanel.setBackground(Color.BLUE);
-		rightPanel();
+
 		
 		mainFrame.add(leftPanel, BorderLayout.WEST);
 		mainFrame.add(centerPanel,BorderLayout.CENTER);
@@ -698,10 +699,17 @@ public class GuiImpl implements edss.interf.Gui{
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(lCurrent.isSelectionEmpty() == false)
+				{
 					lFavorites.clearSelection();
+					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
+					P.setSelected(true);
+				}
+					
 			}
 			
 		});
+		
+	
 		
 		lFavorites.addListSelectionListener(new ListSelectionListener()
 		{
@@ -709,7 +717,11 @@ public class GuiImpl implements edss.interf.Gui{
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(lFavorites.isSelectionEmpty() == false)
+				{
 					lCurrent.clearSelection();
+					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
+					P.setSelected(true);
+				}
 			}
 			
 		});
@@ -792,15 +804,24 @@ public class GuiImpl implements edss.interf.Gui{
 		final ButtonGroup buttonGroup = new ButtonGroup();
 		
 		int s = 20;
-		final JToggleButton N = new JToggleButton("N");
         N.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         N.setMaximumSize(new Dimension(WIDTH/10, s));
         N.setMinimumSize(new Dimension(WIDTH/10, s));
 		N.setSize(WIDTH/10, s);
 		N.setPreferredSize(new Dimension(WIDTH/10, s));
 		N.setBorder(BorderFactory.createRaisedBevelBorder());
+		N.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mediator.enterState(StateConstant.WIRESTATE);
+				
+			}
+			
+		});
 		
-		final JToggleButton M = new JToggleButton("M");
+		
+
 		M.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 	    M.setMaximumSize(new Dimension(WIDTH/10, s));
 	    M.setMinimumSize(new Dimension(WIDTH/10, s));
@@ -817,7 +838,7 @@ public class GuiImpl implements edss.interf.Gui{
 			
 		});
 		
-		final JToggleButton P = new JToggleButton("P");
+
 		P.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 	    P.setMaximumSize(new Dimension(WIDTH/10, s));
 	    P.setMinimumSize(new Dimension(WIDTH/10, s));
@@ -902,7 +923,7 @@ public class GuiImpl implements edss.interf.Gui{
 		P.setToolTipText("Place");
 		G.setToolTipText("Drag item");
 		M.setToolTipText("Mouse");
-		N.setToolTipText("Line");
+		N.setToolTipText("Wire");
 		
 		buttonGroup.add(L);
 		buttonGroup.add(D);
@@ -993,6 +1014,13 @@ public class GuiImpl implements edss.interf.Gui{
 		if(centerPanel.getComponentCount() == 0)
 			return false;
 		return true;
+	}
+	
+	public Piece getSelectedPiece()
+	{
+		if(lCurrent.getSelectedValue() != null)
+			return	currentVector.get(lCurrent.getSelectedIndex());
+		return favoritesVector.get(lFavorites.getSelectedIndex());
 	}
 	
 }

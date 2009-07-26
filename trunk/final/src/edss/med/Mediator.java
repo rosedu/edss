@@ -1,6 +1,7 @@
 package edss.med;
 
 import edss.canvas.MyCanvas;
+import edss.canvas.StateConstant;
 import edss.interf.*;
 
 
@@ -9,7 +10,8 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	private Gui gui;
 	private Model model;
 	private Canvas canvas;
-
+	
+	
 	@Override
 	public void registerGui(Gui g)
 	{
@@ -53,7 +55,23 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 
 	@Override
 	public void enterState(int c) {
-		// TODO Auto-generated method stub
+		switch(c)
+		{
+		case StateConstant.PIECESTATE : 
+		case StateConstant.DELETESTATE :
+		case StateConstant.DRAGSTATE :
+		case StateConstant.MOUSESTATE :
+		default : break;
+			
+		}
+		
+	}
+
+	@Override
+	public void setPiece(String name, String category, String subcategory) {
+		// pasez!
+		//model.setPiece(category,subcategory,name);
+		System.out.println(category + " " + subcategory + " " + name); 
 		
 	}
 }
