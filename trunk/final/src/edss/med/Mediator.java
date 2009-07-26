@@ -62,6 +62,7 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 		case StateConstant.DELETESTATE :
 		case StateConstant.DRAGSTATE :
 		case StateConstant.MOUSESTATE :
+		case StateConstant.WIRESTATE :
 		default : break;
 			
 		}
@@ -72,7 +73,7 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	public void setPiece(String name, String category, String subcategory) {
 		// pasez!
 		model.setLastSelected(category,subcategory,name);
-		//System.out.println(category + " " + subcategory + " " + name); 
+		// System.out.println(category + " " + subcategory + " " + name); 
 		
 	}
 	@Override
