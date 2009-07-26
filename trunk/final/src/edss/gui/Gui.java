@@ -245,7 +245,7 @@ public class Gui implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.SHIFT_MASK);
 			fSaveAs.setAccelerator(key);
 			
-			JMenuItem fExportToPdf = new JMenuItem("Export to pdf",new ImageIcon("Icons\\exportToPdf.jpg"));
+			JMenuItem fExportToPdf = new JMenuItem("Export to pdf", new ImageIcon("Icons\\exportToPdf.jpg"));
 			fExportToPdf.addActionListener(new ActionListener() 
 			{	public void actionPerformed(ActionEvent e)
 				{
