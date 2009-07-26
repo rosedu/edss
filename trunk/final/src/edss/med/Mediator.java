@@ -74,8 +74,7 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	}
 	@Override
 	public String getId() {
-		return null;
-//		return model.getId();
+		return model.getId();
 	}
 
 	@Override
