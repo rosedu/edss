@@ -8,11 +8,17 @@ public class ModelImpl implements Model {
 
 	private ModelMediator med;
 	private Schematic scheme;
-	private edss.model.Piece selectedPiece;
+//	private edss.model.Piece selectedPiece;
+	
+	private String[] lastSelected;
+	
 	
 	public ModelImpl(ModelMediator med) {
 		this.med = med;
 		med.registerModel(this);
+		
+		scheme = new Schematic();
+		lastSelected = new String[3];
 	}
 	
 	@Override
@@ -25,27 +31,29 @@ public class ModelImpl implements Model {
 		med.update();	
 	}
 	
-	public Piece getSelectedPiece() {
-		return selectedPiece;
+	public void setLastSelected(String category, String subCategory, String name) {
+		lastSelected[0] = category;
+		lastSelected[1] = subCategory;
+		lastSelected[2] = name;
 	}
 	
-	public void setSelectedPiece(Piece p) {
-		selectedPiece = (edss.model.Piece)p;
-	}
+//	public Piece getSelectedPiece() {
+//		return selectedPiece;
+//	}
+//	
+//	public void setSelectedPiece(Piece p) {
+//		selectedPiece = (edss.model.Piece)p;
+//	}
 	
-	public Piece createPiece(String category, String subcategory, String name) {
-		return new edss.model.Piece(category, subcategory, 0, 0, name);
+	public void createPiece(String category, String subcategory, String name) {
+		setLastSelected(category, subcategory, name);
 	}
 	
 	public void addPiece(int x, int y) {
-		 selectedPiece.setX(x);
-		 selectedPiece.setY(y);
-		 scheme.addComponent(selectedPiece);
-		 selectedPiece.setX(0);
-		 selectedPiece.setY(0);
+		 scheme.addComponent(new edss.model.Piece(lastSelected[0], lastSelected[1], x, y, lastSelected[2]));
 	}
 	
 	public String getSVG() {
-		return selectedPiece.getSvgURI();
+		return edss.model.Piece.getSVG(lastSelected[0], lastSelected[1]);
 	}
 }
