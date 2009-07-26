@@ -9,7 +9,7 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	private Gui gui;
 	private Model model;
 	private Canvas canvas;
-	
+
 	@Override
 	public void registerGui(Gui g)
 	{
@@ -51,4 +51,9 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 		gui.getCenterPanel().add(canv.getCanvas());
 	}
 
+	@Override
+	public void enterState(int c) {
+		// TODO Auto-generated method stub
+		
+	}
 }
