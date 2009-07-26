@@ -1,5 +1,6 @@
 package edss.canvas;
 
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -71,6 +72,10 @@ public class StateManager {
 
 	public void getMouseUpElementListener(Event evt) {
 		crtState.getMouseUpElementListener(evt);		
+	}
+
+	public void getKeyTypedListener(KeyEvent arg0) {
+		crtState.getKeyTypedListener(arg0);	
 	}
 	
 }

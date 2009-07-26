@@ -47,9 +47,7 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 
 	@Override
 	public void addPanel() {
-		//System.out.println(gui.getCenterPanel());
 		MyCanvas canv = new MyCanvas(gui.getCenterPanel());
-		
 		gui.getCenterPanel().add(canv.getCanvas());
 	}
 
@@ -74,4 +72,16 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 		//System.out.println(category + " " + subcategory + " " + name); 
 		
 	}
+	@Override
+	public String getId() {
+		return null;
+//		return model.getId();
+	}
+
+	@Override
+	public String getSVG() {
+		return model.getSVG();
+	}
+	
+
 }

@@ -9,9 +9,11 @@ import org.apache.batik.util.XMLResourceDescriptor;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.svg.SVGDocument;
 
+import edss.interf.CanvasMediator;
+
 
 public class Constant {
-//	CanvasMediator mediator = new CanvasMediator();
+	static CanvasMediator mediator;
 	static PointMatrix matrix = new PointMatrix();
 	
 	static String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;

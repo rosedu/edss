@@ -1,6 +1,7 @@
 package edss.canvas;
 
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import javax.xml.transform.TransformerException;

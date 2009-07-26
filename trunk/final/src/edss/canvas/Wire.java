@@ -27,7 +27,7 @@ public class Wire extends SchematicElement{
 		//init pct start
 		points = new WirePoints(cursorX, cursorY);
 		
-		EventTarget target = (EventTarget)g;
+		EventTarget target = (EventTarget) g;
 		target.addEventListener("mousedown", EventListenerImpl.mouseDownListener, true);
 		target.addEventListener("mouseup", EventListenerImpl.mouseUpListener, true);
 		target.addEventListener("click", EventListenerImpl.mouseClickListener, true);
@@ -70,25 +70,37 @@ public class Wire extends SchematicElement{
 
 	public Wire(Element element) {
 		super(element);
+		points = new WirePoints(element.getAttribute("points"));
+
 	}
 
 
 	public void draw(int cursorX, int cursorY)
 	{
-		points.addPoint(cursorX, cursorY);
+		int roundX = MyMath.roundAtStep(cursorX / Constant.matrix.scale, PointMatrix.CELL_SIZE);
+		int roundY = MyMath.roundAtStep(cursorY / Constant.matrix.scale, PointMatrix.CELL_SIZE);
+		points.addPoint(roundX, roundY);
 		line.setAttribute("points", points.toString());
 	}
-	
+
+
+
 	@Override
 	public void move(int... destination) {
 //		if (selectedSegment == null) {
 //			throw new Exception(displayError()); 
 //		}
 		// TODO : rotunjire destination[0]
-		selectedSegment.move(destination[0]);
+		
+		if (selectedSegment.direction == Segment.VERTICAL) {
+			selectedSegment.move(destination[1] - selectedSegment.a.x);
+		} else {
+			selectedSegment.move(destination[0] - selectedSegment.a.y);
+		}
+		domElement.setAttributeNS(null, "points", points.toString());
 	}
 
-
+	
 	@Override
 	protected String displayError() {
 		return "No wire selected";

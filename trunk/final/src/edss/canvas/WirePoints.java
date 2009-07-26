@@ -14,11 +14,13 @@ public class WirePoints {
 			pointList.add(new MyPoint(tok.nextToken(), tok.nextToken()));
 			System.out.println(pointList.get(i++));
 		}
+		System.out.println(pointList);
 	}
 	
 	public WirePoints(int x, int y) {
 		pointList.add(new MyPoint(x,y));
 	}
+	
 
 	@Override
 	public String toString() {
@@ -30,9 +32,15 @@ public class WirePoints {
 	}
 	
 	public void addPoint(int x, int y) {
+		MyPoint a;
+		MyPoint b;
 		if (pointList.size() > 1) {
-			MyPoint a = pointList.get(pointList.size() - 2);
-			MyPoint b = pointList.get(pointList.size() - 1);
+//			int dX = Math.abs((int) Math.round(arg0.getX() / matrix.scale - crtPoint.x));	// la scara 1:1
+//			int dY = Math.abs((int) Math.round(arg0.getY() / matrix.scale - crtPoint.y));
+			
+			
+			a = pointList.get(pointList.size() - 2);
+			b = pointList.get(pointList.size() - 1);
 			if (
 					(a.x == b.x && a.x == x) ||
 					(a.y == b.y && a.y == y)) {
@@ -42,18 +50,32 @@ public class WirePoints {
 			}
 		}
 		
-		MyPoint tmpPoint = new MyPoint(x, y); 
-		if (pointList.size() > 0 && pointList.get(pointList.size() - 1).equals(tmpPoint)) {
+		MyPoint tmpPoint;// = new MyPoint(x, y); 
+		b = pointList.get(pointList.size() - 1);
+
+		if (b.x != x && b.y != y) {
+			tmpPoint = new MyPoint(b.x, y);
+			pointList.add(tmpPoint);
+		}
+
+		tmpPoint = new MyPoint(x, y);
+		if (pointList.get(pointList.size() - 1).equals(tmpPoint)) {
+			// am ramas pe acelasi punct
 			return;
 		}
 		pointList.add(tmpPoint);
+		
 	}
 	
 	public Segment getSegment(int x, int y) {
 		// cand intru aici, stiu ca punctul (x, y) este pe fir si ca firul are cel putin 2 puncte
 		Segment result = new Segment();
 		Iterator<MyPoint> it = pointList.iterator();
-		result.a = it.next();
+		if (it.hasNext()) {
+			result.a = it.next();
+		} else {
+			System.out.println("mda");
+		}
 		while (it.hasNext()) {
 			 result.b = it.next();
 			 

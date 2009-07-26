@@ -2,80 +2,55 @@ package edss.canvas;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 
-import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.svg.SVGDocument;
 
-public class State {
+public class InsertState extends State {
 	public void getMouseDownElementListener(Event evt) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMousePressedCanvasListener(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseExitedCanvasListener(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseReleasedCanvasListener(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseDraggedListener(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseEnteredCanvasListener(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseClickedCanvasListener(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		String fileName = Constant.mediator.getSVG();
+		String id = Constant.mediator.getId();
+		try {
+			Piece.addPiece(Constant.domFactory, fileName, arg0.getX(), arg0.getY(), id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void getMouseMovedListener(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseClickElementListener(Event evt) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseUpElementListener(Event evt) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseOutElementListener(Event evt) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseOverElementListener(Event evt) {
-		// TODO Auto-generated method stub
-		
 	}
-
 
 	public void getKeyTypedListener(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
-
-
 }

@@ -1,5 +1,7 @@
 package edss.canvas;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -91,4 +93,25 @@ public class EventListenerImpl {
 			Constant.stateManager.getMouseClickedCanvasListener(arg0);
 		}
 	};
+	public static KeyListener keyListener = new KeyListener() {
+		
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+			System.out.println("EventListenerImpl - KeyListener");
+			Constant.stateManager.getKeyTypedListener(arg0);
+		}
+		
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
 }

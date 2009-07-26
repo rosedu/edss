@@ -14,13 +14,17 @@ public abstract class SchematicElement {
 	{
 		domElement = element;
 	}
-	public void delete() throws Exception {
+	public void delete() {
 
+		System.out.println("ss");
 		if (domElement != null) {
-			domElement.removeChild(domElement.getFirstChild());
+			System.out.println("ss");
+			System.out.println(domElement.getNodeName());
+			domElement.getParentNode().removeChild(domElement);
 			domElement = null;
 		} else {
-			throw new Exception(displayError());
+			System.out.println("null");
+//			throw new Exception(displayError());
 		}
 	}
 

@@ -1,6 +1,7 @@
 package edss.canvas;
 
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
@@ -19,8 +20,9 @@ public class PieceState extends State {
 //		if (target.getElementsByTagName("svg").getLength() == 0) {
 		if (!target.getNodeName().equals("svg")) {
 			// fir
-			movedElement = new Wire(target);
-			((Wire) movedElement).selectedSegment = ((Wire) movedElement).points.getSegment(mouseEvent.getClientX(), mouseEvent.getClientY());
+			movedElement = new Wire((Element) target.getFirstChild());
+			((Wire) movedElement).selectedSegment = ((Wire) movedElement).points.getSegment(mouseEvent.getClientX(),
+																						mouseEvent.getClientY());
 			System.out.println("down fir");
 		} else {
 			// piesa
@@ -46,8 +48,11 @@ public class PieceState extends State {
 	}
 
 	public void getMouseDraggedListener(MouseEvent arg0) {
-		if(movedElement != null)
+		if(movedElement != null) {
+			System.out.println("drag");
 			movedElement.move(arg0.getX(), arg0.getY());
+			
+		}
 		
 	}
 
@@ -74,9 +79,9 @@ public class PieceState extends State {
 
 	public void getMouseClickElementListener(Event evt) {
 		Element target = (Element) evt.getCurrentTarget();
-		if (target.getElementsByTagName("svg").getLength() == 0) {
+		if (!target.getNodeName().equals("svg")) {
 			// fir
-			selectedElement = new Wire(target);
+			selectedElement = new Wire((Element) target.getFirstChild());
 		} else {
 			// piesa
 			selectedElement = new Piece(target);
@@ -97,5 +102,22 @@ public class PieceState extends State {
 	public void getMouseOverElementListener(Event evt) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void getKeyTypedListener(KeyEvent arg0) {
+		switch(arg0.getKeyChar())
+		{
+		case 127:
+			System.out.println("key - DEL");
+//			try {
+				System.out.println("key - DEL");
+				System.out.println(selectedElement);
+				selectedElement.delete();
+//			} catch (Exception e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			break;
+		}
 	}
 }
