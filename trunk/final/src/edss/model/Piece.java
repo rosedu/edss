@@ -21,7 +21,6 @@ public class Piece implements Serializable, edss.interf.Piece {
 	protected String svgURI;
 	protected String id;
 	
-	
 	protected String type;
 
 	protected static Map<String, Map<String, Boolean>> instances = 
@@ -62,6 +61,7 @@ public class Piece implements Serializable, edss.interf.Piece {
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		}
+		
 		Node pieceName = doc.getChildNodes().item(0);
 		NodeList nl = pieceName.getChildNodes();
 		
@@ -154,6 +154,25 @@ public class Piece implements Serializable, edss.interf.Piece {
 		this.id = type + no;
 		
 		System.out.println("Created component: " + id);
+	}
+	
+	public static String getSVG(String category, String subCategory) {
+		String componentFileName = "components\\" + category + "\\" + subCategory +
+		"\\" + subCategory + ".xml";
+		Document doc = null;
+
+		File f = new File(componentFileName);
+		try {
+			doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(f);
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		
+		return doc.getElementsByTagName("svg").item(0).getChildNodes().item(0).getTextContent().trim();
 	}
 	
 	public String getSvgURI() {
