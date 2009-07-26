@@ -86,6 +86,8 @@ import org.jvnet.substance.skin.SubstanceSaharaLookAndFeel;
 import org.jvnet.substance.skin.SubstanceTwilightLookAndFeel;
 
 import edss.canvas.Constant;
+import edss.canvas.State;
+import edss.canvas.StateConstant;
 import edss.interf.Gui;
 import edss.interf.GuiMediator;
 
@@ -126,6 +128,7 @@ public class GuiImpl implements edss.interf.Gui{
 	Vector <Piece> favoritesVector = new Vector <Piece> ();	
 	
 	GuiMediator mediator;
+	
 	// constructor method
 	public GuiImpl(final edss.interf.GuiMediator mediator)
 	{
@@ -263,6 +266,7 @@ public class GuiImpl implements edss.interf.Gui{
 					centerPanel.add(newInternalFrame);
 					w.add(newInternalFrame);
 					centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
+					mediator.enterState(StateConstant.PIECESTATE);
 					//System.out.println(mediator);
 					
 	
@@ -803,6 +807,15 @@ public class GuiImpl implements edss.interf.Gui{
 		M.setSize(WIDTH/10, s);
 		M.setPreferredSize(new Dimension(WIDTH/10, s));
 		M.setBorder(BorderFactory.createRaisedBevelBorder());
+		M.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mediator.enterState(StateConstant.MOUSESTATE);
+				
+			}
+			
+		});
 		
 		final JToggleButton P = new JToggleButton("P");
 		P.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -811,6 +824,15 @@ public class GuiImpl implements edss.interf.Gui{
 		P.setSize(WIDTH/10, s);
 		P.setPreferredSize(new Dimension(WIDTH/10, s));
 		P.setBorder(BorderFactory.createRaisedBevelBorder());
+		P.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				mediator.enterState(StateConstant.PIECESTATE);			
+			}
+			
+		});
 		
 		final JToggleButton L = new JToggleButton("L");
 		L.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -848,6 +870,15 @@ public class GuiImpl implements edss.interf.Gui{
 		D.setSize(WIDTH/10, s);
 		D.setPreferredSize(new Dimension(WIDTH/10, s));
 		D.setBorder(BorderFactory.createRaisedBevelBorder());
+		D.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				mediator.enterState(StateConstant.DELETESTATE);			
+			}
+			
+		});
 		
 		JToggleButton G = new JToggleButton("G");
 		G.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -856,6 +887,15 @@ public class GuiImpl implements edss.interf.Gui{
 		G.setSize(WIDTH/10, s);
 		G.setPreferredSize(new Dimension(WIDTH/10, s));
 		G.setBorder(BorderFactory.createRaisedBevelBorder());
+		G.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				mediator.enterState(StateConstant.DRAGSTATE);			
+			}
+			
+		});
 		
 		D.setToolTipText("Delete");
 		L.setToolTipText("Library");
