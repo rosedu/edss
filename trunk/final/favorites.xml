@@ -25,24 +25,4 @@
 		<subcategory>dc_voltage</subcategory>
 		<name>12V</name>
 	</piece>
-	<piece>
-		<category>diodes</category>
-		<subcategory>diode</subcategory>
-		<name>1N5712</name>
-	</piece>
-	<piece>
-		<category>basic</category>
-		<subcategory>resistor</subcategory>
-		<name>1K</name>
-	</piece>
-	<piece>
-		<category>sources</category>
-		<subcategory>dc_voltage</subcategory>
-		<name>5V</name>
-	</piece>
-	<piece>
-		<category>sources</category>
-		<subcategory>dc_voltage</subcategory>
-		<name>10V</name>
-	</piece>
 </favorites>

@@ -10,9 +10,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.SplashScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
@@ -49,6 +52,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.Scrollable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -81,6 +85,7 @@ import org.jvnet.substance.skin.SubstanceRavenLookAndFeel;
 import org.jvnet.substance.skin.SubstanceSaharaLookAndFeel;
 import org.jvnet.substance.skin.SubstanceTwilightLookAndFeel;
 
+import edss.canvas.Constant;
 import edss.interf.Gui;
 import edss.interf.GuiMediator;
 
@@ -258,6 +263,11 @@ public class GuiImpl implements edss.interf.Gui{
 					centerPanel.add(newInternalFrame);
 					w.add(newInternalFrame);
 					centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
+					//System.out.println(mediator);
+					
+	
+					
+					mediator.addPanel();
 					System.out.println("New");
 					}					
 				});
@@ -905,8 +915,9 @@ public class GuiImpl implements edss.interf.Gui{
 	public JPanel getCenterPanel() {
 		for(int i=0; i<centerPanel.getComponents().length; i++)
 		{
+			System.out.println("xx");
 			NewInternalFrame nj = (NewInternalFrame)centerPanel.getComponents()[i];
-			if(nj.isSelected() == true)
+//			if(nj.is == true)
 				return nj.getPanel();		
 		}
 		return null;
@@ -923,4 +934,8 @@ public class GuiImpl implements edss.interf.Gui{
 			return false;
 		return true;
 	}
+	
 }
+
+
+

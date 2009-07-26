@@ -6,5 +6,6 @@ public interface GuiMediator {
 	
 	public void scale(int factor);
 	public void registerGui(Gui guiImpl);
+	public void addPanel();
 
 }

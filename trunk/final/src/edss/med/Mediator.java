@@ -1,5 +1,6 @@
 package edss.med;
 
+import edss.canvas.MyCanvas;
 import edss.interf.*;
 
 
@@ -40,6 +41,14 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	@Override
 	public void registerCanvas(Canvas canvas) {
 		this.canvas = canvas;
+	}
+
+	@Override
+	public void addPanel() {
+		//System.out.println(gui.getCenterPanel());
+		MyCanvas canv = new MyCanvas(gui.getCenterPanel());
+		
+		gui.getCenterPanel().add(canv.getCanvas());
 	}
 
 }

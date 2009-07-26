@@ -1,5 +1,6 @@
 package edss.canvas;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.AdjustmentEvent;
@@ -35,6 +36,7 @@ import org.w3c.dom.Document;
 
 public class MyCanvas {
 	public JFrame frame = new JFrame("Canvas");
+	public JScrollPane scrollPane;
 
 	static public JPanel panel = new PanelScroll() {
 		private static final long serialVersionUID = 8450159075035550085L;
@@ -49,6 +51,7 @@ public class MyCanvas {
 
 	public MyCanvas(JPanel guiPanel) {
 		//			this.panel = panel;
+//		panel = guiPanel;
 		Constant.panel = guiPanel;
 		Constant.panel.add(panel);
 		Constant.canvas.setPreferredSize(new Dimension(2048, 2048));
@@ -99,7 +102,7 @@ public class MyCanvas {
 		panel.setLayout(new OverlayLayout(panel));
 		panel.add(Constant.matrix);
 		panel.add(Constant.canvas);
-		final JScrollPane scrollPane = new JScrollPane(panel);
+		scrollPane = new JScrollPane(panel);
 		scrollPane.setAutoscrolls(true);
 		scrollPane
 		.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -118,10 +121,10 @@ public class MyCanvas {
 
 		// init frame
 
-		frame.setVisible(true);
-		frame.setSize(800, 800);
-		frame.setContentPane(scrollPane);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setVisible(true);
+//		frame.setSize(800, 800);
+//		frame.setContentPane(scrollPane);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 	
@@ -142,9 +145,13 @@ public class MyCanvas {
 		out.close();
 	}
 
-	public static void main(String[] args) {
-		MyCanvas myCanvas = new MyCanvas(guiPanel);
+//	public static void main(String[] args) {
+//		MyCanvas myCanvas = new MyCanvas(guiPanel);
+//
+//	}
 
+	public JScrollPane getCanvas() {
+		return scrollPane;
 	}
 
 }
@@ -179,5 +186,4 @@ class PanelScroll extends JPanel implements Scrollable {
 			int orientation, int direction) {
 		return 24;
 	}
-
 }

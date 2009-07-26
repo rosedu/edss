@@ -24,7 +24,7 @@ public class NewInternalFrame extends JInternalFrame {
 		super(s + " " + i, true, true, true, true);
 		setBounds(i*10, i*10, 300, 300);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
-		internalPanel = new JPanel();
+		internalPanel = new JPanel(new BorderLayout());
 		zoomSlider = new JSlider(25, 400);
 		zoomSlider.setValue(100);
 		zoomSlider.addMouseListener(new MouseListener()
