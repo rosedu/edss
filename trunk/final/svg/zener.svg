@@ -42,8 +42,8 @@
      inkscape:document-units="px"
      inkscape:window-width="1280"
      inkscape:window-height="740"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
      showguides="true"
      inkscape:guide-bbox="true">
     <sodipodi:guide
@@ -97,13 +97,6 @@
      id="layer1"
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
-    <tspan
-       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial;-inkscape-font-specification:Arial"
-       sodipodi:role="line"
-       id="tspan5428"
-       x="1.4285715"
-       y="19.714285"
-       transform="translate(9,-77)">\\</tspan>
     <path
        style="fill:#ffffff;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:2.34653759;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;display:inline"
        d="M 1.254039,48.142857 L 36.41809,48"
