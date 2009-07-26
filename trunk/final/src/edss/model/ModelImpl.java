@@ -31,6 +31,7 @@ public class ModelImpl implements Model {
 		med.update();	
 	}
 	
+	@Override
 	public void setLastSelected(String category, String subCategory, String name) {
 		lastSelected[0] = category;
 		lastSelected[1] = subCategory;

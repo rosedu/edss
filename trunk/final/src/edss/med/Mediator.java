@@ -70,8 +70,8 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	@Override
 	public void setPiece(String name, String category, String subcategory) {
 		// pasez!
-		//model.setPiece(category,subcategory,name);
-		System.out.println(category + " " + subcategory + " " + name); 
+		model.setLastSelected(category,subcategory,name);
+		//System.out.println(category + " " + subcategory + " " + name); 
 		
 	}
 }
