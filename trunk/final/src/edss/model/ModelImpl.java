@@ -9,7 +9,7 @@ public class ModelImpl implements Model {
 	private ModelMediator med;
 	private Schematic scheme;
 //	private edss.model.Piece selectedPiece;
-	
+	private String id;
 	private String[] lastSelected;
 	
 	
@@ -51,10 +51,17 @@ public class ModelImpl implements Model {
 	}
 	
 	public void addPiece(int x, int y) {
-		 scheme.addComponent(new edss.model.Piece(lastSelected[0], lastSelected[1], x, y, lastSelected[2]));
+		edss.model.Piece p = new edss.model.Piece(lastSelected[0], lastSelected[1], x, y, lastSelected[2]);
+		p.setId(id);
+		 scheme.addComponent(p);
 	}
 	
 	public String getSVG() {
 		return edss.model.Piece.getSVG(lastSelected[0], lastSelected[1]);
+	}
+	
+	public String getId() {
+		id = String.valueOf(Math.random());
+		return id;
 	}
 }

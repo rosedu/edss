@@ -222,6 +222,10 @@ public class Piece implements Serializable, edss.interf.Piece {
 	public String getType() {
 		return type;
 	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public Map<String, String> getProperties() {
 		return properties;
