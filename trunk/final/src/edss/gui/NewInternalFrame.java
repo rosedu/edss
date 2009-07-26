@@ -25,14 +25,13 @@ public class NewInternalFrame extends JInternalFrame {
 		setBounds(i*10, i*10, 300, 300);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		internalPanel = new JPanel(new BorderLayout());
-		zoomSlider = new JSlider(25, 400);
-		zoomSlider.setValue(100);
+		zoomSlider = new JSlider(1, 5);
+		zoomSlider.setValue(3);
 		zoomSlider.addMouseListener(new MouseListener()
 		{
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
@@ -56,9 +55,22 @@ public class NewInternalFrame extends JInternalFrame {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				System.out.println("Zoom = " + zoomSlider.getValue());
-				zoomFactor = zoomSlider.getValue();
-				med.zoom(zoomFactor); // TODO
+				int auxZoom = zoomSlider.getValue();
+//					if(auxZoom < 37)
+//						zoomFactor = 25;
+//					if(auxZoom >= 37 && auxZoom < 76)
+//						zoomFactor = 50;
+//					if(auxZoom >= 76 && auxZoom < 150)
+//						zoomFactor = 100;
+//					if(auxZoom >= 150 && auxZoom < 300)
+//						zoomFactor = 200;
+//					if(auxZoom >= 300)
+//						zoomFactor = 400;
+				
+				zoomFactor = (int) ((Math.pow(2, (auxZoom - 3)) * 100));
+				System.out.println("Zoom = " + zoomFactor);
+				// zoomSlider.setValue(zoomFactor);
+				med.zoom(zoomFactor); 
 			}
 
 			

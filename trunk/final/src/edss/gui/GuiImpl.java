@@ -355,12 +355,22 @@ public class GuiImpl implements edss.interf.Gui{
 					System.out.println("Zoom in");
 					if((NewInternalFrame) centerPanel.getSelectedFrame() != null)
 					{
-						((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor() + 10);
+						((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor() * 2);
 						if(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor()<25)
 							((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(25);
 						if(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor()>400)
 							((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(400);
-						((NewInternalFrame) centerPanel.getSelectedFrame()).zoomSlider.setValue(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
+						int y = ((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor();
+						switch(y)
+						{
+						case 25 : y = 1; break;
+						case 50 : y = 2; break;
+						case 100 : y = 3; break;
+						case 200 : y = 4; break;
+						case 400 : y = 5; break;
+						default : y=3; break;
+						}
+						((NewInternalFrame) centerPanel.getSelectedFrame()).zoomSlider.setValue(y);
 						mediator.scale(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 						System.out.println("Zoom = " + ((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 					}	
@@ -376,12 +386,22 @@ public class GuiImpl implements edss.interf.Gui{
 					System.out.println("Zoom out");
 					if((NewInternalFrame) centerPanel.getSelectedFrame() != null)
 					{
-						((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor() - 10);
+						((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor() / 2);
 						if(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor()<25)
 							((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(25);
 						if(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor()>400)
 							((NewInternalFrame) centerPanel.getSelectedFrame()).setZoomFactor(400);
-						((NewInternalFrame) centerPanel.getSelectedFrame()).zoomSlider.setValue(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
+						int y = ((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor();
+						switch(y)
+						{
+						case 25 : y = 1; break;
+						case 50 : y = 2; break;
+						case 100 : y = 3; break;
+						case 200 : y = 4; break;
+						case 400 : y = 5; break;
+						default : y=3; break;
+						}
+						((NewInternalFrame) centerPanel.getSelectedFrame()).zoomSlider.setValue(y);
 						mediator.scale(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 						System.out.println("Zoom = " + ((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 					}
