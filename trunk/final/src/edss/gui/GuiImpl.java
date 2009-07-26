@@ -130,6 +130,9 @@ public class GuiImpl implements edss.interf.Gui{
 	final JToggleButton P = new JToggleButton("P");
 	final JToggleButton N = new JToggleButton("W");
 	final JToggleButton M = new JToggleButton("M");
+	final JToggleButton L = new JToggleButton("L");
+	final JToggleButton D = new JToggleButton("D");
+	final JToggleButton G = new JToggleButton("G");
 	
 	GuiMediator mediator;
 	
@@ -579,11 +582,77 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, InputEvent.CTRL_MASK);
 			tRotateRight.setAccelerator(key);
 			
+			JMenuItem tPiece = new JMenuItem("Place piece",new ImageIcon("Icons\\piece.jpg"));
+			tPiece.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						P.setSelected(true);
+					}
+				});
+			key = KeyStroke.getKeyStroke('p');
+			tPiece.setAccelerator(key);
 			
+			JMenuItem tWire = new JMenuItem("Wire",new ImageIcon("Icons\\wire.jpg"));
+			tWire.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						N.setSelected(true);
+					}
+				});
+			key = KeyStroke.getKeyStroke('w');
+			tWire.setAccelerator(key);
+			
+			JMenuItem tSelect = new JMenuItem("Mouse",new ImageIcon("Icons\\mouse.jpg"));
+			tSelect.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						M.setSelected(true);
+					}
+				});
+			key = KeyStroke.getKeyStroke('m');
+			tSelect.setAccelerator(key);
+			
+			JMenuItem tDrag = new JMenuItem("Drag",new ImageIcon("Icons\\drag.jpg"));
+			tDrag.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						G.setSelected(true);
+					}
+				});
+			key = KeyStroke.getKeyStroke('g');
+			tDrag.setAccelerator(key);
+			
+			JMenuItem tDelete = new JMenuItem("Delete",new ImageIcon("Icons\\delete.jpg"));
+			tDelete.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						D.setSelected(true);
+					}
+				});
+			key = KeyStroke.getKeyStroke('d');
+			tDelete.setAccelerator(key);
+			
+			tools.add(tDelete);
+			add(tDelete);
+			tools.add(tDrag);
+			add(tDrag);
+			tools.add(tSelect);
+			add(tSelect);
+			tools.add(tWire);
+			add(tWire);
+			tools.add(tPiece);
+			add(tPiece);
+			tools.addSeparator();
 			tools.add(tRotateLeft);
 			add(tRotateLeft);
 			tools.add(tRotateRight);
 			add(tRotateRight);
+			
 			
 		JMenu help = new JMenu("Help");
 			JMenuItem hIndex = new JMenuItem("Index",new ImageIcon("Icons\\info.jpg"));
@@ -855,7 +924,6 @@ public class GuiImpl implements edss.interf.Gui{
 			
 		});
 		
-		final JToggleButton L = new JToggleButton("L");
 		L.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 	    L.setMaximumSize(new Dimension(WIDTH/10, s));
 	    L.setMinimumSize(new Dimension(WIDTH/10, s));   
@@ -884,7 +952,6 @@ public class GuiImpl implements edss.interf.Gui{
 			}
 		});
 		
-		JToggleButton D = new JToggleButton("D");
 		D.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 	    D.setMaximumSize(new Dimension(WIDTH/10, s));
 	    D.setMinimumSize(new Dimension(WIDTH/10, s));
@@ -901,7 +968,6 @@ public class GuiImpl implements edss.interf.Gui{
 			
 		});
 		
-		JToggleButton G = new JToggleButton("G");
 		G.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 	    G.setMaximumSize(new Dimension(WIDTH/10, s));
 	    G.setMinimumSize(new Dimension(WIDTH/10, s));
