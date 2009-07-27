@@ -335,17 +335,21 @@ public class GuiImpl implements edss.interf.Gui{
 				{	public void actionPerformed(ActionEvent e)
 					{
 					System.out.println("Save");
-					JFileChooser chSave = new JFileChooser();
-					chSave.setDialogType(JFileChooser.SAVE_DIALOG);
-					FileFilter myFilter = new FileNameExtensionFilter("*.svg", "svg");
-					chSave.addChoosableFileFilter(myFilter);
-					chSave.showSaveDialog(mainFrame);
-					
-					if(chSave.getSelectedFile() != null)
+					if(w.size() != 0)
 					{
-						System.out.println(chSave.getSelectedFile().getAbsolutePath());
+						JFileChooser chSave = new JFileChooser();
+						chSave.setDialogType(JFileChooser.SAVE_DIALOG);
+						FileFilter myFilter = new FileNameExtensionFilter("*.svg", "svg");
+						chSave.addChoosableFileFilter(myFilter);
+						chSave.showSaveDialog(mainFrame);
+					
+						if(chSave.getSelectedFile() != null)
+						{
+							System.out.println(chSave.getSelectedFile().getAbsolutePath());
 							mediator.save(chSave.getSelectedFile().getAbsolutePath());
+						}
 					}
+					else JOptionPane.showMessageDialog(null, "There is no file to save!", "ERROR!", JOptionPane.ERROR_MESSAGE);
 					}					
 				});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
@@ -355,18 +359,21 @@ public class GuiImpl implements edss.interf.Gui{
 				fSaveAs.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
-					JFileChooser chSave = new JFileChooser();
-					chSave.setDialogType(JFileChooser.SAVE_DIALOG);
-					FileFilter myFilter = new FileNameExtensionFilter("*.svg", "svg");
-					chSave.addChoosableFileFilter(myFilter);
-					chSave.showSaveDialog(mainFrame);
-					
-					if(chSave.getSelectedFile() != null)
+					if(w.size() != 0) // conditie mai buna pe viitor
 					{
-						System.out.println(chSave.getSelectedFile().getAbsolutePath());
-							mediator.save(chSave.getSelectedFile().getAbsolutePath());
-					}
+						JFileChooser chSave = new JFileChooser();
+						chSave.setDialogType(JFileChooser.SAVE_DIALOG);
+						FileFilter myFilter = new FileNameExtensionFilter("*.svg", "svg");
+						chSave.addChoosableFileFilter(myFilter);
+						chSave.showSaveDialog(mainFrame);
 					
+						if(chSave.getSelectedFile() != null)
+						{
+							System.out.println(chSave.getSelectedFile().getAbsolutePath());
+							mediator.save(chSave.getSelectedFile().getAbsolutePath());
+						}
+					}
+					else JOptionPane.showMessageDialog(null, "There is no file to save!", "ERROR!", JOptionPane.ERROR_MESSAGE);
 					
 					System.out.println("Save as");
 					}					
@@ -620,6 +627,7 @@ public class GuiImpl implements edss.interf.Gui{
 				public void actionPerformed(ActionEvent e)
 				{
 					System.out.println("Rotate left");
+					mediator.rotate(-1);
 				}
 			});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_MASK);
@@ -631,6 +639,7 @@ public class GuiImpl implements edss.interf.Gui{
 				public void actionPerformed(ActionEvent e)
 				{
 					System.out.println("Rotate right");
+					mediator.rotate(1);
 				}
 			});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, InputEvent.CTRL_MASK);
@@ -825,8 +834,8 @@ public class GuiImpl implements edss.interf.Gui{
 				{
 					lFavorites.clearSelection();
 					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
-					P.setSelected(true);
 				}
+				P.setSelected(true);
 					
 			}
 			
@@ -843,8 +852,8 @@ public class GuiImpl implements edss.interf.Gui{
 				{
 					lCurrent.clearSelection();
 					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
-					P.setSelected(true);
 				}
+				P.setSelected(true);
 			}
 			
 		});
