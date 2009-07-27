@@ -40,7 +40,7 @@ public class Piece implements Serializable, edss.interf.Piece {
 		this.x = x;
 		this.y = y;
 		
-
+		
 		pins = new HashMap<String, Pin>();
 		properties = new HashMap<String, String>();
 		Document doc = null;

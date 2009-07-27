@@ -24,6 +24,7 @@ public class RemoveComponentCommand implements Command, Serializable {
 	@Override
 	public void unExecute() {
 		scheme.addComp(piece);
+		//scheme.getMediator().
 	}
 
 }

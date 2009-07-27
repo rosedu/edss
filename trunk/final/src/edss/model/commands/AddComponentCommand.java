@@ -18,11 +18,11 @@ public class AddComponentCommand implements Command, Serializable {
 	@Override
 	public void execute() {
 		scheme.addComp(piece);
-
 	}
 
 	@Override
 	public void unExecute() {
 		scheme.removeComp(piece.getId());
+		//scheme.getMediator().removePieceFromCanvas(piece);
 	}
 }

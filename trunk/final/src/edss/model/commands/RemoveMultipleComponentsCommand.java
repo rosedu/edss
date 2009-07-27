@@ -65,14 +65,16 @@ public class RemoveMultipleComponentsCommand implements Command, Serializable {
 	public void unExecute() {
 		Iterator<Piece> itp = pieces.iterator();
 		while(itp.hasNext()){
-			Piece pm = itp.next();
-			scheme.addComp(pm);
+			Piece piece = itp.next();
+			scheme.addComp(piece);
+			//scheme.getMediator().addPieceToCanvas(piece);
 		}
 		
 		Iterator<Wire> itw = wires.iterator();
 		while(itw.hasNext()){
 			Wire w = itw.next();
 			scheme.addWireWithoutUndo(w);
+			//scheme.getMediator().addWireToCanvas(w);
 		}
 	}
 

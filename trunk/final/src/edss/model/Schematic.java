@@ -8,9 +8,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import edss.interf.ModelMediator;
 import edss.model.commands.AddComponentCommand;
 import edss.model.commands.AddWireCommand;
 import edss.model.commands.CommandManager;
@@ -24,16 +26,24 @@ public class Schematic implements Serializable {
 	private Map<String, Piece> components;
 	private Map<String, Wire> wires;
 	private double scaled = 1;
-	private CommandManager commMan;
+	private CommandManager commandManager;
+	private ModelMediator med;
+	
+	public Schematic(ModelMediator med) {
+		this.med = med;
+		components = new HashMap<String, Piece>();
+		wires = new HashMap<String, Wire>();
+		commandManager = new CommandManager();
+	}
 	
 	public Schematic() {
 		components = new HashMap<String, Piece>();
 		wires = new HashMap<String, Wire>();
-		commMan = new CommandManager();
+		commandManager = new CommandManager();
 	}
 	
 	public void addComponent(Piece piece) {
-		commMan.doCommand(new AddComponentCommand(this, piece));
+		commandManager.doCommand(new AddComponentCommand(this, piece));
 	}
 	
 	public void addComp(Piece piece) {
@@ -41,7 +51,23 @@ public class Schematic implements Serializable {
 	}
 	
 	public void removeComponent(String id) {
-		commMan.doCommand(new RemoveComponentCommand(this, id));
+		Piece piece = components.get(id);
+		List<String> selected = new LinkedList<String>();
+		
+		selected.add(id);
+		Iterator itp = piece.getPins().values().iterator();
+		
+		while (itp.hasNext()) {
+			Pin pin = (Pin)itp.next();
+			
+			Iterator itc = pin.getConnections().iterator();
+			
+			while (itc.hasNext()) {
+				selected.add(((Connection)itc.next()).getWire().getId());
+			}
+		}
+		
+		commandManager.doCommand(new RemoveMultipleComponentsCommand(this, selected));
 	}
 	
 	public void removeComp(String id){
@@ -66,7 +92,7 @@ public class Schematic implements Serializable {
 	}
 	
 	public void removeMultipleComponents(List<String> selected){
-		commMan.doCommand(new RemoveMultipleComponentsCommand(this, selected));
+		commandManager.doCommand(new RemoveMultipleComponentsCommand(this, selected));
 	}
 	
 	public void removeMultipleComponentsWithoutUndo(List<Piece> auxComps, List<Wire>auxWires){		
@@ -85,10 +111,10 @@ public class Schematic implements Serializable {
 	}
 
 	public void addWire(String piece1, String pin1, String piece2, String pin2) {
-		commMan.doCommand(new AddWireCommand(this, piece1, pin1, piece2, pin2));
+		commandManager.doCommand(new AddWireCommand(this, piece1, pin1, piece2, pin2));
 	}
 	
-	public void addWireWithoutUndo(String piece1, String pin1, String piece2, String pin2) {
+	public Wire addWireWithoutUndo(String piece1, String pin1, String piece2, String pin2) {
 		Piece pm1 = components.get(piece1);
 		Piece pm2 = components.get(piece2);
 		Pin p1 = pm1.getPins().get(pin1);
@@ -99,6 +125,8 @@ public class Schematic implements Serializable {
 		
 		p1.addConnection(p2, w);
 		p2.addConnection(p1, w);
+		
+		return w;
 	}
 	
 	public void addWireWithoutUndo(Wire w) {
@@ -112,7 +140,7 @@ public class Schematic implements Serializable {
 	}
 	
 	public void removeWire(String id) {
-		commMan.doCommand(new RemoveWireCommand(this, id));
+		commandManager.doCommand(new RemoveWireCommand(this, id));
 	}
 	
 	public void removeWireWithoutUndo(String piece1, String pin1, String piece2, String pin2){
@@ -139,8 +167,8 @@ public class Schematic implements Serializable {
 		Wire.usedIDs.remove(id);
 	}
 	
-	public void rotateComponent(String id, int r){
-		commMan.doCommand(new RotateComponentCommand(this, id, r));
+	public void rotateComponent(int r, String id){
+		commandManager.doCommand(new RotateComponentCommand(this, id, r));
 	}
 	
 	public Map<String, Piece> getComponents() {
@@ -151,6 +179,10 @@ public class Schematic implements Serializable {
 		return wires;
 	}
 	
+	public ModelMediator getMediator() {
+		return med;
+	}
+
 	public double getScaled() {
 		return scaled;
 	}
@@ -233,11 +265,11 @@ public class Schematic implements Serializable {
 	}
 	
 	public void undo() {
-		commMan.undo();
+		commandManager.undo();
 	}
 	
 	public void redo() {
-		commMan.redo();
+		commandManager.redo();
 	}
 	
 	public String toString()

@@ -11,4 +11,6 @@ public interface Model {
 	
 	void saveScheme(String name);
 	void openScheme(String name);
+	
+	void rotate(int r, String id);
 }

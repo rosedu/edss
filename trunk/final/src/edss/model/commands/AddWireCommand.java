@@ -2,6 +2,7 @@ package edss.model.commands;
 import java.io.Serializable;
 
 import edss.model.Schematic;
+import edss.model.Wire;
 
 
 
@@ -11,6 +12,7 @@ public class AddWireCommand implements Command, Serializable {
 	String pin1;
 	String piece2;
 	String pin2;
+	Wire w;
 	
 	public AddWireCommand(Schematic scheme, String piece1, String pin1, String piece2, String pin2) {
 		this.scheme = scheme;
@@ -22,12 +24,13 @@ public class AddWireCommand implements Command, Serializable {
 	
 	@Override
 	public void execute() {
-		scheme.addWireWithoutUndo(piece1, pin1, piece2, pin2);
+		w = scheme.addWireWithoutUndo(piece1, pin1, piece2, pin2);
 	}
 
 	@Override
 	public void unExecute() {
 		scheme.removeWireWithoutUndo(piece1, pin1, piece2, pin2);
+		//scheme.getMediator().removeWireFromCanvas(w.getId());
 	}
 
 }

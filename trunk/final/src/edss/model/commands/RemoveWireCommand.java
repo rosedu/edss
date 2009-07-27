@@ -23,6 +23,7 @@ public class RemoveWireCommand implements Command {
 	public void unExecute() {
 		scheme.addWireWithoutUndo(wire.getPin1().getPiece().getId(), wire.getPin1().getId(),
 				                  wire.getPin2().getPiece().getId(), wire.getPin2().getId());
+		//scheme.getMediator().addWireToCanvas(wire);
 	}
 
 }

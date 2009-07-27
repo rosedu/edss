@@ -15,7 +15,7 @@ public class ModelImpl implements Model {
 		this.med = med;
 		med.registerModel(this);
 		
-		scheme = new Schematic();
+		scheme = new Schematic(med);
 		lastSelected = new String[3];
 	}
 	
@@ -47,16 +47,21 @@ public class ModelImpl implements Model {
 	}
 	
 	@Override
+	public void rotate(int r, String id) {
+		scheme.rotateComponent(r, id);
+	}
+	
+	@Override
 	public String getSVG() {
 		return edss.model.Piece.getSVG(lastSelected[0], lastSelected[1]);
 	}
-
+	
 	@Override
 	public void openScheme(String name) {
 		scheme = Schematic.load(name+".sch");
 		System.out.println(scheme);
 	}
-
+	
 	@Override
 	public void saveScheme(String name) {
 		scheme.save(name+".sch");
