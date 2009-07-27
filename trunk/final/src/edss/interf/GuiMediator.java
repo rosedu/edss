@@ -10,4 +10,5 @@ public interface GuiMediator {
 	public void setPiece(String name, String category, String subcategory);
 	public void save(String absolutePath);
 	public void open(String auxTBO);
+	public void rotate(int i);
 }
