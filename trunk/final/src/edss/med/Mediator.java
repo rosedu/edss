@@ -3,6 +3,8 @@ package edss.med;
 import java.io.File;
 import java.io.IOException;
 
+import javax.xml.transform.TransformerException;
+
 import edss.canvas.MyCanvas;
 import edss.canvas.StateConstant;
 import edss.interf.*;
@@ -97,11 +99,21 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 			System.out.println(res);
 			return "file:///" + res;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
+	public void save(String file)
+	{
+		try {
+			canvas.saveSVG(file + ".svg");
+			model.saveScheme(file);
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
