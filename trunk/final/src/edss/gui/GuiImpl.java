@@ -315,6 +315,7 @@ public class GuiImpl implements edss.interf.Gui{
 									centerPanel.add(n);
 									w.add(n);
 									centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
+									mediator.open(auxTBO);
 								}
 								
 							}
