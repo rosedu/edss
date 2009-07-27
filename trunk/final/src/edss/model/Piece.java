@@ -36,7 +36,7 @@ public class Piece implements Serializable, edss.interf.Piece {
 /*	protected Piece() {
 	}*/
 	
-	public Piece(String category, String subCategory, int x, int y, String model) {
+	public Piece(String category, String subCategory, String model, int x, int y) {
 		this.x = x;
 		this.y = y;
 		
