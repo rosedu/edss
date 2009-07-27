@@ -9,6 +9,8 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
+import edss.interf.GuiMediator;
+
 
 public class NewInternalFrame extends JInternalFrame {
 	
@@ -17,11 +19,12 @@ public class NewInternalFrame extends JInternalFrame {
 	private int zoomFactor = 100;
 //	private JSVGCanvas canvas;
 	
-	Mediator med = new Mediator(); 
+	GuiMediator mediator; // = new Mediator(); 
 
-	public NewInternalFrame(String s, int i)
+	public NewInternalFrame(String s, int i, final GuiMediator mediator)
 	{
 		super(s + " " + i, true, true, true, true);
+		this.mediator =  mediator;		
 		setBounds(i*10, i*10, 300, 300);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		internalPanel = new JPanel(new BorderLayout());
@@ -70,7 +73,7 @@ public class NewInternalFrame extends JInternalFrame {
 				zoomFactor = (int) ((Math.pow(2, (auxZoom - 3)) * 100));
 				System.out.println("Zoom = " + zoomFactor);
 				// zoomSlider.setValue(zoomFactor);
-				med.zoom(zoomFactor); 
+				mediator.scale(zoomFactor); 
 			}
 
 			
