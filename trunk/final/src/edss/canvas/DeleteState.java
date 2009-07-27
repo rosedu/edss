@@ -8,6 +8,10 @@ import org.w3c.dom.events.MouseEvent;
 
 public class DeleteState extends State {
 
+	public DeleteState(CanvasImpl canvas) {
+		super(canvas);
+	}
+
 	public void getMouseDownElementListener(Event evt) {
 	}
 
@@ -38,10 +42,10 @@ public class DeleteState extends State {
 		SchematicElement selectedElement ;
 		if (!target.getNodeName().equals("svg")) {
 			// fir
-			selectedElement = new Wire((Element) target.getFirstChild());
+			selectedElement = new Wire(canvas, (Element) target.getFirstChild());
 		} else {
 			// piesa
-			selectedElement = new Piece(target);
+			selectedElement = new Piece(canvas, target);
 		}
 		selectedElement.delete();
 	}

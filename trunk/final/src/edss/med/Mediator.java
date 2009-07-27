@@ -5,9 +5,14 @@ import java.io.IOException;
 
 import javax.xml.transform.TransformerException;
 
-import edss.canvas.MyCanvas;
 import edss.canvas.StateConstant;
-import edss.interf.*;
+import edss.interf.Canvas;
+import edss.interf.CanvasMediator;
+import edss.interf.Gui;
+import edss.interf.GuiMediator;
+import edss.interf.Model;
+import edss.interf.ModelMediator;
+import edss.interf.Piece;
 
 
 public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
@@ -29,6 +34,11 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	}
 	
 	@Override
+	public void registerCanvas(Canvas canvas) {
+		this.canvas = canvas;
+	}
+	
+	@Override
 	public void editPieceProperties(String id) {
 		Piece piece = model.getPiece(id);
 		gui.editPieceProperties(piece);
@@ -45,15 +55,13 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 		canvas.scale(factor);
 	}
 	
-	@Override
-	public void registerCanvas(Canvas canvas) {
-		this.canvas = canvas;
-	}
 
 	@Override
 	public void addPanel() {
-		MyCanvas canv = new MyCanvas(gui.getCenterPanel());
-		gui.getCenterPanel().add(canv.getCanvas());
+//		CanvasImpl canv = new CanvasImpl(gui.getCenterPanel());
+		canvas.setCanvasVariables(gui.getCenterPanel());
+		gui.getCenterPanel().add(canvas.getCanvas());
+//		return gui.getCenterPanel();
 	}
 
 	@Override
@@ -158,5 +166,6 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 		// canvas.delete(lastSelectedId);
 	}
 	
+
 
 }

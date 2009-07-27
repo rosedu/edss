@@ -1,7 +1,9 @@
 package edss.interf;
 
+import java.awt.Component;
 import java.io.IOException;
 
+import javax.swing.JPanel;
 import javax.xml.transform.TransformerException;
 
 public interface Canvas {
@@ -21,6 +23,9 @@ public interface Canvas {
 	public void enterInsertState();
 	public void enterDeleteState();
 
+	Component getCanvas();
+	
+	public void setCanvasVariables(JPanel guiPanel);
 	
 	//intoarce id-ul ultimei piese selectate
 	//de avut grija sa se puna la null daca se intra in alt mod

@@ -6,40 +6,34 @@ import java.io.IOException;
 import javax.xml.transform.TransformerException;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.svg.SVGDocument;
 
 
 public class Piece extends SchematicElement {
 	public Point crtPoint;
-	public Piece(Element element)
+	public Piece(CanvasImpl canvas, Element element)
 	{
-		super(element);
-		
+		super(canvas, element);
 	}
-			
-	public static void addPiece(SVGDocument document, String fileName, int cursorX, int cursorY, String id) throws IOException {
-		SVGDocument doc1 = (SVGDocument) Constant.saxFactory.createDocument(fileName);
-
-		doc1.getRootElement().setAttribute("id", id);
-
-		// adaug un tag group
-		Element g = doc1.createElementNS(Constant.svgNS, "g");
-		g.setAttribute("transform","translate(" + cursorX + "," + cursorY + ")");
-		g.appendChild(doc1.getRootElement());
-
-		// aici se unesc
-		Node x = document.importNode(g, true);
-		document.getDocumentElement().appendChild(x);
-		
-		EventTarget target = (EventTarget) document.getElementById(id);
-		target.addEventListener("mousedown", EventListenerImpl.mouseDownListener, true);
-		target.addEventListener("mouseup", EventListenerImpl.mouseUpListener, true);
-		target.addEventListener("click", EventListenerImpl.mouseClickListener, true);
-		
-
-	}
+//	//TODO scos document	
+//	public void addPiece(SVGDocument document, String fileName, int cursorX, int cursorY, String id) throws IOException {
+//		SVGDocument doc1 = (SVGDocument) Constant.saxFactory.createDocument(fileName);
+//
+//		doc1.getRootElement().setAttribute("id", id);
+//
+//		// adaug un tag group
+//		Element g = doc1.createElementNS(Constant.svgNS, "g");
+//		g.setAttribute("transform","translate(" + cursorX + "," + cursorY + ")");
+//		g.appendChild(doc1.getRootElement());
+//
+//		// aici se unesc
+//		Node x = document.importNode(g, true);
+//		document.getDocumentElement().appendChild(x);
+//		
+//		EventTarget target = (EventTarget) document.getElementById(id);
+//		target.addEventListener("mousedown", canvas.eventListener.mouseDownListener, true);
+//		target.addEventListener("mouseup", canvas.eventListener.mouseUpListener, true);
+//		target.addEventListener("click", canvas.eventListener.mouseClickListener, true);
+//	}
 	
 	@Override
 	public void move(int... destination)
@@ -48,11 +42,11 @@ public class Piece extends SchematicElement {
 		int y = destination[1];
 		int startX = (int) crtPoint.getX();
 		int startY = (int) crtPoint.getY();
-		if (Math.abs(x - startX) > PointMatrix.CELL_SIZE * Constant.matrix.scale ||	Math.abs(y - startY) > PointMatrix.CELL_SIZE * Constant.matrix.scale)
+		if (Math.abs(x - startX) > PointMatrix.CELL_SIZE * canvas.matrix.scale ||	Math.abs(y - startY) > PointMatrix.CELL_SIZE * canvas.matrix.scale)
 		{
 			if (domElement != null) {
-				int dx = MyMath.roundAtStep((x - startX)/Constant.matrix.scale, PointMatrix.CELL_SIZE);
-				int dy = MyMath.roundAtStep((y - startY)/Constant.matrix.scale, PointMatrix.CELL_SIZE);
+				int dx = MyMath.roundAtStep((x - startX)/canvas.matrix.scale, PointMatrix.CELL_SIZE);
+				int dy = MyMath.roundAtStep((y - startY)/canvas.matrix.scale, PointMatrix.CELL_SIZE);
 				String attr = ((Element) domElement.getParentNode()).getAttribute("transform");
 				TransformTag transform = new TransformTag(attr);
 				if (transform.translate != null) {
@@ -64,12 +58,12 @@ public class Piece extends SchematicElement {
 
 				((Element) domElement.getParentNode()).setAttribute("transform", transform.toString());
 
-			//	Constant.canvas.repaint();
+			//	canvas.canvas.repaint();
 				// canvas.setDoubleBuffered(true);
 				// canvas.setDoubleBufferedRendering(true);
 				crtPoint.setLocation(x, y);
 				try {
-					MyCanvas.writeSvg(Constant.domFactory, "export.svg");
+					CanvasImpl.writeSvg(canvas.domFactory, "export.svg");
 				} catch (TransformerException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -7,11 +7,21 @@ import org.w3c.dom.events.Event;
 
 
 public class StateManager {
-	static WireState wireState = new WireState();
-	static PieceState pieceState = new PieceState();
-	static InsertState insertState = new InsertState();
-	static DeleteState deleteState = new DeleteState();
+	CanvasImpl canvas;
+	WireState wireState;
+	PieceState pieceState ;
+	InsertState insertState;
+	DeleteState deleteState;
+	
 	State crtState = pieceState;
+	public StateManager(CanvasImpl canvas)
+	{
+		this.canvas = canvas;
+		wireState  = new WireState(canvas);
+		pieceState = new PieceState(canvas);
+		insertState = new InsertState(canvas);
+		deleteState = new DeleteState(canvas);
+	}
 	
 	public void enterWireState() {
 		crtState = wireState;

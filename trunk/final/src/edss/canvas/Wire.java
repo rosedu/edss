@@ -12,8 +12,9 @@ public class Wire extends SchematicElement{
 	Element endPin;
 	
 	
-	public Wire(SVGDocument document,int cursorX, int cursorY, String id)
+	public Wire(CanvasImpl canvas, SVGDocument document,int cursorX, int cursorY, String id)
 	{
+		super(canvas);
 		// add <g> <line ...>
 		Element g = document.createElementNS(Constant.svgNS, "g");
 		line = document.createElementNS(Constant.svgNS, "polyline");
@@ -28,22 +29,22 @@ public class Wire extends SchematicElement{
 		points = new WirePoints(cursorX, cursorY);
 		
 		EventTarget target = (EventTarget) g;
-		target.addEventListener("mousedown", EventListenerImpl.mouseDownListener, true);
-		target.addEventListener("mouseup", EventListenerImpl.mouseUpListener, true);
-		target.addEventListener("click", EventListenerImpl.mouseClickListener, true);
+		target.addEventListener("mousedown", canvas.eventListener.mouseDownListener, true);
+		target.addEventListener("mouseup", canvas.eventListener.mouseUpListener, true);
+		target.addEventListener("click", canvas.eventListener.mouseClickListener, true);
 	}
 
 
-	public Wire(Element element) {
-		super(element);
+	public Wire(CanvasImpl canvas, Element element) {
+		super(canvas,element);
 		points = new WirePoints(element.getAttribute("points"));
 	}
 
 
 	public void draw(int cursorX, int cursorY)
 	{
-		int roundX = MyMath.roundAtStep(cursorX / Constant.matrix.scale, PointMatrix.CELL_SIZE);
-		int roundY = MyMath.roundAtStep(cursorY / Constant.matrix.scale, PointMatrix.CELL_SIZE);
+		int roundX = MyMath.roundAtStep(cursorX / canvas.matrix.scale, PointMatrix.CELL_SIZE);
+		int roundY = MyMath.roundAtStep(cursorY / canvas.matrix.scale, PointMatrix.CELL_SIZE);
 		points.addPoint(roundX, roundY);
 		line.setAttribute("points", points.toString());
 	}
@@ -52,9 +53,6 @@ public class Wire extends SchematicElement{
 
 	@Override
 	public void move(int... destination) {
-//		if (selectedSegment == null) {
-//			throw new Exception(displayError()); 
-//		}
 		// TODO : rotunjire destination[0]
 		
 		if (selectedSegment.direction == Segment.VERTICAL) {

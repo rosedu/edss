@@ -14,6 +14,10 @@ public class WireState extends State {
 
 	static Wire wire;
 	
+	public WireState(CanvasImpl canvas) {
+		super(canvas);
+	}
+	
 	public void getMouseDownElementListener(Event evt) {
 		// TODO Auto-generated method stub
 		
@@ -60,7 +64,7 @@ public class WireState extends State {
 		if (pin.getAttribute("id").contains("pin")) {
 			DOMMouseEvent mouseEvent = (DOMMouseEvent) evt;
 			if (wire == null) {
-				wire = new Wire(Constant.domFactory, (int) (mouseEvent.getClientX() / Constant.matrix.scale), (int) (mouseEvent.getClientY() / Constant.matrix.scale), null);
+				wire = new Wire(canvas, canvas.domFactory, (int) (mouseEvent.getClientX() / canvas.matrix.scale), (int) (mouseEvent.getClientY() / canvas.matrix.scale), null);
 				wire.startPin = pin;
 				return;
 			} else {
@@ -83,7 +87,7 @@ public class WireState extends State {
 	public void getMouseOutElementListener(Event evt) {
 		Element pin = (Element) evt.getTarget();
 		if (pin.getAttribute("id").contains("pin")) {
-			Constant.panel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			canvas.guiPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}		
 	}
 
@@ -91,7 +95,7 @@ public class WireState extends State {
 		Element pin = (Element) evt.getTarget();
 		System.out.println("MouseOverElement");
 		if (pin.getAttribute("id").contains("pin")) {
-			Constant.panel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+			canvas.guiPanel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 		}		
 	}
 }

@@ -1,44 +1,27 @@
 package edss.gui;
 import java.awt.BorderLayout;
-import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.SplashScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.beans.PropertyChangeListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.Vector;
 
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.DefaultListModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -48,12 +31,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-import javax.swing.Scrollable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -87,10 +68,7 @@ import org.jvnet.substance.skin.SubstanceRavenLookAndFeel;
 import org.jvnet.substance.skin.SubstanceSaharaLookAndFeel;
 import org.jvnet.substance.skin.SubstanceTwilightLookAndFeel;
 
-import edss.canvas.Constant;
-import edss.canvas.State;
 import edss.canvas.StateConstant;
-import edss.interf.Gui;
 import edss.interf.GuiMediator;
 
 // import com.jgoodies.forms.factories.Borders;
@@ -144,47 +122,47 @@ public class GuiImpl implements edss.interf.Gui{
 	{
 		// this.mediator = mediator;
 		edss.gui.Configuration cf = new edss.gui.Configuration("config.xml");
-		int skin = cf.skinId;
+		final int skin = cf.skinId;
 		// ParseDatabase dataBase = new ParseDatabase("database.xml");
-		try {
-			switch(skin)
-			{
-			case 0 : UIManager.setLookAndFeel(new SubstanceAutumnLookAndFeel()); break;
-			case 1 : UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel()); break;
-			case 2 : UIManager.setLookAndFeel(new SubstanceBusinessBlueSteelLookAndFeel()); break;
-			case 3 : UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel()); break;
-			case 4 : UIManager.setLookAndFeel(new SubstanceChallengerDeepLookAndFeel()); break;
-			case 5 : UIManager.setLookAndFeel(new SubstanceCremeLookAndFeel()); break;
-			case 6 : UIManager.setLookAndFeel(new SubstanceCremeCoffeeLookAndFeel()); break;
-			case 7 : UIManager.setLookAndFeel(new SubstanceDustLookAndFeel()); break;
-			case 8 : UIManager.setLookAndFeel(new SubstanceDustCoffeeLookAndFeel()); break;
-			case 9 : UIManager.setLookAndFeel(new SubstanceEmeraldDuskLookAndFeel()); break;
-			case 10 : UIManager.setLookAndFeel(new SubstanceMagmaLookAndFeel()); break;
-			case 11 : UIManager.setLookAndFeel(new SubstanceMistAquaLookAndFeel()); break;
-			case 12 : UIManager.setLookAndFeel(new SubstanceMistSilverLookAndFeel()); break;
-			case 13 : UIManager.setLookAndFeel(new SubstanceModerateLookAndFeel()); break;
-			case 14 : UIManager.setLookAndFeel(new SubstanceNebulaLookAndFeel()); break;
-			case 15 : UIManager.setLookAndFeel(new SubstanceNebulaBrickWallLookAndFeel()); break;
-			case 16 : UIManager.setLookAndFeel(new SubstanceOfficeBlue2007LookAndFeel()); break;
-			case 17 : UIManager.setLookAndFeel(new SubstanceOfficeSilver2007LookAndFeel()); break;
-			case 18 : UIManager.setLookAndFeel(new SubstanceRavenLookAndFeel()); break;
-			case 19 : UIManager.setLookAndFeel(new SubstanceRavenGraphiteLookAndFeel()); break;
-			case 20 : UIManager.setLookAndFeel(new SubstanceRavenGraphiteGlassLookAndFeel()); break;
-			case 21 : UIManager.setLookAndFeel(new SubstanceSaharaLookAndFeel()); break;
-			case 22 : UIManager.setLookAndFeel(new SubstanceTwilightLookAndFeel()); break;
-			default : UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
-			}
-			
-			//UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
-		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JFrame.setDefaultLookAndFeelDecorated(true);
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-
+				try {
+					switch(skin)
+					{
+					case 0 : UIManager.setLookAndFeel(new SubstanceAutumnLookAndFeel()); break;
+					case 1 : UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel()); break;
+					case 2 : UIManager.setLookAndFeel(new SubstanceBusinessBlueSteelLookAndFeel()); break;
+					case 3 : UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel()); break;
+					case 4 : UIManager.setLookAndFeel(new SubstanceChallengerDeepLookAndFeel()); break;
+					case 5 : UIManager.setLookAndFeel(new SubstanceCremeLookAndFeel()); break;
+					case 6 : UIManager.setLookAndFeel(new SubstanceCremeCoffeeLookAndFeel()); break;
+					case 7 : UIManager.setLookAndFeel(new SubstanceDustLookAndFeel()); break;
+					case 8 : UIManager.setLookAndFeel(new SubstanceDustCoffeeLookAndFeel()); break;
+					case 9 : UIManager.setLookAndFeel(new SubstanceEmeraldDuskLookAndFeel()); break;
+					case 10 : UIManager.setLookAndFeel(new SubstanceMagmaLookAndFeel()); break;
+					case 11 : UIManager.setLookAndFeel(new SubstanceMistAquaLookAndFeel()); break;
+					case 12 : UIManager.setLookAndFeel(new SubstanceMistSilverLookAndFeel()); break;
+					case 13 : UIManager.setLookAndFeel(new SubstanceModerateLookAndFeel()); break;
+					case 14 : UIManager.setLookAndFeel(new SubstanceNebulaLookAndFeel()); break;
+					case 15 : UIManager.setLookAndFeel(new SubstanceNebulaBrickWallLookAndFeel()); break;
+					case 16 : UIManager.setLookAndFeel(new SubstanceOfficeBlue2007LookAndFeel()); break;
+					case 17 : UIManager.setLookAndFeel(new SubstanceOfficeSilver2007LookAndFeel()); break;
+					case 18 : UIManager.setLookAndFeel(new SubstanceRavenLookAndFeel()); break;
+					case 19 : UIManager.setLookAndFeel(new SubstanceRavenGraphiteLookAndFeel()); break;
+					case 20 : UIManager.setLookAndFeel(new SubstanceRavenGraphiteGlassLookAndFeel()); break;
+					case 21 : UIManager.setLookAndFeel(new SubstanceSaharaLookAndFeel()); break;
+					case 22 : UIManager.setLookAndFeel(new SubstanceTwilightLookAndFeel()); break;
+					default : UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
+					}
+					
+					//UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
+				} catch (UnsupportedLookAndFeelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				JFrame.setDefaultLookAndFeelDecorated(true);
 				auxMeth(mediator);
 		
 			}

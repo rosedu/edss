@@ -16,8 +16,8 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Mediator mediator = new Mediator();
-		Canvas canvas = new CanvasImpl(mediator); 
 		Gui gui = new GuiImpl(mediator);
+		Canvas canvas = new CanvasImpl(mediator); 
 		Model model = new ModelImpl(mediator);
 	}
 

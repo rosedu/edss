@@ -13,16 +13,19 @@ import edss.interf.CanvasMediator;
 
 
 public class Constant {
-	static CanvasMediator mediator;
-	static PointMatrix matrix = new PointMatrix();
-	
 	static String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 	static String parser = XMLResourceDescriptor.getXMLParserClassName();
 	static SAXSVGDocumentFactory saxFactory = new SAXSVGDocumentFactory(parser);
-	static DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-	static SVGDocument domFactory = (SVGDocument) impl.createDocument(svgNS, "svg", null);
 	
-	static JSVGCanvas canvas = new JSVGCanvas();
-	static JPanel panel;
-	static StateManager stateManager = new StateManager();
+	
+	CanvasMediator mediator;
+	StateManager stateManager = new StateManager((CanvasImpl) this);
+	JPanel guiPanel;
+	
+	PointMatrix matrix = new PointMatrix();
+	JSVGCanvas canvas = new JSVGCanvas();
+	
+	DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
+	SVGDocument domFactory = (SVGDocument) impl.createDocument(svgNS, "svg", null);
+	
 }

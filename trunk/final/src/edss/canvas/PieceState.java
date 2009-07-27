@@ -13,19 +13,24 @@ public class PieceState extends State {
 	public static SchematicElement selectedElement;
 	public static SchematicElement movedElement;
 	
+	public PieceState(CanvasImpl canvas) {
+		super(canvas);
+	}
+
+
 	public void getMouseDownElementListener(Event evt) {
 		Element target = (Element) evt.getCurrentTarget();
 		DOMMouseEvent mouseEvent = (DOMMouseEvent) evt;
 //		if (target.getElementsByTagName("svg").getLength() == 0) {
 		if (!target.getNodeName().equals("svg")) {
 			// fir
-			movedElement = new Wire((Element) target.getFirstChild());
+			movedElement = new Wire(canvas, (Element) target.getFirstChild());
 			((Wire) movedElement).selectedSegment = ((Wire) movedElement).points.getSegment(mouseEvent.getClientX(),
 																						mouseEvent.getClientY());
 			System.out.println("down fir");
 		} else {
 			// piesa
-			movedElement = new Piece(target);
+			movedElement = new Piece(canvas, target);
 			((Piece) movedElement).crtPoint = new Point(mouseEvent.getClientX(), mouseEvent.getClientY()); 
 			System.out.println("down piesa");
 		}		
@@ -68,10 +73,10 @@ public class PieceState extends State {
 		Element target = (Element) evt.getCurrentTarget();
 		if (!target.getNodeName().equals("svg")) {
 			// fir
-			selectedElement = new Wire((Element) target.getFirstChild());
+			selectedElement = new Wire(canvas, (Element) target.getFirstChild());
 		} else {
 			// piesa
-			selectedElement = new Piece(target);
+			selectedElement = new Piece(canvas, target);
 		}
 		
 	}

@@ -4,16 +4,21 @@ import org.w3c.dom.Element;
 
 
 public abstract class SchematicElement {
+	CanvasImpl canvas;
 	Element domElement;
 	
-	public SchematicElement() {
+	public SchematicElement(CanvasImpl canvas) {
 		domElement = null;
+		this.canvas = canvas;
 	}
 	
-	public SchematicElement(Element element)
+	public SchematicElement(CanvasImpl canvas,Element element)
 	{
+		this.canvas = canvas;
 		domElement = element;
 	}
+
+
 	public void delete() {
 
 		System.out.println("ss");
@@ -24,7 +29,6 @@ public abstract class SchematicElement {
 			domElement = null;
 		} else {
 			System.out.println("null");
-//			throw new Exception(displayError());
 		}
 	}
 

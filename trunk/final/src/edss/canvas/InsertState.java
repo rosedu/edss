@@ -7,6 +7,10 @@ import java.io.IOException;
 import org.w3c.dom.events.Event;
 
 public class InsertState extends State {
+	public InsertState(CanvasImpl canvas) {
+		super(canvas);
+	}
+
 	public void getMouseDownElementListener(Event evt) {
 	}
 
@@ -26,15 +30,18 @@ public class InsertState extends State {
 	}
 
 	public void getMouseClickedCanvasListener(MouseEvent arg0) {
-		String fileName = Constant.mediator.getSVG();
-		int roundX = MyMath.roundAtStep(arg0.getX() / Constant.matrix.scale, PointMatrix.CELL_SIZE);
-		int roundY = MyMath.roundAtStep(arg0.getY() / Constant.matrix.scale, PointMatrix.CELL_SIZE);
-		String id = Constant.mediator.addPiece(roundX, roundY);
-		try {
-			Piece.addPiece(Constant.domFactory, fileName, roundX, roundY, id);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		System.out.println(canvas);
+		int roundX = MyMath.roundAtStep(arg0.getX() / canvas.matrix.scale, PointMatrix.CELL_SIZE);
+		int roundY = MyMath.roundAtStep(arg0.getY() / canvas.matrix.scale, PointMatrix.CELL_SIZE);
+		String id = canvas.mediator.addPiece(roundX, roundY);
+		if (id != null) {
+			String fileName = canvas.mediator.getSVG();
+			try {
+				canvas.addPiece(canvas.domFactory, fileName, roundX, roundY, id);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

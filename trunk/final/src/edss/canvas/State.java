@@ -6,6 +6,12 @@ import java.awt.event.MouseEvent;
 import org.w3c.dom.events.Event;
 
 public class State {
+	CanvasImpl canvas;
+	
+	public State(CanvasImpl canvas) {
+		this.canvas = canvas;
+	}
+	
 	public void getMouseDownElementListener(Event evt) {
 		// TODO Auto-generated method stub
 		
