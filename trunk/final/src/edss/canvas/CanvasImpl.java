@@ -268,6 +268,11 @@ public class CanvasImpl extends Constant implements Canvas {
 		target.addEventListener("mouseup", eventListener.mouseUpListener, true);
 		target.addEventListener("click", eventListener.mouseClickListener, true);
 	}
+	@Override
+	public String getLastSelectedPieceId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
 
