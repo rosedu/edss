@@ -22,6 +22,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -97,6 +98,7 @@ import edss.interf.GuiMediator;
 // Main Class
 public class GuiImpl implements edss.interf.Gui{
 	
+	public String fileName;
 	public Vector v = new Vector();
 	public int i = 0;
 	public final String	CONFIG_FILE = "config.xml";
@@ -266,7 +268,7 @@ public class GuiImpl implements edss.interf.Gui{
 				fNew.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
-					NewInternalFrame newInternalFrame = new NewInternalFrame("New project", coordonates++, mediator);
+					NewInternalFrame newInternalFrame = new NewInternalFrame("New project", coordonates++, mediator, null);
 					centerPanel.add(newInternalFrame);
 					w.add(newInternalFrame);
 					centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
@@ -286,14 +288,41 @@ public class GuiImpl implements edss.interf.Gui{
 				fOpen.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
-					System.out.println("Open");
-					JFileChooser chOpen = new JFileChooser();
-					FileFilter myFilter = new FileNameExtensionFilter("*.svg", "svg");
-					chOpen.addChoosableFileFilter(myFilter);
-					chOpen.showOpenDialog(mainFrame);
+						System.out.println("Open");
+						JFileChooser chOpen = new JFileChooser();
+						FileFilter myFilter1 = new FileNameExtensionFilter("*.svg", "svg");
+						FileFilter myFilter2 = new FileNameExtensionFilter("*.sch", "sch");
+						chOpen.addChoosableFileFilter(myFilter1);
+						chOpen.addChoosableFileFilter(myFilter2);
+						chOpen.showOpenDialog(mainFrame);
 					
-					if(chOpen.getSelectedFile() != null)
-						System.out.println(chOpen.getSelectedFile().getAbsolutePath());
+						if(chOpen.getSelectedFile() != null)
+						{
+							System.out.println(chOpen.getSelectedFile().getAbsolutePath());
+							String toBeOpened = chOpen.getSelectedFile().getAbsolutePath();
+							if(toBeOpened.contains(".svg") || toBeOpened.contains(".sch"))
+							{
+								String auxTBO = "";
+								for(int i=0; i<toBeOpened.length()-4; i++)
+									auxTBO = auxTBO + toBeOpened.charAt(i);
+								File f1 = new File(auxTBO + ".sch");
+								File f2 = new File(auxTBO + ".svg");
+								if(f1.exists() == false || f2.exists() == false)
+									JOptionPane.showMessageDialog(null, "File missing", "ERROR!", JOptionPane.ERROR_MESSAGE);
+								else
+								{
+									NewInternalFrame n = new NewInternalFrame("New project", coordonates++, mediator, auxTBO);
+									centerPanel.add(n);
+									w.add(n);
+									centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
+								}
+								
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(null, "File type not suportted", "ERROR!", JOptionPane.ERROR_MESSAGE);
+							}
+						}
 					}					
 				});
 			
@@ -305,6 +334,17 @@ public class GuiImpl implements edss.interf.Gui{
 				{	public void actionPerformed(ActionEvent e)
 					{
 					System.out.println("Save");
+					JFileChooser chSave = new JFileChooser();
+					chSave.setDialogType(JFileChooser.SAVE_DIALOG);
+					FileFilter myFilter = new FileNameExtensionFilter("*.svg", "svg");
+					chSave.addChoosableFileFilter(myFilter);
+					chSave.showSaveDialog(mainFrame);
+					
+					if(chSave.getSelectedFile() != null)
+					{
+						System.out.println(chSave.getSelectedFile().getAbsolutePath());
+							mediator.save(chSave.getSelectedFile().getAbsolutePath());
+					}
 					}					
 				});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
@@ -324,11 +364,10 @@ public class GuiImpl implements edss.interf.Gui{
 					{
 						System.out.println(chSave.getSelectedFile().getAbsolutePath());
 							mediator.save(chSave.getSelectedFile().getAbsolutePath());
-						// System.out.println(chSave.getFileSelectionMode());
 					}
 					
 					
-					// System.out.println("Save as");
+					System.out.println("Save as");
 					}					
 				});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.SHIFT_MASK);
