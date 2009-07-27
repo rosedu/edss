@@ -48,8 +48,8 @@ public class Piece implements Serializable, edss.interf.Piece {
 		
 		//-------------------------------------------------------------------
 		//-------------------------------------------------------------------
-		String componentFileName = "components\\" + category + "\\" + subCategory +
-									"\\" + subCategory + ".xml";
+		String componentFileName = "components/" + category + "/" + subCategory +
+									"/" + subCategory + ".xml";
 		
 		File f = new File(componentFileName);
 		try {
@@ -157,8 +157,8 @@ public class Piece implements Serializable, edss.interf.Piece {
 	}
 	
 	public static String getSVG(String category, String subCategory) {
-		String componentFileName = "components\\" + category + "\\" + subCategory +
-		"\\" + subCategory + ".xml";
+		String componentFileName = "components/" + category + "/" + subCategory +
+		"/" + subCategory + ".xml";
 		Document doc = null;
 
 		File f = new File(componentFileName);
