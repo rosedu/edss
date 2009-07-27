@@ -8,4 +8,5 @@ public interface GuiMediator {
 	public void addPanel();
 	public void enterState(int c);
 	public void setPiece(String name, String category, String subcategory);
+	public void save(String absolutePath);
 }
