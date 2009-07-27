@@ -126,5 +126,10 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	 		e.printStackTrace();
 		}
 	}
+	
+	public void rotate(int r)
+	{
+		canvas.rotate(r);
+	}
 
 }
