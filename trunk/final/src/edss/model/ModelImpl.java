@@ -36,13 +36,26 @@ public class ModelImpl implements Model {
 		lastSelected[2] = name;
 	}
 	
+	@Override
 	public String addPiece(int x, int y) {
 		edss.model.Piece p = new edss.model.Piece(lastSelected[0], lastSelected[1], lastSelected[2], x, y);
 		scheme.addComponent(p);
 		return p.getId();
 	}
 	
+	@Override
 	public String getSVG() {
 		return edss.model.Piece.getSVG(lastSelected[0], lastSelected[1]);
+	}
+
+	@Override
+	public void openScheme(String name) {
+		scheme = Schematic.load(name+".sch");
+		System.out.println(scheme);
+	}
+
+	@Override
+	public void saveScheme(String name) {
+		scheme.save(name+".sch");
 	}
 }
