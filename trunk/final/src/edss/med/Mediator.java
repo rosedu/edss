@@ -107,8 +107,16 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	public void save(String file)
 	{
 		try {
-			canvas.saveSVG(file + ".svg");
-			model.saveScheme(file);
+			if(file.contains(".svg"))
+			{
+				canvas.saveSVG(file);
+				model.saveScheme(file.substring(0, file.lastIndexOf('.')));
+			}
+			else
+			{
+				canvas.saveSVG(file + ".svg");
+				model.saveScheme(file);
+			}
 		} catch (TransformerException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
