@@ -62,6 +62,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apache.batik.transcoder.TranscoderException;
 import org.jvnet.substance.skin.SubstanceAutumnLookAndFeel;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
 import org.jvnet.substance.skin.SubstanceBusinessBlueSteelLookAndFeel;
@@ -337,16 +338,33 @@ public class GuiImpl implements edss.interf.Gui{
 					System.out.println("Save");
 					if(getActiveFrame() != null)
 					{
-						JFileChooser chSave = new JFileChooser();
-						chSave.setDialogType(JFileChooser.SAVE_DIALOG);
-						FileFilter myFilter = new FileNameExtensionFilter("*.svg", "svg");
-						chSave.addChoosableFileFilter(myFilter);
-						chSave.showSaveDialog(mainFrame);
-					
-						if(chSave.getSelectedFile() != null)
+						if(getActiveFrame().fileName != null)
 						{
-							System.out.println(chSave.getSelectedFile().getAbsolutePath());
-							mediator.save(chSave.getSelectedFile().getAbsolutePath());
+							// System.out.println(getActiveFrame().fileName);
+							String aux = getActiveFrame().fileName.substring(0, getActiveFrame().fileName.lastIndexOf('.'));
+							mediator.save(aux);
+						}
+						else
+						{
+							JFileChooser chSave = new JFileChooser();
+							chSave.setDialogType(JFileChooser.SAVE_DIALOG);
+							FileFilter myFilter = new FileNameExtensionFilter("*.svg", "svg");
+							chSave.addChoosableFileFilter(myFilter);
+							chSave.showSaveDialog(mainFrame);
+						
+							if(chSave.getSelectedFile() != null)
+							{
+								System.out.println(chSave.getSelectedFile().getAbsolutePath());
+								if(chSave.getSelectedFile().getAbsolutePath().contains(".svg"))
+								{
+									getActiveFrame().fileName = chSave.getSelectedFile().getAbsolutePath();
+								}
+								else
+								{
+									getActiveFrame().fileName = chSave.getSelectedFile().getAbsolutePath() + ".svg";
+								}
+								mediator.save(chSave.getSelectedFile().getAbsolutePath());
+							}
 						}
 					}
 					else JOptionPane.showMessageDialog(null, "There is no file to save!", "ERROR!", JOptionPane.ERROR_MESSAGE);
@@ -385,7 +403,19 @@ public class GuiImpl implements edss.interf.Gui{
 			fExportToPdf.addActionListener(new ActionListener() 
 			{	public void actionPerformed(ActionEvent e)
 				{
-				System.out.println("SExport to pdf");
+					System.out.println("Export to pdf");
+					if(getActiveFrame() != null && getActiveFrame().fileName != null)
+					{
+					ExampleSVG2PDF pdf = new ExampleSVG2PDF();
+					try {
+						pdf.convertSVG2PDF(new File(getActiveFrame().fileName), new File(getActiveFrame().fileName.substring(0, getActiveFrame().fileName.lastIndexOf('.')) + ".pdf"));
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					} catch (TranscoderException e1) {
+						e1.printStackTrace();
+					}
+					}
+					else JOptionPane.showMessageDialog(null, "You fail!", "ERROR!", JOptionPane.ERROR_MESSAGE);
 				}					
 			});
 		key = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK);
