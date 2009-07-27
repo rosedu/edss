@@ -38,6 +38,9 @@ public class ModelImpl implements Model {
 	
 	@Override
 	public String addPiece(int x, int y) {
+		if (lastSelected[0] == null)
+			return null;
+		
 		edss.model.Piece p = new edss.model.Piece(lastSelected[0], lastSelected[1], lastSelected[2], x, y);
 		scheme.addComponent(p);
 		return p.getId();
