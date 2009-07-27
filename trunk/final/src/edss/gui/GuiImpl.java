@@ -266,7 +266,7 @@ public class GuiImpl implements edss.interf.Gui{
 				fNew.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
-					NewInternalFrame newInternalFrame = new NewInternalFrame("New project", coordonates++);
+					NewInternalFrame newInternalFrame = new NewInternalFrame("New project", coordonates++, mediator);
 					centerPanel.add(newInternalFrame);
 					w.add(newInternalFrame);
 					centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
