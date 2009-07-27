@@ -21,5 +21,10 @@ public interface Canvas {
 	public void enterInsertState();
 	public void enterDeleteState();
 
+	
+	//intoarce id-ul ultimei piese selectate
+	//de avut grija sa se puna la null daca se intra in alt mod
+	String getLastSelectedPieceId();
+
 
 }
