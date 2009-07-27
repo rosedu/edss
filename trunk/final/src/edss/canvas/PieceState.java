@@ -3,7 +3,6 @@ package edss.canvas;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 import org.apache.batik.dom.events.DOMMouseEvent;
 import org.w3c.dom.Element;
@@ -57,24 +56,12 @@ public class PieceState extends State {
 	}
 
 	public void getMouseEnteredCanvasListener(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseClickedCanvasListener(MouseEvent arg0) {
-//		System.out.println("mouseClicked Canvas - piece mode");
-//		try {
-//			Piece.addPiece(Constant.domFactory, "file:///C:/My Documents 1/EDSS/svn/branches/model/svg/bjt_npn.svg", arg0.getX(), arg0.getY(), "dsacascadsca" + Math.random());
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
 	}
 
 	public void getMouseMovedListener(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseClickElementListener(Event evt) {
@@ -91,33 +78,21 @@ public class PieceState extends State {
 
 	public void getMouseUpElementListener(Event evt) {
 		movedElement = null;
-		
 	}
 
 	public void getMouseOutElementListener(Event evt) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getMouseOverElementListener(Event evt) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void getKeyTypedListener(KeyEvent arg0) {
 		switch(arg0.getKeyChar())
 		{
 		case 127:
-			System.out.println("key - DEL");
-//			try {
-				System.out.println("key - DEL");
-				System.out.println(selectedElement);
-				selectedElement.delete();
-//			} catch (Exception e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			selectedElement.delete();
 			break;
+		
 		}
 	}
 }

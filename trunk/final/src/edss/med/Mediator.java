@@ -64,6 +64,7 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 			canvas.enterInsertState();
 			break;
 		case StateConstant.DELETESTATE :
+			canvas.enterDeleteState();
 			break;
 		case StateConstant.DRAGSTATE :
 			break;
@@ -93,7 +94,6 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 
 	@Override
 	public String getSVG() {
-//		String crtDir = ;
 		try {
 			String res = new File("svg/" + model.getSVG()).getCanonicalPath();
 			System.out.println(res);

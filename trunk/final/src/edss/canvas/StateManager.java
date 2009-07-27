@@ -7,10 +7,10 @@ import org.w3c.dom.events.Event;
 
 
 public class StateManager {
-	private static WireState wireState = new WireState();
-	private static PieceState pieceState = new PieceState();
-	private static InsertState insertState = new InsertState();
-
+	static WireState wireState = new WireState();
+	static PieceState pieceState = new PieceState();
+	static InsertState insertState = new InsertState();
+	static DeleteState deleteState = new DeleteState();
 	State crtState = pieceState;
 	
 	public void enterWireState() {
@@ -23,6 +23,9 @@ public class StateManager {
 	
 	public void enterInsertState() {
 		crtState = insertState;
+	}
+	public void enterDeleteState() {
+		crtState = deleteState;
 	}
 
 	public void getMouseDownElementListener(Event evt) {

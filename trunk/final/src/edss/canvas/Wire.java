@@ -31,47 +31,12 @@ public class Wire extends SchematicElement{
 		target.addEventListener("mousedown", EventListenerImpl.mouseDownListener, true);
 		target.addEventListener("mouseup", EventListenerImpl.mouseUpListener, true);
 		target.addEventListener("click", EventListenerImpl.mouseClickListener, true);
-		
-		
-/*		//event listener pe line
-		NodeList nl = document.getRootElement().getElementsByTagName("polyline");
-		EventTarget t = (EventTarget) nl.item(nl.getLength() - 1).getParentNode();
-		
-		
-		
-		
-		// TODO : de verificat
-//		EventTarget t = (EventTarget) g;
-		t.addEventListener("click", new ClickEventListener(), true); 
-//				new EventListener() {
-//
-//			@Override
-//			public void handleEvent(Event evt) {
-//				System.out.println("click pa fir");
-//				selected = ((Element) evt.getCurrentTarget());
-//
-//			}
-//		}, true);
-
-		t.addEventListener("mousedown", new MouseDownListener(), true); 
-//				new EventListener() {
-//
-//			@Override
-//			public void handleEvent(Event evt) {
-//				System.out.println("fir selectat");
-//				wireSelected = new WirePoints(((Element) evt.getCurrentTarget()).getAttribute("points"));
-//				DOMMouseEvent mouseEvent = (DOMMouseEvent) evt;
-//				segmentSelected = wireSelected.getSegment(mouseEvent.getClientX(), mouseEvent.getClientY());
-//			}
-//		}, true);
-*/		
 	}
 
 
 	public Wire(Element element) {
 		super(element);
 		points = new WirePoints(element.getAttribute("points"));
-
 	}
 
 

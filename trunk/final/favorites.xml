@@ -1,3 +1,33 @@
 <?xml version="1.0" ?>
 <favorites>
+	<piece>
+		<category>transistors</category>
+		<subcategory>mos_dp</subcategory>
+		<name>generic_mos_dp</name>
+	</piece>
+	<piece>
+		<category>transistors</category>
+		<subcategory>mos_ep</subcategory>
+		<name>generic_mos_ep</name>
+	</piece>
+	<piece>
+		<category>transistors</category>
+		<subcategory>mos_dn</subcategory>
+		<name>generic_mos_dn</name>
+	</piece>
+	<piece>
+		<category>basic</category>
+		<subcategory>capacitor</subcategory>
+		<name>1u</name>
+	</piece>
+	<piece>
+		<category>basic</category>
+		<subcategory>resistor</subcategory>
+		<name>1K</name>
+	</piece>
+	<piece>
+		<category>diodes</category>
+		<subcategory>schottky</subcategory>
+		<name>1N5711</name>
+	</piece>
 </favorites>

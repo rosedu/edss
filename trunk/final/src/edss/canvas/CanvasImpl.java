@@ -13,6 +13,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 
 import edss.interf.Canvas;
@@ -76,17 +77,48 @@ public class CanvasImpl implements Canvas {
 		Constant.stateManager.enterWireState();
 		
 	}
+	
+	@Override
+	public void enterDeleteState() {
+		Constant.stateManager.enterDeleteState();
+		
+	}
 
+
+
+	
 	@Override
 	public void rotate(int angle) {
-		// TODO Auto-generated method stub
-		
+		if (Constant.stateManager.crtState == StateManager.pieceState)
+		{
+			Element selected = PieceState.selectedElement.domElement;
+			System.out.println(selected);
+			if (selected!= null) {
+				String attr = selected.getAttribute("transform");
+				TransformTag tr = new TransformTag(attr);
+
+				if (tr.rotate == null) {
+					tr.rotate = new Rotate(90, 0, 0);
+				} else {
+					tr.rotate.angle += angle;
+					tr.rotate.angle %= 360;
+				}
+
+				if (tr.rotate.angle == 0) {
+					tr.rotate = null;
+				} else {
+					// TODO : eventual de gasit centrul
+					tr.rotate.x = PointMatrix.CELL_SIZE;
+					tr.rotate.y = PointMatrix.CELL_SIZE;
+				}
+				selected.setAttribute("transform", tr.toString());
+			}		
+		}
 	}
 	
 	@Override
 	public void openSVG(String fileName) throws IOException {
-		Constant.domFactory = (SVGDocument) Constant.saxFactory.createDocument(fileName);
-		
+		Constant.domFactory = (SVGDocument) Constant.saxFactory.createDocument("file:///" + fileName);
 	}
 
 	@Override
@@ -105,5 +137,6 @@ public class CanvasImpl implements Canvas {
 		out.write(xmlString);
 		out.close();		
 	}
+
 
 }

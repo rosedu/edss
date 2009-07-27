@@ -60,7 +60,7 @@ public class WireState extends State {
 		if (pin.getAttribute("id").contains("pin")) {
 			DOMMouseEvent mouseEvent = (DOMMouseEvent) evt;
 			if (wire == null) {
-				wire = new Wire(Constant.domFactory, mouseEvent.getClientX(), mouseEvent.getClientY(), null);
+				wire = new Wire(Constant.domFactory, (int) (mouseEvent.getClientX() / Constant.matrix.scale), (int) (mouseEvent.getClientY() / Constant.matrix.scale), null);
 				wire.startPin = pin;
 				return;
 			} else {
@@ -89,6 +89,7 @@ public class WireState extends State {
 
 	public void getMouseOverElementListener(Event evt) {
 		Element pin = (Element) evt.getTarget();
+		System.out.println("MouseOverElement");
 		if (pin.getAttribute("id").contains("pin")) {
 			Constant.panel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 		}		

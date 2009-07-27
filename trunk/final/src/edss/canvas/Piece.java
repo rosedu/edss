@@ -48,7 +48,7 @@ public class Piece extends SchematicElement {
 		int y = destination[1];
 		int startX = (int) crtPoint.getX();
 		int startY = (int) crtPoint.getY();
-		if (Math.abs(x - startX) > PointMatrix.CELL_SIZE ||	Math.abs(y - startY) > PointMatrix.CELL_SIZE )
+		if (Math.abs(x - startX) > PointMatrix.CELL_SIZE * Constant.matrix.scale ||	Math.abs(y - startY) > PointMatrix.CELL_SIZE * Constant.matrix.scale)
 		{
 			if (domElement != null) {
 				int dx = MyMath.roundAtStep((x - startX)/Constant.matrix.scale, PointMatrix.CELL_SIZE);
