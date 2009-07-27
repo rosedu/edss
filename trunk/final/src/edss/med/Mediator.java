@@ -137,7 +137,26 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	
 	public void rotate(int r)
 	{
-		canvas.rotate(r);
+		//String lastSelectedId=canvas.getLastSelectedPiece();
+		
+		//DE AVUT grija sa se faca null la loc cand se intra in alt mod!!!
+	/*	
+		if (lastSelectedId!=null) {
+		canvas.rotate(r,lastSelectedId);
+		model.rotate(r,lastSelectedId);
+		}
+	 */
+		
+		
 	}
+	
+	
+	
+	public void delete(String lastSelectedId)
+	{
+		// model.delete(lastSelectedId);
+		// canvas.delete(lastSelectedId);
+	}
+	
 
 }
