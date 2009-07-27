@@ -131,7 +131,7 @@ public class GuiImpl implements edss.interf.Gui{
 	
 	final JToggleButton P = new JToggleButton("Piece");
 	final JToggleButton N = new JToggleButton("Wire");
-	final JToggleButton M = new JToggleButton("Mousse");
+	final JToggleButton M = new JToggleButton("Mouse");
 	final JToggleButton L = new JToggleButton("Library");
 	final JToggleButton D = new JToggleButton("Delete");
 	final JToggleButton G = new JToggleButton("Drag");
@@ -607,7 +607,7 @@ public class GuiImpl implements edss.interf.Gui{
 					LibrarySelection l = new LibrarySelection(mainFrame, lCurrent, lFavorites, currentVector, favoritesVector);
 				}
 			});
-			key = KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK);
+			key = KeyStroke.getKeyStroke('l');
 			lOpenLibrary.setAccelerator(key);
 			
 			JMenuItem lLibraryManager = new JMenuItem("Library manager",new ImageIcon("Icons/librarymanager.jpg"));
