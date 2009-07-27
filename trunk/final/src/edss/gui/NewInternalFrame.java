@@ -15,15 +15,17 @@ import edss.interf.GuiMediator;
 public class NewInternalFrame extends JInternalFrame {
 	
 	JSlider zoomSlider;
+	String fileName;
 	private JPanel internalPanel;
 	private int zoomFactor = 100;
 //	private JSVGCanvas canvas;
 	
 	GuiMediator mediator; // = new Mediator(); 
 
-	public NewInternalFrame(String s, int i, final GuiMediator mediator)
+	public NewInternalFrame(String s, int i, final GuiMediator mediator, String file)
 	{
 		super(s + " " + i, true, true, true, true);
+		fileName = file;
 		this.mediator =  mediator;		
 		setBounds(i*10, i*10, 300, 300);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
