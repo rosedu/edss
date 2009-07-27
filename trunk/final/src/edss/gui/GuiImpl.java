@@ -129,12 +129,12 @@ public class GuiImpl implements edss.interf.Gui{
 	Vector <Piece> currentVector = new Vector <Piece> ();
 	Vector <Piece> favoritesVector = new Vector <Piece> ();	
 	
-	final JToggleButton P = new JToggleButton("P");
-	final JToggleButton N = new JToggleButton("W");
-	final JToggleButton M = new JToggleButton("M");
-	final JToggleButton L = new JToggleButton("L");
-	final JToggleButton D = new JToggleButton("D");
-	final JToggleButton G = new JToggleButton("G");
+	final JToggleButton P = new JToggleButton("Piece");
+	final JToggleButton N = new JToggleButton("Wire");
+	final JToggleButton M = new JToggleButton("Mousse");
+	final JToggleButton L = new JToggleButton("Library");
+	final JToggleButton D = new JToggleButton("Delete");
+	final JToggleButton G = new JToggleButton("Drag");
 	
 	GuiMediator mediator;
 	
@@ -335,7 +335,7 @@ public class GuiImpl implements edss.interf.Gui{
 				{	public void actionPerformed(ActionEvent e)
 					{
 					System.out.println("Save");
-					if(w.size() != 0)
+					if(getActiveFrame() != null)
 					{
 						JFileChooser chSave = new JFileChooser();
 						chSave.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -359,7 +359,7 @@ public class GuiImpl implements edss.interf.Gui{
 				fSaveAs.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
-					if(w.size() != 0) // conditie mai buna pe viitor
+					if(getActiveFrame() != null) // conditie mai buna pe viitor
 					{
 						JFileChooser chSave = new JFileChooser();
 						chSave.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -836,6 +836,7 @@ public class GuiImpl implements edss.interf.Gui{
 					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
 				}
 				P.setSelected(true);
+				mediator.enterState(StateConstant.PIECESTATE);
 					
 			}
 			
@@ -854,6 +855,7 @@ public class GuiImpl implements edss.interf.Gui{
 					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
 				}
 				P.setSelected(true);
+				mediator.enterState(StateConstant.PIECESTATE);
 			}
 			
 		});
@@ -1150,6 +1152,20 @@ public class GuiImpl implements edss.interf.Gui{
 		if(lCurrent.getSelectedValue() != null)
 			return	currentVector.get(lCurrent.getSelectedIndex());
 		return favoritesVector.get(lFavorites.getSelectedIndex());
+	}
+	
+	public NewInternalFrame getActiveFrame()
+	{
+		NewInternalFrame r = null;
+		for(int i=0; i<w.size(); i++)
+		{
+			if(w.get(i).isSelected() == true)
+			{
+				r = w.get(i);
+				return r;
+			}
+		}
+		return r;
 	}
 	
 }
