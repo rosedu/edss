@@ -352,7 +352,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
 			fSave.setAccelerator(key);
 				
-			JMenuItem fSaveAs = new JMenuItem("Save as",new ImageIcon("Icons/saveas.jpg"));
+			JMenuItem fSaveAs = new JMenuItem("Save as",new ImageIcon("Icons/save.jpg"));
 				fSaveAs.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
