@@ -314,10 +314,24 @@ public class GuiImpl implements edss.interf.Gui{
 				fSaveAs.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
-					System.out.println("Save as");
+					JFileChooser chSave = new JFileChooser();
+					chSave.setDialogType(JFileChooser.SAVE_DIALOG);
+					FileFilter myFilter = new FileNameExtensionFilter("*.svg", "svg");
+					chSave.addChoosableFileFilter(myFilter);
+					chSave.showSaveDialog(mainFrame);
+					
+					if(chSave.getSelectedFile() != null)
+					{
+						System.out.println(chSave.getSelectedFile().getAbsolutePath());
+							mediator.save(chSave.getSelectedFile().getAbsolutePath());
+						// System.out.println(chSave.getFileSelectionMode());
+					}
+					
+					
+					// System.out.println("Save as");
 					}					
 				});
-			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
+			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.SHIFT_MASK);
 			fSaveAs.setAccelerator(key);
 			
 			JMenuItem fExportToPdf = new JMenuItem("Export to pdf", new ImageIcon("Icons/exportToPdf.jpg"));
