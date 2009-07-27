@@ -1,3 +1,5 @@
+
+===GENERATOR===
 Genereaza baza de date pentru proiectul edss,
 pe baza folderelor de piese.
 Considera primul nivel de foldere ca fiind categoriile,
@@ -7,3 +9,11 @@ numele pieselor
 
 Rulare: java Generator cale_catre_str_foldere nume_baza_de_date
 
+
+===EXAMPLESVG2PDF=== 
+Exemplu de transformare svg to pdf.
+Are nevoie de batik & fop. 
+
+(http://mirror.jvsnet.ro/apache/xmlgraphics/fop/source/ )
+
+Libraria fop se gaseste aici.
