@@ -27,9 +27,11 @@ public class InsertState extends State {
 
 	public void getMouseClickedCanvasListener(MouseEvent arg0) {
 		String fileName = Constant.mediator.getSVG();
-		String id = Constant.mediator.getId();
+		int roundX = MyMath.roundAtStep(arg0.getX() / Constant.matrix.scale, PointMatrix.CELL_SIZE);
+		int roundY = MyMath.roundAtStep(arg0.getY() / Constant.matrix.scale, PointMatrix.CELL_SIZE);
+		String id = Constant.mediator.addPiece(roundX, roundY);
 		try {
-			Piece.addPiece(Constant.domFactory, fileName, arg0.getX(), arg0.getY(), id);
+			Piece.addPiece(Constant.domFactory, fileName, roundX, roundY, id);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

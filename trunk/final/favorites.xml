@@ -1,28 +1,3 @@
 <?xml version="1.0" ?>
 <favorites>
-	<piece>
-		<category>transistors</category>
-		<subcategory>mos_dn</subcategory>
-		<name>generic_mos_dn</name>
-	</piece>
-	<piece>
-		<category>diodes</category>
-		<subcategory>diode</subcategory>
-		<name>1N5711</name>
-	</piece>
-	<piece>
-		<category>transistors</category>
-		<subcategory>bjt_pnp</subcategory>
-		<name>generic</name>
-	</piece>
-	<piece>
-		<category>basic</category>
-		<subcategory>capacitor</subcategory>
-		<name>1u</name>
-	</piece>
-	<piece>
-		<category>sources</category>
-		<subcategory>dc_voltage</subcategory>
-		<name>12V</name>
-	</piece>
 </favorites>

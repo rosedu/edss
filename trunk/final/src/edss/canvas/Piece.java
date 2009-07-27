@@ -1,15 +1,12 @@
 package edss.canvas;
 
 import java.awt.Point;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import javax.xml.transform.TransformerException;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.svg.SVGDocument;
 

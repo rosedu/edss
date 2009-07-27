@@ -152,11 +152,6 @@ public class MyCanvas {
 		out.close();
 	}
 
-//	public static void main(String[] args) {
-//		MyCanvas myCanvas = new MyCanvas(guiPanel);
-//
-//	}
-
 	public JScrollPane getCanvas() {
 		return scrollPane;
 	}

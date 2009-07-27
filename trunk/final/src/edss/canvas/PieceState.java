@@ -62,14 +62,14 @@ public class PieceState extends State {
 	}
 
 	public void getMouseClickedCanvasListener(MouseEvent arg0) {
-		System.out.println("mouseClicked Canvas - piece mode");
-		try {
-			Piece.addPiece(Constant.domFactory, "file:///C:/My Documents 1/EDSS/svn/branches/model/svg/bjt_npn.svg", arg0.getX(), arg0.getY(), "dsacascadsca" + Math.random());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+//		System.out.println("mouseClicked Canvas - piece mode");
+//		try {
+//			Piece.addPiece(Constant.domFactory, "file:///C:/My Documents 1/EDSS/svn/branches/model/svg/bjt_npn.svg", arg0.getX(), arg0.getY(), "dsacascadsca" + Math.random());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
 	}
 
 	public void getMouseMovedListener(MouseEvent arg0) {

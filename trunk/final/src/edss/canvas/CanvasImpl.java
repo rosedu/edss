@@ -1,6 +1,19 @@
 package edss.canvas;
 
 import java.awt.geom.AffineTransform;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.svg.SVGDocument;
 
 import edss.interf.Canvas;
 import edss.interf.CanvasMediator;
@@ -44,6 +57,53 @@ public class CanvasImpl implements Canvas {
 		Constant.mediator = mediator;
 		mediator.registerCanvas(this);
 		
+	}
+
+	@Override
+	public void enterInsertState() {
+		Constant.stateManager.enterInsertState();
+		
+	}
+
+	@Override
+	public void enterPieceState() {
+		Constant.stateManager.enterPieceState();
+		
+	}
+
+	@Override
+	public void enterWireState() {
+		Constant.stateManager.enterWireState();
+		
+	}
+
+	@Override
+	public void rotate(int angle) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void openSVG(String fileName) throws IOException {
+		Constant.domFactory = (SVGDocument) Constant.saxFactory.createDocument(fileName);
+		
+	}
+
+	@Override
+	public void saveSVG(String fileName) throws TransformerException, IOException {
+		TransformerFactory transFactory = TransformerFactory.newInstance();
+		Transformer trans = transFactory.newTransformer();
+		trans.setOutputProperty(OutputKeys.INDENT, "yes");
+
+		StringWriter stringWriter = new StringWriter();
+		StreamResult result = new StreamResult(stringWriter);
+		DOMSource source = new DOMSource(Constant.domFactory);
+		trans.transform(source, result);
+		String xmlString = stringWriter.toString();
+
+		BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+		out.write(xmlString);
+		out.close();		
 	}
 
 }

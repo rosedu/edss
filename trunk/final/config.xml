@@ -1,4 +1,13 @@
 <?xml version="1.0" ?>
 <config>
-	<skin id = "20" />
+	<skin id = "3" />
+		<toolbar>
+			<button id = "0" />
+			<button id = "1" />
+			<button id = "2" />
+			<button id = "3" />
+			<button id = "4" />
+			<button id = "5" />
+			<button id = "6" />
+		</toolbar>
 </config>

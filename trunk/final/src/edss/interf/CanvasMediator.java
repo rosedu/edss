@@ -9,6 +9,7 @@ public interface CanvasMediator {
 	 */
 	public void editPieceProperties(String id);
 	public void registerCanvas(Canvas canvas);
-	public String getId();
+	public String addPiece(int x, int y);
 	public String getSVG();
+
 }

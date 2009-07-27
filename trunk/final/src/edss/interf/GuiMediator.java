@@ -1,6 +1,5 @@
 package edss.interf;
 
-import edss.gui.GuiImpl;
 
 public interface GuiMediator {
 	

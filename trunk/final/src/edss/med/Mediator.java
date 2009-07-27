@@ -58,11 +58,19 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	public void enterState(int c) {
 		switch(c)
 		{
-		case StateConstant.PIECESTATE : 
+		case StateConstant.PIECESTATE :
+			canvas.enterInsertState();
+			break;
 		case StateConstant.DELETESTATE :
+			break;
 		case StateConstant.DRAGSTATE :
+			break;
 		case StateConstant.MOUSESTATE :
+			canvas.enterPieceState();
+			break;
 		case StateConstant.WIRESTATE :
+			canvas.enterWireState();
+			break;
 		default : break;
 			
 		}
@@ -77,8 +85,8 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 		
 	}
 	@Override
-	public String getId() {
-		return model.getId();
+	public String addPiece(int x, int y) {
+		return model.addPiece(x, y);
 	}
 
 	@Override

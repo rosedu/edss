@@ -2,13 +2,10 @@ package edss.canvas;
 
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import org.apache.batik.dom.events.DOMMouseEvent;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
 
 
 public class WireState extends State {

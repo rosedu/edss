@@ -2,13 +2,8 @@ package edss.canvas;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
-import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.svg.SVGDocument;
 
 public class State {
 	public void getMouseDownElementListener(Event evt) {
