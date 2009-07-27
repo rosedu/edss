@@ -115,5 +115,16 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 			e.printStackTrace();
 		}
 	}
+	
+	public void open(String file)
+	{
+		 try {
+			 System.out.println(file);
+			 canvas.openSVG(file  + ".svg");
+			 model.openScheme(file);
+		} catch (IOException e) {
+	 		e.printStackTrace();
+		}
+	}
 
 }
