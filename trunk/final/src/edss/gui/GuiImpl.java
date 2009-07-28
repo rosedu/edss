@@ -730,6 +730,17 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke('p');
 			tPiece.setAccelerator(key);
 			
+			JMenuItem tJunction = new JMenuItem("Junction",new ImageIcon("Icons/daniel.jpg"));
+			tPiece.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						J.setSelected(true);
+					}
+				});
+			key = KeyStroke.getKeyStroke('j');
+			tJunction.setAccelerator(key);
+			
 			JMenuItem tWire = new JMenuItem("Wire",new ImageIcon("Icons/wire.jpg"));
 			tWire.addActionListener(new ActionListener()
 				{
@@ -784,7 +795,9 @@ public class GuiImpl implements edss.interf.Gui{
 			tools.add(tWire);
 			add(tWire);
 			tools.add(tPiece);
-			add(tPiece);
+			add(tPiece);			
+			tools.add(tJunction);
+			add(tJunction);
 			tools.addSeparator();
 			tools.add(tRotateLeft);
 			add(tRotateLeft);
@@ -1202,7 +1215,13 @@ public class GuiImpl implements edss.interf.Gui{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-//				mediator = getActiveFrame().getMediator();
+				if(getActiveFrame() != null)
+				{
+					mediator = getActiveFrame().getMediator();
+					mediator.setPiece("node", "node", "node");
+					mediator.enterState(StateConstant.PIECESTATE);
+				}
+				
 //				mediator.enterState(StateConstant.JUNCTIONSTATE);			
 			}
 			
