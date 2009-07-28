@@ -34,7 +34,6 @@ public class InsertState extends State {
 		int roundX = MyMath.roundAtStep(arg0.getX() / canvas.matrix.scale, PointMatrix.CELL_SIZE);
 		int roundY = MyMath.roundAtStep(arg0.getY() / canvas.matrix.scale, PointMatrix.CELL_SIZE);
 		edss.interf.Piece piece = canvas.mediator.addPiece(roundX, roundY);
-		System.out.println("val de la mole:  " + piece.getValue());
 		if (piece.getId() != null) {
 			String fileName = canvas.mediator.getSVG();
 			try {

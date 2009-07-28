@@ -220,14 +220,6 @@ public class CanvasImpl extends Constant implements Canvas {
 					tr.rotate.angle += angle;
 					tr.rotate.angle %= 360;
 				}
-//dc asta?
-//				if (tr.rotate.angle == 0) {
-//					tr.rotate = null;
-//				} else {
-//					// TODO : eventual de gasit centrul
-//					tr.rotate.x = svgDimension;
-//					tr.rotate.y = svgDimension;
-//				}
 
 				selected.setAttribute("transform", tr.toString());
 				tr.rotate.angle *= -1;
@@ -291,23 +283,12 @@ public class CanvasImpl extends Constant implements Canvas {
 	
 	private static void setTextTag(Node x, String text1, String text2) {
 		NodeList nl = ((Element) x).getElementsByTagName("text");
-		
-		if(nl.getLength() == 0)
-			return;
-		System.out.println("texte: " +text1 + text2);
 		for (int i = 0; i < nl.getLength(); i++) {
 			if(((Element)(nl.item(i).getFirstChild())).getAttribute("id").equals("name"))
 				((Element)nl.item(i)).setTextContent(text1);
 			else 
 				((Element)nl.item(i)).setTextContent(text2);
-				
 		}	
-		
-	//	System.out.println(1);
-		if(nl.getLength() == 1)
-			return;
-		
-		//System.out.println(1);
 	}
 	
 	@Override
