@@ -8,7 +8,10 @@ import java.beans.PropertyVetoException;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
+import edss.canvas.StateConstant;
 import edss.interf.GuiMediator;
 
 
@@ -18,6 +21,8 @@ public class NewInternalFrame extends JInternalFrame {
 	String fileName;
 	private JPanel internalPanel;
 	private int zoomFactor = 100;
+	private GuiImpl gui;
+	private int state;
 //	private JSVGCanvas canvas;
 	
 	GuiMediator mediator; // = new Mediator(); 
@@ -25,6 +30,7 @@ public class NewInternalFrame extends JInternalFrame {
 	public NewInternalFrame(String s, int i, String file)
 	{
 		super(s + " " + i, true, true, true, true);
+		state = StateConstant.PIECESTATE;
 		fileName = file;
 		this.mediator =   new edss.med.Mediator();		
 		mediator.init();
@@ -85,6 +91,119 @@ public class NewInternalFrame extends JInternalFrame {
 		add(internalPanel, BorderLayout.CENTER);
 		add(zoomSlider, BorderLayout.SOUTH);
 		setVisible(true);
+		this.addInternalFrameListener(new InternalFrameListener()
+		{
+
+			@Override
+			public void internalFrameActivated(InternalFrameEvent e) {
+				// System.out.println(getTitle() + " <<<<");
+				gui.mediator = mediator;
+				if(gui.M.isSelected())
+				{
+					state = StateConstant.MOUSESTATE;
+					gui.mediator.enterState(StateConstant.MOUSESTATE);
+					if(gui.getSelectedPiece() != null)
+						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
+				}
+				if(gui.P.isSelected())
+				{
+					state = StateConstant.PIECESTATE;
+					gui.mediator.enterState(StateConstant.PIECESTATE);
+					if(gui.getSelectedPiece() != null)
+						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
+				}
+				if(gui.D.isSelected())
+				{
+					state = StateConstant.DELETESTATE;
+					gui.mediator.enterState(StateConstant.DELETESTATE);
+					if(gui.getSelectedPiece() != null)
+						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
+				}
+				if(gui.G.isSelected())
+				{
+					state = StateConstant.DRAGSTATE;
+					gui.mediator.enterState(StateConstant.DRAGSTATE);
+					if(gui.getSelectedPiece() != null)
+						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
+				}
+				if(gui.N.isSelected())
+				{
+					state = StateConstant.WIRESTATE;
+					gui.mediator.enterState(StateConstant.WIRESTATE);
+					if(gui.getSelectedPiece() != null)
+						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
+				}
+				if(gui.J.isSelected())
+				{
+					state = StateConstant.PIECESTATE;
+					gui.mediator.enterState(StateConstant.PIECESTATE);
+					gui.mediator.setPiece("node", "node", "node");
+				}
+				else
+				{
+					gui.mediator.enterState(state);
+					if(gui.getSelectedPiece() != null)
+						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
+					else 
+					{
+						gui.M.setSelected(true);
+						gui.mediator.enterState(state);
+					}
+					if(state == StateConstant.PIECESTATE)
+						gui.P.setSelected(true);
+					if(state == StateConstant.DRAGSTATE)
+						gui.G.setSelected(true);
+					if(state == StateConstant.WIRESTATE)
+						gui.N.setSelected(true);	
+					if(state == StateConstant.DELETESTATE)
+						gui.D.setSelected(true);	
+					if(state == StateConstant.MOUSESTATE)
+						gui.M.setSelected(true);	
+				}
+				
+			}
+
+			@Override
+			public void internalFrameClosed(InternalFrameEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void internalFrameClosing(InternalFrameEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void internalFrameDeactivated(InternalFrameEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void internalFrameDeiconified(InternalFrameEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void internalFrameIconified(InternalFrameEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void internalFrameOpened(InternalFrameEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	}
+	public void registerGui(GuiImpl g)
+	{
+		gui = g;
 	}
 	
 	public int getZoomFactor()
