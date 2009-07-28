@@ -22,11 +22,12 @@ public class NewInternalFrame extends JInternalFrame {
 	
 	GuiMediator mediator; // = new Mediator(); 
 
-	public NewInternalFrame(String s, int i, final GuiMediator mediator, String file)
+	public NewInternalFrame(String s, int i, String file)
 	{
 		super(s + " " + i, true, true, true, true);
 		fileName = file;
-		this.mediator =  mediator;		
+		this.mediator =   new edss.med.Mediator();		
+		mediator.init();
 		setBounds(i*10, i*10, 300, 300);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		internalPanel = new JPanel(new BorderLayout());
@@ -98,6 +99,11 @@ public class NewInternalFrame extends JInternalFrame {
 	public JPanel getPanel()
 	{
 		return internalPanel;
+	}
+	
+	public GuiMediator getMediator()
+	{
+		return mediator;
 	}
 	
 }
