@@ -1,11 +1,14 @@
 package edss.model;
 
 import java.awt.Point;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import edss.interf.Model;
 import edss.interf.ModelMediator;
 import edss.interf.Piece;
+import edss.interf.WireInfo;
 
 public class ModelImpl implements Model {
 
@@ -27,6 +30,10 @@ public class ModelImpl implements Model {
 		return scheme.getComponents().get(id);
 	}
 	
+	public Schematic getScheme() {
+		return scheme;
+	}
+
 	@Override
 	public void update() {
 		med.update();	
@@ -86,5 +93,42 @@ public class ModelImpl implements Model {
 		Wire w = new Wire(p1, p2, points);
 		scheme.addWire(w);
 		return w.getId();
+	}
+
+	@Override
+	public List<WireInfo> getWiresInfo(final String pieceId) {
+		List<WireInfo> wi = new LinkedList<WireInfo>();
+		List<Pin> pins = new LinkedList<Pin>(scheme.getComponents().get(pieceId).getPins().values());
+		
+		Iterator<Pin> it = pins.iterator();
+		
+		while(it.hasNext()) {
+			final Pin pin = it.next();
+			List<Connection> connections = pin.getConnections();
+			
+			Iterator<Connection> itc = connections.iterator();
+			
+			while (itc.hasNext()) {
+				Connection con = itc.next();
+				final Wire w = con.getWire();
+				
+				wi.add(new WireInfo() {
+					
+					public int getEnd() {
+						if (w.getPin1().getId() == pin.getId())
+							return WireInfo.BEGIN;
+						else
+							return WireInfo.END;
+					}
+
+					@Override
+					public String getWireId() {
+						return w.getId();
+					}
+					
+				});
+			}
+		}
+		return wi;
 	}
 }

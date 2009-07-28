@@ -20,9 +20,8 @@ public class Test {
 		//scheme.addWire("Q2", "pin3", "Q1", "pin1");
 		
 		scheme.addWire("Q2", "pin3", "Q1", "pin1", l);
-		scheme.save("schema.sch");
-		scheme.removeComponent("R1");
-		scheme.undo();
+
+		
 		System.out.println(scheme);
 	}
 }

@@ -34,6 +34,7 @@ import org.w3c.dom.svg.SVGDocument;
 
 import edss.interf.Canvas;
 import edss.interf.CanvasMediator;
+import edss.interf.Piece;
 
 
 @SuppressWarnings("serial")

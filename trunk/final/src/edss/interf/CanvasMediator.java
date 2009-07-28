@@ -22,6 +22,6 @@ public interface CanvasMediator {
 			String idEndPin);
 	
 	
-	public List<WireInfo> getWiresInfo();
+	public List<WireInfo> getWiresInfo(String pieceId);
 	 
 }
