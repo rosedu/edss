@@ -12,4 +12,5 @@ public interface GuiMediator {
 	public void open(String auxTBO);
 	public void rotate(int angle);
 	public void init();
+	public void setPreview();
 }
