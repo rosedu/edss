@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.OverlayLayout;
@@ -28,8 +27,10 @@ import org.apache.batik.swing.JSVGCanvas;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.svg.SVGDocument;
+
 
 import edss.interf.Canvas;
 import edss.interf.CanvasMediator;
@@ -37,7 +38,7 @@ import edss.interf.CanvasMediator;
 
 @SuppressWarnings("serial")
 public class CanvasImpl extends Constant implements Canvas {
-	public JFrame frame = new JFrame("Canvas");
+//	public JFrame frame = new JFrame("Canvas");
 	public JScrollPane scrollPane;
 	EventListenerImpl eventListener = new EventListenerImpl(this);
 	
@@ -65,10 +66,10 @@ public class CanvasImpl extends Constant implements Canvas {
 //		
 //		this.panel = guiPanel;
 //		panel = guiPanel;
-//		this.guiPanel = guiPanel;
+		this.guiPanel = guiPanel;
 		guiPanel.add(panel);
-		frame.add(panel);
-		canvas.setPreferredSize(new Dimension(2048, 2048));
+//		frame.add(panel);
+		canvas.setPreferredSize(new Dimension(700, 700));
 		canvas.setDocumentState(JSVGCanvas.ALWAYS_DYNAMIC);
 		canvas.setDocument(domFactory);
 		canvas.setBorder(BorderFactory.createTitledBorder("THE canvas"));
@@ -88,7 +89,6 @@ public class CanvasImpl extends Constant implements Canvas {
 		matrix.setOpaque(false);
 
 		// init panel
-
 		panel.setLayout(new OverlayLayout(panel));
 		panel.add(matrix);
 		panel.add(canvas);
@@ -163,11 +163,9 @@ public class CanvasImpl extends Constant implements Canvas {
 		int canvW = (int) Math.round(canvas.getWidth() / matrix.ratio);
 		System.out.println(canvW + " " + canvH);
 		canvas.setSize(canvW, canvH);
-//		canvas.setPreferredSize(new Dimension(canvW, canvH));
-		guiPanel.revalidate();
+		guiPanel.validate();
 		canvas.repaint();
 		matrix.repaint();
-//		pas /= matrix.ratio;
 	}
 	
 	
@@ -201,27 +199,44 @@ public class CanvasImpl extends Constant implements Canvas {
 	public void rotate(int angle) {
 		if (stateManager.crtState == stateManager.pieceState)
 		{
-			Element selected = PieceState.selectedElement.domElement;
-			System.out.println(selected);
-			if (selected!= null) {
+			Element selected = (Element) stateManager.pieceState.selectedElement.domElement.getElementsByTagName("g").item(0);
+				//domFactory.getElementById(lastSelectedId);
+			System.out.println(selected.getFirstChild().getNodeName());
+			if (selected != null) {
 				String attr = selected.getAttribute("transform");
 				TransformTag tr = new TransformTag(attr);
 
 				if (tr.rotate == null) {
-					tr.rotate = new Rotate(90, 0, 0);
+					tr.rotate = new Rotate(90, svgDimension, svgDimension);
 				} else {
+					tr.rotate.x = svgDimension;
+					tr.rotate.y = svgDimension; 
 					tr.rotate.angle += angle;
 					tr.rotate.angle %= 360;
 				}
+//dc asta?
+//				if (tr.rotate.angle == 0) {
+//					tr.rotate = null;
+//				} else {
+//					// TODO : eventual de gasit centrul
+//					tr.rotate.x = svgDimension;
+//					tr.rotate.y = svgDimension;
+//				}
 
-				if (tr.rotate.angle == 0) {
-					tr.rotate = null;
-				} else {
-					// TODO : eventual de gasit centrul
-					tr.rotate.x = PointMatrix.CELL_SIZE;
-					tr.rotate.y = PointMatrix.CELL_SIZE;
-				}
+//				if(tr.translate == null)
+//				{
+//					tr.translate = new Translate(semn, semn);
+//				}
+//				else
+//				{
+//					tr.translate.x += semn;
+//					tr.translate.y += semn;
+//				}
+				
 				selected.setAttribute("transform", tr.toString());
+				tr.rotate.angle *= -1;
+				Node text = selected.getElementsByTagName("text").item(0);
+				((Element) text.getParentNode()).setAttribute("transform",tr.rotate.toString());
 			}		
 		}
 	}
@@ -263,11 +278,29 @@ public class CanvasImpl extends Constant implements Canvas {
 		Node x = document.importNode(g, true);
 		document.getDocumentElement().appendChild(x);
 		
+		
+		
+		//conventie piesa de intrare: 2 copii <g>: primul: piesa + textLabel; alDoilea: pinii
+		setTextTag(x,id,"ceva");
+		
 		EventTarget target = (EventTarget) document.getElementById(id);
 		target.addEventListener("mousedown", eventListener.mouseDownListener, true);
 		target.addEventListener("mouseup", eventListener.mouseUpListener, true);
 		target.addEventListener("click", eventListener.mouseClickListener, true);
 	}
+	
+	private static void setTextTag(Node x, String text1, String text2) {
+		NodeList nl = ((Element) x).getElementsByTagName("text");
+		if(nl.getLength() == 0)
+			return;
+		
+		((Element)nl.item(0)).setTextContent(text1);
+		if(nl.getLength() == 1)
+			return;
+		
+		((Element)nl.item(1)).setTextContent("");//text2);
+	}
+	
 	@Override
 	public String getLastSelectedPieceId() {
 		// TODO Auto-generated method stub

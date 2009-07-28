@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.xml.transform.TransformerException;
 
+import org.w3c.dom.Element;
+
 import edss.canvas.StateConstant;
 import edss.interf.Canvas;
 import edss.interf.CanvasMediator;
@@ -14,7 +16,7 @@ import edss.interf.Model;
 import edss.interf.ModelMediator;
 import edss.interf.Piece;
 
-
+//TODO State pattern pt mediator
 public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 
 	private Gui gui;
@@ -23,9 +25,9 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	
 	
 	@Override
-	public void registerGui(Gui g)
+	public void registerGui(Gui gui)
 	{
-		gui = g;
+		this.gui = gui;
 	}
 	
 	@Override
@@ -65,8 +67,8 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	}
 
 	@Override
-	public void enterState(int c) {
-		switch(c)
+	public void enterState(int state) {
+		switch(state)
 		{
 		case StateConstant.PIECESTATE :
 			canvas.enterInsertState();
@@ -85,15 +87,11 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 		default : break;
 			
 		}
-		
 	}
 
 	@Override
 	public void setPiece(String name, String category, String subcategory) {
-		// pasez!
 		model.setLastSelected(category,subcategory,name);
-		// System.out.println(category + " " + subcategory + " " + name); 
-		
 	}
 	@Override
 	public String addPiece(int x, int y) {
@@ -143,27 +141,19 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 		}
 	}
 	
-	public void rotate(int r)
+	public void rotate(int angle)
 	{
-		String lastSelectedId=canvas.getLastSelectedPieceId();
-		
+		canvas.rotate(angle);//tine minte singur piesa selectata
 		//DE AVUT grija sa se faca null la loc cand se intra in alt mod!!!
-	/*	
-		if (lastSelectedId!=null) {
-		canvas.rotate(r,lastSelectedId);
-		model.rotate(r,lastSelectedId);
-		}
-	 */
-		
-		
+//		String lastSelectedId = canvas.getLastSelectedPieceId();
+//			model.rotate(r,lastSelectedId);
+//		}
 	}
 	
-	
-	
-	public void delete(String lastSelectedId)
+	public void delete()
 	{
-		// model.delete(lastSelectedId);
-		// canvas.delete(lastSelectedId);
+		//canvas sterge aici dupa click!! -> enterState(int state)
+		//model.delete();
 	}
 	
 

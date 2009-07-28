@@ -15,7 +15,7 @@ public class Wire extends SchematicElement{
 	public Wire(CanvasImpl canvas, SVGDocument document,int cursorX, int cursorY, String id)
 	{
 		super(canvas);
-		// add <g> <line ...>
+		// add <g> <polyline ...>
 		Element g = document.createElementNS(Constant.svgNS, "g");
 		line = document.createElementNS(Constant.svgNS, "polyline");
 		line.setAttributeNS(null, "stroke", "blue");
@@ -32,6 +32,9 @@ public class Wire extends SchematicElement{
 		target.addEventListener("mousedown", canvas.eventListener.mouseDownListener, true);
 		target.addEventListener("mouseup", canvas.eventListener.mouseUpListener, true);
 		target.addEventListener("click", canvas.eventListener.mouseClickListener, true);
+		
+		//TODO anunt mediatorul ca am desenat linie
+		//canvas.mediator.drawLine(cursorX, cursorY);
 	}
 
 
@@ -47,6 +50,8 @@ public class Wire extends SchematicElement{
 		int roundY = MyMath.roundAtStep(cursorY / canvas.matrix.scale, PointMatrix.CELL_SIZE);
 		points.addPoint(roundX, roundY);
 		line.setAttribute("points", points.toString());
+		//TODO anunt mediatorul ca am desenat linie
+		//canvas.mediator.drawLine(cursorX, cursorY);
 	}
 
 
@@ -61,6 +66,8 @@ public class Wire extends SchematicElement{
 			selectedSegment.move(destination[0] - selectedSegment.a.y);
 		}
 		domElement.setAttributeNS(null, "points", points.toString());
+		//TODO anunt mediatorul ca am mutat linie
+		//canvas.mediator.moveLine(destination);
 	}
 
 	

@@ -30,4 +30,39 @@
 		<subcategory>schottky</subcategory>
 		<name>1N5711</name>
 	</piece>
+	<piece>
+		<category>transistors</category>
+		<subcategory>mos_en</subcategory>
+		<name>generic_mos_en</name>
+	</piece>
+	<piece>
+		<category>node</category>
+		<subcategory>node</subcategory>
+		<name>node</name>
+	</piece>
+	<piece>
+		<category>diodes</category>
+		<subcategory>zener</subcategory>
+		<name>generic_zener</name>
+	</piece>
+	<piece>
+		<category>sources</category>
+		<subcategory>dc_voltage</subcategory>
+		<name>5V</name>
+	</piece>
+	<piece>
+		<category>diodes</category>
+		<subcategory>schottky</subcategory>
+		<name>1N5712</name>
+	</piece>
+	<piece>
+		<category>transistors</category>
+		<subcategory>bjt_pnp</subcategory>
+		<name>generic_pnp</name>
+	</piece>
+	<piece>
+		<category>transistors</category>
+		<subcategory>bjt_npn</subcategory>
+		<name>generic_npn</name>
+	</piece>
 </favorites>

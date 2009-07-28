@@ -12,6 +12,5 @@ public interface CanvasMediator {
 	public void registerCanvas(Canvas canvas);
 	public String addPiece(int x, int y);
 	public String getSVG();
-//	JPanel getPanel();
-
+	public void delete();
 }

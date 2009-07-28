@@ -10,8 +10,8 @@ import org.w3c.dom.events.Event;
 
 
 public class PieceState extends State {
-	public static SchematicElement selectedElement;
-	public static SchematicElement movedElement;
+	public SchematicElement selectedElement;
+	public SchematicElement movedElement;
 	
 	public PieceState(CanvasImpl canvas) {
 		super(canvas);
@@ -77,6 +77,7 @@ public class PieceState extends State {
 		} else {
 			// piesa
 			selectedElement = new Piece(canvas, target);
+			System.out.println("MouseClickPiesa: " + selectedElement.domElement.getNodeName());
 		}
 		
 	}
@@ -92,6 +93,8 @@ public class PieceState extends State {
 	}
 
 	public void getKeyTypedListener(KeyEvent arg0) {
+		if(selectedElement == null)
+			return;
 		switch(arg0.getKeyChar())
 		{
 		case 127:

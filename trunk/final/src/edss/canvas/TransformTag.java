@@ -27,6 +27,7 @@ public class TransformTag {
 			double angle = Double.parseDouble(tok.nextToken());
 			double x = Double.parseDouble(tok.nextToken());
 			double y = Double.parseDouble(tok.nextToken());
+			System.out.println("x si y = " + x+y);
 			rotate = new Rotate(angle, x, y);
 		}
 		
@@ -86,7 +87,7 @@ class Rotate {
 
 	@Override
 	public String toString() {
-		return ("rotate(" + angle + ", " + x + ", " + y + ")");
+		return ("rotate("+ angle + ", " + x + ", " + y + ")");
 	}
 }
 

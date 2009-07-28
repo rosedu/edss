@@ -16,7 +16,7 @@ public class Constant {
 	static String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 	static String parser = XMLResourceDescriptor.getXMLParserClassName();
 	static SAXSVGDocumentFactory saxFactory = new SAXSVGDocumentFactory(parser);
-	
+	static int svgDimension = 47;
 	
 	CanvasMediator mediator;
 	StateManager stateManager = new StateManager((CanvasImpl) this);

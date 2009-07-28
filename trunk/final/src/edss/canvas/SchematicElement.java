@@ -27,6 +27,7 @@ public abstract class SchematicElement {
 			System.out.println(domElement.getNodeName());
 			domElement.getParentNode().removeChild(domElement);
 			domElement = null;
+			canvas.mediator.delete();
 		} else {
 			System.out.println("null");
 		}

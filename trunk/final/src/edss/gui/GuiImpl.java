@@ -636,7 +636,7 @@ public class GuiImpl implements edss.interf.Gui{
 				public void actionPerformed(ActionEvent e)
 				{
 					System.out.println("Rotate left");
-					mediator.rotate(-1);
+					mediator.rotate(-90);
 				}
 			});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_MASK);
@@ -648,7 +648,7 @@ public class GuiImpl implements edss.interf.Gui{
 				public void actionPerformed(ActionEvent e)
 				{
 					System.out.println("Rotate right");
-					mediator.rotate(1);
+					mediator.rotate(90);
 				}
 			});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, InputEvent.CTRL_MASK);
