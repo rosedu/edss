@@ -127,7 +127,7 @@ public class GuiImpl implements edss.interf.Gui{
 	final JToggleButton D = new JToggleButton("Delete");
 	final JToggleButton G = new JToggleButton("Drag");
 	final JToggleButton J = new JToggleButton("Junction");
-	NewInternalFrame newInternalFrame;
+	// NewInternalFrame newInternalFrame;
 	Vector <GuiMediator> mediatorVector = new Vector <GuiMediator> ();
 	GuiMediator mediator; 
 	
@@ -260,74 +260,11 @@ public class GuiImpl implements edss.interf.Gui{
 				fNew.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
-					newInternalFrame = new NewInternalFrame("New project", coordonates++, null);
+					NewInternalFrame newInternalFrame = new NewInternalFrame("New project", coordonates++, null);
+					newInternalFrame.registerGui(getMe());
 					centerPanel.add(newInternalFrame);
 					w.add(newInternalFrame);
-					// if(w.size() == 1)
-					newInternalFrame.addInternalFrameListener(new InternalFrameListener()
-					{
-
-						@Override
-						public void internalFrameActivated(InternalFrameEvent e) {
-							mediator = newInternalFrame.getMediator();
-							if(P.isSelected())
-								mediator.enterState(StateConstant.PIECESTATE);
-							if(D.isSelected())
-								mediator.enterState(StateConstant.DELETESTATE);
-							if(M.isSelected())
-								mediator.enterState(StateConstant.MOUSESTATE);
-							if(N.isSelected())
-								mediator.enterState(StateConstant.WIRESTATE);
-							if(G.isSelected())
-								mediator.enterState(StateConstant.DRAGSTATE);
-							if(getSelectedPiece() != null)
-								mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
-							if(J.isSelected())
-							{
-								mediator.setPiece("node", "node" , "node");
-								mediator.enterState(StateConstant.PIECESTATE);
-							}
-						}
-
-						@Override
-						public void internalFrameClosed(InternalFrameEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-
-						@Override
-						public void internalFrameClosing(InternalFrameEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-
-						@Override
-						public void internalFrameDeactivated(
-								InternalFrameEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-
-						@Override
-						public void internalFrameDeiconified(
-								InternalFrameEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-
-						@Override
-						public void internalFrameIconified(InternalFrameEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-
-						@Override
-						public void internalFrameOpened(InternalFrameEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-						
-					});
+					
 						centerPanel.getDesktopManager().activateFrame(newInternalFrame);
 					// else
 						 //centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
@@ -701,7 +638,7 @@ public class GuiImpl implements edss.interf.Gui{
 			add(eCustomize);
 			
 		JMenu library = new JMenu("Library");
-			JMenuItem lOpenLibrary = new JMenuItem("Open library",new ImageIcon("Icons/openlibrary.jpg"));
+			JMenuItem lOpenLibrary = new JMenuItem("Open library",new ImageIcon("Icons/openlibrary2.gif"));
 			lOpenLibrary.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -712,7 +649,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke('l');
 			lOpenLibrary.setAccelerator(key);
 			
-			JMenuItem lLibraryManager = new JMenuItem("Library manager",new ImageIcon("Icons/librarymanager.jpg"));
+			JMenuItem lLibraryManager = new JMenuItem("Library manager",new ImageIcon("Icons/librarymanager.ico"));
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_MASK);
 			lLibraryManager.setAccelerator(key);
 			
@@ -1382,6 +1319,10 @@ public class GuiImpl implements edss.interf.Gui{
 	public void register()
 	{
 		mediator.registerGui(this);
+	}
+	public GuiImpl getMe()
+	{
+		return this;
 	}
 	
 //	public Piece getPiece()
