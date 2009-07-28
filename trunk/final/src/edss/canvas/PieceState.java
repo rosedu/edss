@@ -54,6 +54,7 @@ public class PieceState extends State {
 	public void getMouseDraggedListener(MouseEvent arg0) {
 		if(movedElement != null) {
 			System.out.println("drag");
+			// TODO de facut scale la arg0
 			movedElement.move(arg0.getX(), arg0.getY());
 			
 		}
@@ -83,6 +84,11 @@ public class PieceState extends State {
 	}
 
 	public void getMouseUpElementListener(Event evt) {
+		Element target = (Element) evt.getCurrentTarget();
+		if (!target.getNodeName().equals("svg")) {
+			// fir
+			((Wire)movedElement).selectedSegment = null;
+		}
 		movedElement = null;
 	}
 

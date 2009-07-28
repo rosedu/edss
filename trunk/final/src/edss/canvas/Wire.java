@@ -61,9 +61,9 @@ public class Wire extends SchematicElement{
 		// TODO : rotunjire destination[0]
 		
 		if (selectedSegment.direction == Segment.VERTICAL) {
-			selectedSegment.move(destination[1] - selectedSegment.a.x);
+			selectedSegment.move(destination[1]);
 		} else {
-			selectedSegment.move(destination[0] - selectedSegment.a.y);
+			selectedSegment.move(destination[0]);
 		}
 		domElement.setAttributeNS(null, "points", points.toString());
 		//TODO anunt mediatorul ca am mutat linie

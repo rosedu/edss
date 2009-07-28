@@ -73,22 +73,29 @@ public class WirePoints {
 		Iterator<MyPoint> it = pointList.iterator();
 		if (it.hasNext()) {
 			result.a = it.next();
+			if (it.hasNext()) {
+				result.b = it.next();
+			}
 		} else {
 			System.out.println("mda");
 		}
 		while (it.hasNext()) {
-			 result.b = it.next();
 			 
-			 if (result.a.x == result.b.x && result.a.x == x) {
+			 if (result.a.x == result.b.x && result.a.x == x && 
+					 (result.a.y - y) * (result.b.y - y)  < 0) {
 				 result.direction = Segment.HORIZONTAL;
 				 break;
 			 }
 			 
-			 if (result.a.y == result.b.y && result.a.y == y) {
+			 if (result.a.y == result.b.y && result.a.y == y &&
+					 (result.a.x - x) * (result.b.x - x)  < 0) {
 				 result.direction = Segment.VERTICAL;
 				 break;
 			 }
+			 result.a = result.b;
+			 result.b = it.next();
 		}
+		System.out.println(result.a + " " + result.b);
 		return result;
 	}
 	
@@ -139,15 +146,19 @@ class Segment {
 	}
 	
 	public void move(int delta) {
+//		System.out.println("delta " + delta);
+//		System.out.println("direct " + direction);
+//		System.out.println(a==b);
 		switch(direction) {
+		
 		case Segment.HORIZONTAL:
-			a.x += delta;
-			b.x += delta;
+			a.x = delta;
+			b.x = delta;
 			break;
 			
 		case Segment.VERTICAL:
-			a.y += delta;
-			b.y += delta;
+			a.y = delta;
+			b.y = delta;
 			break;
 			
 		default:

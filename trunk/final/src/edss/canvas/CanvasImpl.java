@@ -221,13 +221,13 @@ public class CanvasImpl extends Constant implements Canvas {
 					tr.rotate.angle %= 360;
 				}
 //dc asta?
-				if (tr.rotate.angle == 0) {
-					tr.rotate = null;
-				} else {
-					// TODO : eventual de gasit centrul
-					tr.rotate.x = svgDimension;
-					tr.rotate.y = svgDimension;
-				}
+//				if (tr.rotate.angle == 0) {
+//					tr.rotate = null;
+//				} else {
+//					// TODO : eventual de gasit centrul
+//					tr.rotate.x = svgDimension;
+//					tr.rotate.y = svgDimension;
+//				}
 
 				selected.setAttribute("transform", tr.toString());
 				tr.rotate.angle *= -1;
@@ -239,8 +239,10 @@ public class CanvasImpl extends Constant implements Canvas {
 	
 	@Override
 	public void openSVG(JPanel guiPanel, String fileName) throws IOException {
+		System.out.println(guiPanel);
 		domFactory = (SVGDocument) saxFactory.createDocument("file:///" + fileName);
 		setCanvasVariables(guiPanel, domFactory);
+//		setCanvasVariables(guiPanel, ((JSVGCanvas) getPreview(fileName)).getSVGDocument());
 	}
 
 	@Override
