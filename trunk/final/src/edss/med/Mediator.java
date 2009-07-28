@@ -166,10 +166,13 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 	}
 
 	public void setPreview() {
+		//if(getSVG() != null && canvas.getPreview(getSVG()) != null)
+		//{
 		gui.getLeftPreview().removeAll();
 		gui.getLeftPreview().add(canvas.getPreview(getSVG()));
 		gui.getLeftPreview().repaint();
 		gui.getLeftPreview().validate();
+		//}
 	}
 
 	@Override
