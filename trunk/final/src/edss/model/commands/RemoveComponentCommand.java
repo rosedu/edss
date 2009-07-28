@@ -20,6 +20,13 @@ public class RemoveComponentCommand implements Command, Serializable {
 		piece = scheme.getComponents().get(id);
 		scheme.removeComp(id);
 	}
+	
+	@Override
+	public void reExecute() {
+		piece = scheme.getComponents().get(id);
+		scheme.removeComp(id);
+		//scheme.getMediator().
+	}
 
 	@Override
 	public void unExecute() {

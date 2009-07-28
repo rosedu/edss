@@ -28,6 +28,10 @@ public class Schematic implements Serializable {
 	private double scaled = 1;
 	private CommandManager commandManager;
 	transient private ModelMediator med;
+	private Map<String, Map<String, Boolean>> instances = 
+		new HashMap<String, Map<String, Boolean>>();
+	
+	
 	
 	public Schematic(ModelMediator med) {
 		this.med = med;
@@ -40,6 +44,10 @@ public class Schematic implements Serializable {
 		components = new HashMap<String, Piece>();
 		wires = new HashMap<String, Wire>();
 		commandManager = new CommandManager();
+	}
+	
+	public Map<String, Map<String, Boolean>> getInstances() {
+		return instances;
 	}
 	
 	public void addComponent(Piece piece) {
@@ -86,7 +94,7 @@ public class Schematic implements Serializable {
 		}
 		
 		components.remove(id);
-		Piece.instances.get(piece.getType()).remove(id);
+		instances.get(piece.getType()).remove(id);
 
 		System.out.println("Deleted: " + id);
 	}

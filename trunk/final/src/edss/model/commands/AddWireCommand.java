@@ -26,11 +26,16 @@ public class AddWireCommand implements Command, Serializable {
 	public void execute() {
 		w = scheme.addWireWithoutUndo(piece1, pin1, piece2, pin2);
 	}
+	
+	@Override
+	public void reExecute() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void unExecute() {
 		scheme.removeWireWithoutUndo(piece1, pin1, piece2, pin2);
 		//scheme.getMediator().removeWireFromCanvas(w.getId());
 	}
-
 }

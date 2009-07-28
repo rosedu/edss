@@ -9,7 +9,7 @@ public class ModelImpl implements Model {
 	private ModelMediator med;
 	private Schematic scheme;
 	private String[] lastSelected;
-	
+	private edss.model.Piece piece = null;
 	
 	public ModelImpl(ModelMediator med) {
 		this.med = med;
@@ -34,6 +34,7 @@ public class ModelImpl implements Model {
 		lastSelected[0] = category;
 		lastSelected[1] = subCategory;
 		lastSelected[2] = name;
+		piece = null;
 	}
 	
 	@Override
@@ -41,8 +42,9 @@ public class ModelImpl implements Model {
 		if (lastSelected[0] == null)
 			return null;
 		
-		edss.model.Piece p = new edss.model.Piece(lastSelected[0], lastSelected[1], lastSelected[2], x, y);
-		scheme.addComponent(p);
+		edss.model.Piece p = new edss.model.Piece(scheme, lastSelected[0], lastSelected[1], lastSelected[2], x, y);
+		piece = p;
+		scheme.addComponent(p); //scheme.addComp(p);
 		return p.getId();
 	}
 	
@@ -65,5 +67,9 @@ public class ModelImpl implements Model {
 	@Override
 	public void saveScheme(String name) {
 		scheme.save(name+".sch");
+	}
+	
+	public edss.model.Piece getPiece(){
+		return piece;
 	}
 }

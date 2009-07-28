@@ -21,8 +21,13 @@ public class RotateComponentCommand implements Command, Serializable {
 	}
 
 	@Override
+	public void reExecute() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	public void unExecute() {
 		scheme.getComponents().get(id).setRotated(-r);
 	}
-
 }

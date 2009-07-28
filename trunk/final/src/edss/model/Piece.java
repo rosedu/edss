@@ -20,11 +20,12 @@ import org.xml.sax.SAXException;
 public class Piece implements Serializable, edss.interf.Piece {
 	protected String svgURI;
 	protected String id;
-	
+	protected Schematic scheme;
 	protected String type;
+	protected String model;
 
-	protected static Map<String, Map<String, Boolean>> instances = 
-		new HashMap<String, Map<String, Boolean>>();
+//	protected static Map<String, Map<String, Boolean>> instances = 
+//		new HashMap<String, Map<String, Boolean>>();
 	
 	protected Map<String, String> properties;
 
@@ -36,10 +37,11 @@ public class Piece implements Serializable, edss.interf.Piece {
 /*	protected Piece() {
 	}*/
 	
-	public Piece(String category, String subCategory, String model, int x, int y) {
+	public Piece(Schematic scheme, String category, String subCategory, String model, int x, int y) {
 		this.x = x;
 		this.y = y;
-		
+		this.model = model;
+		this.scheme = scheme;
 		
 		pins = new HashMap<String, Pin>();
 		properties = new HashMap<String, String>();
@@ -133,13 +135,13 @@ public class Piece implements Serializable, edss.interf.Piece {
 		Map<String, Boolean> usedIDs;
 		Integer no;
 
-		usedIDs = instances.get(type);
+		usedIDs = scheme.getInstances().get(type);
 
 		if (usedIDs == null) {
 			no = 1;
 			Map<String, Boolean> m2 = new HashMap<String, Boolean>();
 			m2.put(type+"1", true);
-			instances.put(type, m2);
+			scheme.getInstances().put(type, m2);
 		} else {
 			int i;
 			for (i = 1; ; i++) {
@@ -152,6 +154,20 @@ public class Piece implements Serializable, edss.interf.Piece {
 		}
 
 		this.id = type + no;
+		
+		//----------------------------------------------------------------
+		//----------------------------------------------------------------
+		model = null;
+		if (type.equals("R"))
+			this.model = properties.get("resistance");
+		if (type.equals("C"))
+		    this.model = properties.get("capacitance");
+		if (type.equals("V"))
+			this.model = properties.get("value");
+		if (type.equals("D"))
+			this.model = model;
+		if (type.equals("Q"))
+			this.model = model;
 		
 		System.out.println("Created component: " + id);
 	}
@@ -254,5 +270,15 @@ public class Piece implements Serializable, edss.interf.Piece {
 		}
 		
 		return sb.toString();
+	}
+
+	@Override
+	public String getName() {
+		return id;
+	}
+
+	@Override
+	public String getValue() {
+		return model;
 	}
 }

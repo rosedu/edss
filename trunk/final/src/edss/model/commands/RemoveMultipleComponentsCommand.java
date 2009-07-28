@@ -62,6 +62,12 @@ public class RemoveMultipleComponentsCommand implements Command, Serializable {
 	}
 
 	@Override
+	public void reExecute() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	public void unExecute() {
 		Iterator<Piece> itp = pieces.iterator();
 		while(itp.hasNext()){
@@ -77,5 +83,4 @@ public class RemoveMultipleComponentsCommand implements Command, Serializable {
 			//scheme.getMediator().addWireToCanvas(w);
 		}
 	}
-
 }
