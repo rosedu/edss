@@ -124,6 +124,7 @@ public class GuiImpl implements edss.interf.Gui{
 	final JToggleButton L = new JToggleButton("Library");
 	final JToggleButton D = new JToggleButton("Delete");
 	final JToggleButton G = new JToggleButton("Drag");
+	final JToggleButton J = new JToggleButton("Junction");
 	
 	Vector <GuiMediator> mediatorVector = new Vector <GuiMediator> ();
 	GuiMediator mediator; 
@@ -677,7 +678,6 @@ public class GuiImpl implements edss.interf.Gui{
 				{
 					System.out.println("Rotate right");
 					mediator = getActiveFrame().getMediator();
-					mediator.rotate(90);
 				}
 			});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, InputEvent.CTRL_MASK);
@@ -738,6 +738,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke('d');
 			tDelete.setAccelerator(key);
 			
+		
 			tools.add(tDelete);
 			add(tDelete);
 			tools.add(tDrag);
@@ -753,7 +754,7 @@ public class GuiImpl implements edss.interf.Gui{
 			add(tRotateLeft);
 			tools.add(tRotateRight);
 			add(tRotateRight);
-			
+	
 			
 		JMenu help = new JMenu("Help");
 			JMenuItem hIndex = new JMenuItem("Index",new ImageIcon("Icons/info.jpg"));
@@ -1139,12 +1140,30 @@ public class GuiImpl implements edss.interf.Gui{
 			
 		});
 		
+		J.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+	    J.setMaximumSize(new Dimension(WIDTH/10, s));
+	    J.setMinimumSize(new Dimension(WIDTH/10, s));
+		J.setSize(WIDTH/10, s);
+		J.setPreferredSize(new Dimension(WIDTH/10, s));
+		J.setBorder(BorderFactory.createRaisedBevelBorder());
+		J.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+//				mediator = getActiveFrame().getMediator();
+//				mediator.enterState(StateConstant.JUNCTIONSTATE);			
+			}
+			
+		});
+		
 		D.setToolTipText("Delete");
 		L.setToolTipText("Library");
 		P.setToolTipText("Place");
 		G.setToolTipText("Drag item");
 		M.setToolTipText("Mouse");
 		N.setToolTipText("Wire");
+		J.setToolTipText("Junction");
 		
 		buttonGroup.add(L);
 		buttonGroup.add(D);
@@ -1152,6 +1171,7 @@ public class GuiImpl implements edss.interf.Gui{
 		buttonGroup.add(G);
 		buttonGroup.add(M);
 		buttonGroup.add(N);
+		buttonGroup.add(J);
 		
 		rightToolBar.add(L);
 		rightToolBar.add(D);
@@ -1159,6 +1179,7 @@ public class GuiImpl implements edss.interf.Gui{
 		rightToolBar.add(G);
 		rightToolBar.add(M);
 		rightToolBar.add(N);
+		rightToolBar.add(J);
 		
 		//rightToolBar.add(buttonGroup);
 		rightPanel.add(rightToolBar);
