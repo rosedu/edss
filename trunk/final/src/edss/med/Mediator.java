@@ -190,7 +190,7 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 
 	@Override
 	public List<WireInfo> getWiresInfo() {
-		model.getWiresInfo();
+		return model.getWiresInfo();
 	}
 
 }

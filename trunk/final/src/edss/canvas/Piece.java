@@ -2,10 +2,14 @@ package edss.canvas;
 
 import java.awt.Point;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.xml.transform.TransformerException;
 
 import org.w3c.dom.Element;
+
+import edss.interf.WireInfo;
 
 
 public class Piece extends SchematicElement {
@@ -58,9 +62,29 @@ public class Piece extends SchematicElement {
 					transform.translate = new Translate(dx, dy);
 				}
 
+				
 				((Element) domElement.getParentNode()).setAttribute("transform", transform.toString());
-
-			//	canvas.canvas.repaint();
+				List<WireInfo> listPin = canvas.mediator.getWiresInfo(domElement.getAttribute("id"));
+				Iterator<WireInfo> it = listPin.iterator();
+				WireInfo info;
+				Element wireElement;
+				int roundX = MyMath.roundAtStep(x/canvas.matrix.scale, PointMatrix.CELL_SIZE);
+				int roundY = MyMath.roundAtStep(y/canvas.matrix.scale, PointMatrix.CELL_SIZE);
+				while(it.hasNext())
+				{
+					info = it.next();
+					wireElement = canvas.domFactory.getElementById(info.getWireId());
+					wire = new Wire(canvas, wireElement);
+					if(info.getEnd() == WireInfo.END)
+						wire.points.addPoint(roundX, roundY);
+					else
+						wire.points.addPointFront(roundX, roundY);
+						
+					
+					
+				}
+				
+				
 				// canvas.setDoubleBuffered(true);
 				// canvas.setDoubleBufferedRendering(true);
 				crtPoint.setLocation(x, y);
