@@ -696,7 +696,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke('p');
 			tPiece.setAccelerator(key);
 			
-			JMenuItem tJunction = new JMenuItem("Junction",new ImageIcon("Icons/daniel.jpg"));
+			JMenuItem tJunction = new JMenuItem("Junction",new ImageIcon("Icons/junction.jpg"));
 			tJunction.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e)
