@@ -27,7 +27,7 @@ public class Schematic implements Serializable {
 	private Map<String, Wire> wires;
 	private double scaled = 1;
 	private CommandManager commandManager;
-	private ModelMediator med;
+	transient private ModelMediator med;
 	
 	public Schematic(ModelMediator med) {
 		this.med = med;
@@ -243,7 +243,7 @@ public class Schematic implements Serializable {
 		}
 	}
 	
-	public static Schematic load(String filename) {
+	public static Schematic load(String filename, ModelMediator med) {
 		Schematic scheme = null;
 		FileInputStream fis = null;
 		ObjectInputStream in = null;
@@ -252,6 +252,7 @@ public class Schematic implements Serializable {
 			fis = new FileInputStream(filename);
 			in = new ObjectInputStream(fis);
 			scheme = (Schematic)in.readObject();
+			scheme.med = med;
 			in.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

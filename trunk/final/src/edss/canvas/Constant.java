@@ -16,7 +16,7 @@ public class Constant {
 	static String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 	static String parser = XMLResourceDescriptor.getXMLParserClassName();
 	static SAXSVGDocumentFactory saxFactory = new SAXSVGDocumentFactory(parser);
-	static int svgDimension = 47;
+	static int svgDimension = 48;
 	
 	CanvasMediator mediator;
 	StateManager stateManager = new StateManager((CanvasImpl) this);
@@ -25,7 +25,7 @@ public class Constant {
 	PointMatrix matrix = new PointMatrix();
 	JSVGCanvas canvas = new JSVGCanvas();
 	
-	DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-	SVGDocument domFactory = (SVGDocument) impl.createDocument(svgNS, "svg", null);
+	static DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
+	SVGDocument domFactory;
 	
 }

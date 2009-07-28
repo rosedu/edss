@@ -2,6 +2,7 @@ package edss.med;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.xml.transform.TransformerException;
 
@@ -17,7 +18,7 @@ import edss.interf.ModelMediator;
 import edss.interf.Piece;
 
 //TODO State pattern pt mediator
-public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
+public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Serializable {
 
 	private Gui gui;
 	private Model model;
@@ -61,9 +62,12 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	@Override
 	public void addPanel() {
 //		CanvasImpl canv = new CanvasImpl(gui.getCenterPanel());
-		canvas.setCanvasVariables(gui.getCenterPanel());
+		canvas.createNewCanvas(gui.getCenterPanel());
 		gui.getCenterPanel().add(canvas.getCanvas());
 //		return gui.getCenterPanel();
+		
+		
+//		gui.getCenterPanel().add(canvas.getPreview("file:///C:/My Documents 1/EDSS/svn/trunk/final/svg/amplifier.svg"));
 	}
 
 	@Override
@@ -132,10 +136,14 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	
 	public void open(String file)
 	{
+		
+//		canvas.setCanvasVariables(gui.getCenterPanel());
+//		gui.getCenterPanel().add(canvas.getCanvas());
+		
 		 try {
 			 System.out.println(file);
-			 canvas.openSVG(file  + ".svg");
-			 model.openScheme(file);
+			 canvas.openSVG(gui.getCenterPanel(), file  + ".svg");
+			 model.openScheme(file, this);
 		} catch (IOException e) {
 	 		e.printStackTrace();
 		}
@@ -143,7 +151,9 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator {
 	
 	public void rotate(int angle)
 	{
+		String lastSelectedId = canvas.getLastSelectedPieceId();
 		canvas.rotate(angle);//tine minte singur piesa selectata
+		
 		//DE AVUT grija sa se faca null la loc cand se intra in alt mod!!!
 //		String lastSelectedId = canvas.getLastSelectedPieceId();
 //			model.rotate(r,lastSelectedId);

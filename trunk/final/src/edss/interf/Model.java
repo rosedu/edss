@@ -10,7 +10,7 @@ public interface Model {
 	String addPiece(int x, int y);
 	
 	void saveScheme(String name);
-	void openScheme(String name);
+	void openScheme(String name, ModelMediator med);
 	
 	void rotate(int r, String id);
 }

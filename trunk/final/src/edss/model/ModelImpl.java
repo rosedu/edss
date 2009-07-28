@@ -57,8 +57,8 @@ public class ModelImpl implements Model {
 	}
 	
 	@Override
-	public void openScheme(String name) {
-		scheme = Schematic.load(name+".sch");
+	public void openScheme(String name, ModelMediator med) {
+		scheme = Schematic.load(name+".sch", med);
 		System.out.println(scheme);
 	}
 	

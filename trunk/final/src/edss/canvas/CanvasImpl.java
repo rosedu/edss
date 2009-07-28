@@ -59,7 +59,13 @@ public class CanvasImpl extends Constant implements Canvas {
 		this.mediator = mediator;
 		mediator.registerCanvas(this);
 	}
-	public void setCanvasVariables(JPanel guiPanel)
+	
+	public void createNewCanvas(JPanel guiPanel) {
+		 this.domFactory = (SVGDocument) impl.createDocument(svgNS, "svg", null);
+		 setCanvasVariables(guiPanel, domFactory);
+	}
+	
+	public void setCanvasVariables(JPanel guiPanel, SVGDocument domFactory)
 	{
 //	
 ////		}
@@ -215,24 +221,14 @@ public class CanvasImpl extends Constant implements Canvas {
 					tr.rotate.angle %= 360;
 				}
 //dc asta?
-//				if (tr.rotate.angle == 0) {
-//					tr.rotate = null;
-//				} else {
-//					// TODO : eventual de gasit centrul
-//					tr.rotate.x = svgDimension;
-//					tr.rotate.y = svgDimension;
-//				}
+				if (tr.rotate.angle == 0) {
+					tr.rotate = null;
+				} else {
+					// TODO : eventual de gasit centrul
+					tr.rotate.x = svgDimension;
+					tr.rotate.y = svgDimension;
+				}
 
-//				if(tr.translate == null)
-//				{
-//					tr.translate = new Translate(semn, semn);
-//				}
-//				else
-//				{
-//					tr.translate.x += semn;
-//					tr.translate.y += semn;
-//				}
-				
 				selected.setAttribute("transform", tr.toString());
 				tr.rotate.angle *= -1;
 				Node text = selected.getElementsByTagName("text").item(0);
@@ -242,8 +238,9 @@ public class CanvasImpl extends Constant implements Canvas {
 	}
 	
 	@Override
-	public void openSVG(String fileName) throws IOException {
+	public void openSVG(JPanel guiPanel, String fileName) throws IOException {
 		domFactory = (SVGDocument) saxFactory.createDocument("file:///" + fileName);
+		setCanvasVariables(guiPanel, domFactory);
 	}
 
 	@Override
@@ -307,6 +304,13 @@ public class CanvasImpl extends Constant implements Canvas {
 		return null;
 	}
 	
+	@Override
+	public Component getPreview(String fileName) {
+		CanvasPreview preview = new CanvasPreview(this);
+		return preview.getPreview(fileName);
+	}
+
+
 }
 
 @SuppressWarnings("serial")
