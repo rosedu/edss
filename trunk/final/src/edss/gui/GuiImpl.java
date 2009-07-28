@@ -518,6 +518,21 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, InputEvent.CTRL_MASK);
 			vZoomOut.setAccelerator(key);
 			
+			JMenuItem vRepaint = new JMenuItem("Repaint",new ImageIcon("Icons/repaint.jpg"));
+			vRepaint.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					System.out.println("repaint");
+					if(mediator != null)
+						mediator.repaint();
+				}
+			});
+			vRepaint.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+			
+			view.add(vRepaint);
+			add(vRepaint);
+			view.addSeparator();
 			view.add(vZoomIn);
 			add(vZoomIn);
 			view.add(vZoomOut);
@@ -638,7 +653,7 @@ public class GuiImpl implements edss.interf.Gui{
 			add(eCustomize);
 			
 		JMenu library = new JMenu("Library");
-			JMenuItem lOpenLibrary = new JMenuItem("Open library",new ImageIcon("Icons/openlibrary2.gif"));
+			JMenuItem lOpenLibrary = new JMenuItem("Open library",new ImageIcon("Icons/openlibrary.jpg"));
 			lOpenLibrary.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -649,7 +664,7 @@ public class GuiImpl implements edss.interf.Gui{
 			key = KeyStroke.getKeyStroke('l');
 			lOpenLibrary.setAccelerator(key);
 			
-			JMenuItem lLibraryManager = new JMenuItem("Library manager",new ImageIcon("Icons/librarymanager.ico"));
+			JMenuItem lLibraryManager = new JMenuItem("Library manager",new ImageIcon("Icons/librarymanager.jpg"));
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_MASK);
 			lLibraryManager.setAccelerator(key);
 			
