@@ -7,8 +7,8 @@ import java.io.Serializable;
 import javax.xml.transform.TransformerException;
 
 import edss.canvas.CanvasImpl;
-<<<<<<< .mine=======
->>>>>>> .theirsimport edss.canvas.StateConstant;
+import edss.canvas.StateConstant;
+import edss.canvas.StateConstant;
 import edss.interf.Canvas;
 import edss.interf.CanvasMediator;
 import edss.interf.Gui;
