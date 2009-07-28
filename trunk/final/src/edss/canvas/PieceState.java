@@ -25,8 +25,8 @@ public class PieceState extends State {
 		if (!target.getNodeName().equals("svg")) {
 			// fir
 			movedElement = new Wire(canvas, (Element) target.getFirstChild());
-			((Wire) movedElement).selectedSegment = ((Wire) movedElement).points.getSegment(mouseEvent.getClientX(),
-																						mouseEvent.getClientY());
+			((Wire) movedElement).selectedSegment = ((Wire) movedElement).points.getSegment((int) (mouseEvent.getClientX() /canvas.matrix.scale),
+																						(int) (mouseEvent.getClientY() /canvas.matrix.scale));
 			System.out.println("down fir");
 		} else {
 			// piesa
@@ -54,8 +54,7 @@ public class PieceState extends State {
 	public void getMouseDraggedListener(MouseEvent arg0) {
 		if(movedElement != null) {
 			System.out.println("drag");
-			// TODO de facut scale la arg0
-			movedElement.move(arg0.getX(), arg0.getY());
+			movedElement.move((int)(arg0.getX()/canvas.matrix.scale), (int)(arg0.getY()/canvas.matrix.scale));
 			
 		}
 		
@@ -84,11 +83,11 @@ public class PieceState extends State {
 	}
 
 	public void getMouseUpElementListener(Event evt) {
-		Element target = (Element) evt.getCurrentTarget();
-		if (!target.getNodeName().equals("svg")) {
-			// fir
-			((Wire)movedElement).selectedSegment = null;
-		}
+//		Element target = (Element) evt.getCurrentTarget();
+//		if (!target.getNodeName().equals("svg")) {
+//			// fir
+//			((Wire)movedElement).selectedSegment = null;
+//		}
 		movedElement = null;
 	}
 

@@ -10,6 +10,10 @@ public class Wire extends SchematicElement{
 	Element line;
 	Element startPin;
 	Element endPin;
+	String idStartPin;
+	String idEndPin;
+	String idStartPiece;
+	String idEndPiece;
 	
 	
 	public Wire(CanvasImpl canvas, SVGDocument document,int cursorX, int cursorY, String id)
@@ -59,6 +63,10 @@ public class Wire extends SchematicElement{
 	@Override
 	public void move(int... destination) {
 		// TODO : rotunjire destination[0]
+		
+		if (selectedSegment == null) {
+			return;
+		}
 		
 		if (selectedSegment.direction == Segment.VERTICAL) {
 			selectedSegment.move(destination[1]);

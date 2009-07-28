@@ -12,7 +12,7 @@ public class WireState extends State {
 	/** doar desenare fire
 	 */
 
-	static Wire wire;
+	Wire wire;
 	
 	public WireState(CanvasImpl canvas) {
 		super(canvas);
@@ -61,16 +61,25 @@ public class WireState extends State {
 
 	public void getMouseClickElementListener(Event evt) {
 		Element pin = (Element) evt.getTarget();
+		Element piece = (Element) evt.getCurrentTarget();
 		if (pin.getAttribute("id").contains("pin")) {
 			DOMMouseEvent mouseEvent = (DOMMouseEvent) evt;
 			if (wire == null) {
 				wire = new Wire(canvas, canvas.domFactory, (int) (mouseEvent.getClientX() / canvas.matrix.scale), (int) (mouseEvent.getClientY() / canvas.matrix.scale), null);
 				wire.startPin = pin;
+				wire.idStartPin = pin.getAttribute("id");
+				wire.idStartPiece = piece.getAttribute("id");
 				return;
 			} else {
 				wire.endPin = pin;
 				if (wire.startPin != wire.endPin) {
 					wire.draw(mouseEvent.getClientX(), mouseEvent.getClientY());
+					wire.idEndPin = pin.getAttribute("id");
+					wire.idEndPiece = piece.getAttribute("id");
+					
+					String id = canvas.mediator.addWire(wire.points.pointList, wire.idStartPiece, wire.idStartPin, wire.idEndPiece, wire.idEndPin);
+					((Element) wire.line.getParentNode()).setAttribute("id", id);
+					
 					wire = null;
 					return;
 					// TODO eventual sa nu mai fac draw aici

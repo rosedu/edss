@@ -1,12 +1,15 @@
 package edss.canvas;
 
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 
 public class WirePoints {
-	ArrayList<MyPoint> pointList = new ArrayList<MyPoint>();
+	LinkedList<MyPoint> pointList = new LinkedList<MyPoint>();
 	public WirePoints(String text) {
 		int i = 0;
 		StringTokenizer tok = new StringTokenizer(text, ", ");
@@ -67,10 +70,17 @@ public class WirePoints {
 		
 	}
 	
+	public void addPointFront(int x, int y) {
+		Collections.reverse(pointList);
+		addPoint(x, y);
+		Collections.reverse(pointList);
+	}
+	
 	public Segment getSegment(int x, int y) {
 		// cand intru aici, stiu ca punctul (x, y) este pe fir si ca firul are cel putin 2 puncte
 		Segment result = new Segment();
 		Iterator<MyPoint> it = pointList.iterator();
+		//TODO click pe pct ce apartine polyline
 		if (it.hasNext()) {
 			result.a = it.next();
 			if (it.hasNext()) {
@@ -81,7 +91,7 @@ public class WirePoints {
 		}
 		while (it.hasNext()) {
 			 
-			 if (result.a.x == result.b.x && result.a.x == x && 
+			 if (Math.abs(result.a.x - result.b.x) < 2 && Math.abs(result.a.x - x) < 2 && 
 					 (result.a.y - y) * (result.b.y - y)  < 0) {
 				 result.direction = Segment.HORIZONTAL;
 				 break;
@@ -102,10 +112,8 @@ public class WirePoints {
 
 }
 
-class MyPoint {
-	int x;
-	int y;
-	
+class MyPoint extends Point {
+
 	MyPoint(int x, int y) {
 		this.x = x;
 		this.y = y;
