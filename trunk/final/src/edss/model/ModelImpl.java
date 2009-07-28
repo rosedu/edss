@@ -48,14 +48,14 @@ public class ModelImpl implements Model {
 	}
 	
 	@Override
-	public String addPiece(int x, int y) {
+	public edss.interf.Piece addPiece(int x, int y) {
 		if (lastSelected[0] == null)
 			return null;
 		
 		edss.model.Piece p = new edss.model.Piece(scheme, lastSelected[0], lastSelected[1], lastSelected[2], x, y);
 		piece = p;
 		scheme.addComponent(p); //scheme.addComp(p);
-		return p.getId();
+		return p;
 	}
 	
 	@Override
