@@ -166,7 +166,7 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 		}
 	}
 	
-	public void rotate(int r)
+	public void rotate(int angle)
 	{
 		String lastSelectedId = canvas.getLastSelectedPieceId();
 		canvas.rotate(angle);//tine minte singur piesa selectata
