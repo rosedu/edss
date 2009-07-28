@@ -1,5 +1,8 @@
 package edss.model;
 
+import java.awt.Point;
+import java.util.List;
+
 import edss.interf.Model;
 import edss.interf.ModelMediator;
 import edss.interf.Piece;
@@ -71,5 +74,17 @@ public class ModelImpl implements Model {
 	
 	public edss.model.Piece getPiece(){
 		return piece;
+	}
+
+	@Override
+	public String addWire(String piece1, String pin1, String piece2, String pin2, List<? extends Point> points) {
+		Piece pm1 = scheme.getComponents().get(piece1);
+		Piece pm2 = scheme.getComponents().get(piece2);
+		Pin p1 = pm1.getPins().get(pin1);
+		Pin p2 = pm2.getPins().get(pin2);
+
+		Wire w = new Wire(p1, p2, points);
+		scheme.addWire(w);
+		return w.getId();
 	}
 }

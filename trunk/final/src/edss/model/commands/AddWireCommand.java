@@ -1,5 +1,7 @@
 package edss.model.commands;
+import java.awt.Point;
 import java.io.Serializable;
+import java.util.List;
 
 import edss.model.Schematic;
 import edss.model.Wire;
@@ -12,19 +14,22 @@ public class AddWireCommand implements Command, Serializable {
 	String pin1;
 	String piece2;
 	String pin2;
+	List<? extends Point> points;
 	Wire w;
 	
-	public AddWireCommand(Schematic scheme, String piece1, String pin1, String piece2, String pin2) {
+	public AddWireCommand(Schematic scheme, String piece1, String pin1, String piece2, String pin2,
+																	List<? extends Point> points) {
 		this.scheme = scheme;
 		this.piece1 = piece1;
 		this.pin1 = pin1;
 		this.piece2 = piece2;
 		this.pin2 = pin2;
+		this.points = points;
 	}
 	
 	@Override
 	public void execute() {
-		w = scheme.addWireWithoutUndo(piece1, pin1, piece2, pin2);
+		w = scheme.addWireWithoutUndo(piece1, pin1, piece2, pin2, points);
 	}
 	
 	@Override

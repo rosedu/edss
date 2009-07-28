@@ -1,6 +1,8 @@
 package edss.model;
+import java.awt.Point;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Wire implements Serializable {
@@ -8,8 +10,9 @@ public class Wire implements Serializable {
 	private Pin pin2;
 	private String id;
 	public static Map<String, Boolean> usedIDs = new HashMap<String, Boolean>();
+	private List<? extends Point> points;
 	
-	public Wire(Pin p1, Pin p2){
+	public Wire(Pin p1, Pin p2, List<? extends Point> points){
 		pin1 = p1;
 		pin2 = p2;
 		
@@ -19,11 +22,13 @@ public class Wire implements Serializable {
 				break;
 		id = "W" + i;
 		usedIDs.put(id, true);
+		this.points = points;
 	}
 	
 	public Wire(Wire w){
 		pin1 = w.getPin1();
 		pin2 = w.getPin2();
+		points = w.getPoints();
 	}
 	
 	public String toString(){
@@ -52,5 +57,9 @@ public class Wire implements Serializable {
 
 	public void setPin2(Pin pin2) {
 		this.pin2 = pin2;
+	}
+
+	public List<? extends Point> getPoints() {
+		return points;
 	}
 }

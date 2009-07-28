@@ -1,4 +1,5 @@
 package edss.model;
+import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
@@ -118,17 +119,22 @@ public class Schematic implements Serializable {
 		}
 	}
 
-	public void addWire(String piece1, String pin1, String piece2, String pin2) {
-		commandManager.doCommand(new AddWireCommand(this, piece1, pin1, piece2, pin2));
+	public void addWire(String piece1, String pin1, String piece2, String pin2, List<? extends Point> points) {
+		commandManager.doCommand(new AddWireCommand(this, piece1, pin1, piece2, pin2, points));
 	}
 	
-	public Wire addWireWithoutUndo(String piece1, String pin1, String piece2, String pin2) {
+	public void addWire(Wire w) {
+		addWire(w.getPin1().getPiece().getId(), w.getPin1().getId(),
+				w.getPin2().getPiece().getId(), w.getPin2().getId(), w.getPoints());
+	}
+	
+	public Wire addWireWithoutUndo(String piece1, String pin1, String piece2, String pin2, List<? extends Point> points) {
 		Piece pm1 = components.get(piece1);
 		Piece pm2 = components.get(piece2);
 		Pin p1 = pm1.getPins().get(pin1);
 		Pin p2 = pm2.getPins().get(pin2);
 
-		Wire w = new Wire(p1, p2);
+		Wire w = new Wire(p1, p2, points);
 		wires.put(w.getId(), w);
 		
 		p1.addConnection(p2, w);
