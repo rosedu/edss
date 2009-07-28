@@ -18,7 +18,7 @@ import edss.interf.ModelMediator;
 import edss.interf.Piece;
 import edss.model.ModelImpl;
 
-//TODO State pattern pt mediator
+
 public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Serializable {
 
 	private Gui gui;
@@ -27,9 +27,9 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 	
 	
 	@Override
-	public void registerGui(Gui gui)
+	public void registerGui(Gui g)
 	{
-		this.gui = gui;
+		gui = g;
 	}
 	
 	@Override
@@ -72,8 +72,8 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 	}
 
 	@Override
-	public void enterState(int state) {
-		switch(state)
+	public void enterState(int c) {
+		switch(c)
 		{
 		case StateConstant.PIECESTATE :
 			canvas.enterInsertState();
@@ -92,16 +92,32 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 		default : break;
 			
 		}
+		
 	}
 
 	@Override
 	public void setPiece(String name, String category, String subcategory) {
+		// pasez!
 		model.setLastSelected(category,subcategory,name);
+		// System.out.println(category + " " + subcategory + " " + name); 
+		
 	}
+	
+	/*public String addPiece(Mediator med, int x, int y) {
+		commandManager.doCommand(new AddComponentCommand(this, x, y));
+	}*/
+	
 	@Override
-	public String addPiece(int x, int y) {
+	public String addPiece/*WithoutUndo*/(int x, int y) {
 		return model.addPiece(x, y);
+		//canvas.addPieceToCanvas(x, y);
 	}
+	
+	/*
+	 * public void addPieceToCanvas(edss.interf.Piece piece){
+	 * 		canvas.addPieceToCanvas(piece);
+	 * }
+	 */
 
 	@Override
 	public String getSVG() {
@@ -150,21 +166,34 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 		}
 	}
 	
-	public void rotate(int angle)
+	public void rotate(int r)
 	{
 		String lastSelectedId = canvas.getLastSelectedPieceId();
 		canvas.rotate(angle);//tine minte singur piesa selectata
 		
 		//DE AVUT grija sa se faca null la loc cand se intra in alt mod!!!
-//		String lastSelectedId = canvas.getLastSelectedPieceId();
-//			model.rotate(r,lastSelectedId);
-//		}
+	/*	
+		if (lastSelectedId!=null) {
+		canvas.rotate(r,lastSelectedId);
+		model.rotate(r,lastSelectedId);
+		}
+	 */
+		
+		
 	}
 	
-	public void delete()
+	
+	
+	public void delete(String lastSelectedId)
 	{
-		//canvas sterge aici dupa click!! -> enterState(int state)
-		//model.delete();
+		// model.delete(lastSelectedId);
+		// canvas.delete(lastSelectedId);
+	}
+
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void init()
