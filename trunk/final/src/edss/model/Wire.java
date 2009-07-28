@@ -9,12 +9,13 @@ public class Wire implements Serializable {
 	private Pin pin1;
 	private Pin pin2;
 	private String id;
-	public static Map<String, Boolean> usedIDs = new HashMap<String, Boolean>();
+	
 	private List<? extends Point> points;
 	
 	public Wire(Pin p1, Pin p2, List<? extends Point> points){
 		pin1 = p1;
 		pin2 = p2;
+		Map<String, Boolean> usedIDs = pin1.getPiece().getScheme().getWireInstances();
 		
 		int i;
 		for (i = 1; ; i++)
@@ -25,7 +26,7 @@ public class Wire implements Serializable {
 		this.points = points;
 	}
 	
-	public Wire(Wire w){
+	public Wire(Wire w) {
 		pin1 = w.getPin1();
 		pin2 = w.getPin2();
 		points = w.getPoints();

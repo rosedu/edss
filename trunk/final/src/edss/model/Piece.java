@@ -21,6 +21,8 @@ public class Piece implements Serializable, edss.interf.Piece {
 	protected String svgURI;
 	protected String id;
 	protected Schematic scheme;
+	
+
 	protected String type;
 	protected String model;
 
@@ -135,13 +137,13 @@ public class Piece implements Serializable, edss.interf.Piece {
 		Map<String, Boolean> usedIDs;
 		Integer no;
 
-		usedIDs = scheme.getInstances().get(type);
+		usedIDs = scheme.getPieceInstances().get(type);
 
 		if (usedIDs == null) {
 			no = 1;
 			Map<String, Boolean> m2 = new HashMap<String, Boolean>();
 			m2.put(type+"1", true);
-			scheme.getInstances().put(type, m2);
+			scheme.getPieceInstances().put(type, m2);
 		} else {
 			int i;
 			for (i = 1; ; i++) {
@@ -233,6 +235,10 @@ public class Piece implements Serializable, edss.interf.Piece {
 	
 	public String getId() {
 		return id;
+	}
+	
+	public Schematic getScheme() {
+		return scheme;
 	}
 	
 	public String getType() {
