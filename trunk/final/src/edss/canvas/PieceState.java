@@ -56,6 +56,7 @@ public class PieceState extends State {
 			System.out.println("drag");
 			movedElement.move((int)(arg0.getX()/canvas.matrix.scale), (int)(arg0.getY()/canvas.matrix.scale));
 			
+			
 		}
 		
 	}

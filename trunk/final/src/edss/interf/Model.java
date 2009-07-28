@@ -18,4 +18,5 @@ public interface Model {
 	void openScheme(String name, ModelMediator med);
 	
 	void rotate(int r, String id);
+	List<WireInfo> getWiresInfo();
 }

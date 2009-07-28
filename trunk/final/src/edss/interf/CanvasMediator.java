@@ -20,4 +20,8 @@ public interface CanvasMediator {
 	public String addWire(List<? extends Point> pointList,
 			String idStartPiece, String idStartPin, String idEndPiece,
 			String idEndPin);
+	
+	
+	public List<WireInfo> getWiresInfo();
+	 
 }

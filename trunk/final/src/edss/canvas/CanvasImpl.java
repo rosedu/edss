@@ -213,7 +213,7 @@ public class CanvasImpl extends Constant implements Canvas {
 				TransformTag tr = new TransformTag(attr);
 
 				if (tr.rotate == null) {
-					tr.rotate = new Rotate(90, svgDimension, svgDimension);
+					tr.rotate = new Rotate(angle, svgDimension, svgDimension);
 				} else {
 					tr.rotate.x = svgDimension;
 					tr.rotate.y = svgDimension; 
@@ -233,6 +233,7 @@ public class CanvasImpl extends Constant implements Canvas {
 				tr.rotate.angle *= -1;
 				Node text = selected.getElementsByTagName("text").item(0);
 				((Element) text.getParentNode()).setAttribute("transform",tr.rotate.toString());
+
 			}		
 		}
 	}
@@ -294,10 +295,12 @@ public class CanvasImpl extends Constant implements Canvas {
 			return;
 		
 		((Element)nl.item(0)).setTextContent(text1);
+		System.out.println(1);
 		if(nl.getLength() == 1)
 			return;
 		
 		((Element)nl.item(1)).setTextContent("");//text2);
+		System.out.println(1);
 	}
 	
 	@Override

@@ -38,6 +38,8 @@ public class Piece extends SchematicElement {
 	@Override
 	public void move(int... destination)
 	{
+		Wire wire;
+		
 		int x = destination[0];
 		int y = destination[1];
 		int startX = (int) crtPoint.getX();

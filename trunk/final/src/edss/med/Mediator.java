@@ -18,6 +18,7 @@ import edss.interf.GuiMediator;
 import edss.interf.Model;
 import edss.interf.ModelMediator;
 import edss.interf.Piece;
+import edss.interf.WireInfo;
 import edss.model.ModelImpl;
 
 //TODO State pattern pt mediator
@@ -185,6 +186,11 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 	public String addWire(List<? extends Point> pointList, String idStartPiece, String idStartPin,
 			String idEndPiece, String idEndPin) {
 		return model.addWire(idStartPiece, idStartPin, idEndPiece, idEndPin, pointList);
+	}
+
+	@Override
+	public List<WireInfo> getWiresInfo() {
+		model.getWiresInfo();
 	}
 
 }
