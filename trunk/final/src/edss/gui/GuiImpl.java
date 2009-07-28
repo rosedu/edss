@@ -78,6 +78,7 @@ import org.jvnet.substance.skin.SubstanceSaharaLookAndFeel;
 import org.jvnet.substance.skin.SubstanceTwilightLookAndFeel;
 
 import edss.canvas.StateConstant;
+import edss.gui.Piece;
 import edss.interf.GuiMediator;
 
 // import com.jgoodies.forms.factories.Borders;
@@ -267,7 +268,7 @@ public class GuiImpl implements edss.interf.Gui{
 					mediator = newInternalFrame.getMediator();
 					register();
 					if(getSelectedPiece() != null)
-						mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
+					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
 					mediator.enterState(StateConstant.PIECESTATE);
 					//System.out.println(mediator);
 					
@@ -663,7 +664,7 @@ public class GuiImpl implements edss.interf.Gui{
 				{
 					System.out.println("Rotate left");
 					mediator = getActiveFrame().getMediator();
-					mediator.rotate(-1);
+					mediator.rotate(-90);
 				}
 			});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_MASK);
@@ -676,7 +677,7 @@ public class GuiImpl implements edss.interf.Gui{
 				{
 					System.out.println("Rotate right");
 					mediator = getActiveFrame().getMediator();
-					mediator.rotate(1);
+					mediator.rotate(90);
 				}
 			});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, InputEvent.CTRL_MASK);
@@ -913,6 +914,7 @@ public class GuiImpl implements edss.interf.Gui{
 				}
 				P.setSelected(true);
 				mediator = getActiveFrame().getMediator();
+				mediator.setPreview();
 				mediator.enterState(StateConstant.PIECESTATE);
 					
 			}
@@ -937,6 +939,8 @@ public class GuiImpl implements edss.interf.Gui{
 				P.setSelected(true);
 				if(getActiveFrame() != null)
 					mediator.enterState(StateConstant.PIECESTATE);
+				if(mediator != null)
+					mediator.setPreview();
 			}
 			
 		});
