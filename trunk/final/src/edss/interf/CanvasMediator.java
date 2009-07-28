@@ -1,5 +1,9 @@
 package edss.interf;
 
+import java.awt.Point;
+import java.util.List;
+
+
 
 public interface CanvasMediator {
 	
@@ -13,4 +17,7 @@ public interface CanvasMediator {
 	public String addPiece(int x, int y);
 	public String getSVG();
 	public void delete();
+	public String addWire(List<? extends Point> pointList,
+			String idStartPiece, String idStartPin, String idEndPiece,
+			String idEndPin);
 }
