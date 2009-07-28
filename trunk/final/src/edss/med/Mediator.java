@@ -6,9 +6,9 @@ import java.io.Serializable;
 
 import javax.xml.transform.TransformerException;
 
-import org.w3c.dom.Element;
-
-import edss.canvas.StateConstant;
+import edss.canvas.CanvasImpl;
+<<<<<<< .mine=======
+>>>>>>> .theirsimport edss.canvas.StateConstant;
 import edss.interf.Canvas;
 import edss.interf.CanvasMediator;
 import edss.interf.Gui;
@@ -16,6 +16,7 @@ import edss.interf.GuiMediator;
 import edss.interf.Model;
 import edss.interf.ModelMediator;
 import edss.interf.Piece;
+import edss.model.ModelImpl;
 
 //TODO State pattern pt mediator
 public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Serializable {
@@ -166,6 +167,11 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 		//model.delete();
 	}
 	
+	public void init()
+	{
+		canvas = new CanvasImpl(this);
+		model = new ModelImpl(this);
+	}
 
 
 }

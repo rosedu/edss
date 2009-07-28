@@ -11,4 +11,5 @@ public interface GuiMediator {
 	public void save(String absolutePath);
 	public void open(String auxTBO);
 	public void rotate(int angle);
+	public void init();
 }

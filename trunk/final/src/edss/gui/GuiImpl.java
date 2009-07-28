@@ -39,6 +39,8 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
@@ -116,10 +118,11 @@ public class GuiImpl implements edss.interf.Gui{
 	final JToggleButton D = new JToggleButton("Delete");
 	final JToggleButton G = new JToggleButton("Drag");
 	
-	GuiMediator mediator;
+	Vector <GuiMediator> mediatorVector = new Vector <GuiMediator> ();
+	GuiMediator mediator; 
 	
 	// constructor method
-	public GuiImpl(final edss.interf.GuiMediator mediator)
+	public GuiImpl()
 	{
 		// this.mediator = mediator;
 		edss.gui.Configuration cf = new edss.gui.Configuration("config.xml");
@@ -164,16 +167,16 @@ public class GuiImpl implements edss.interf.Gui{
 					e.printStackTrace();
 				}
 				JFrame.setDefaultLookAndFeelDecorated(true);
-				auxMeth(mediator);
+				auxMeth();
 		
 			}
 		});
 	}
 	
-	public void auxMeth(GuiMediator mediator)
+	public void auxMeth()
 	{
-		mediator.registerGui(this);
-		this.mediator = mediator;
+		// mediator.registerGui(this);
+		// this.mediator = mediator;
 		
 		
 		ParseFavorites p = new ParseFavorites("favorites.xml");
@@ -188,7 +191,7 @@ public class GuiImpl implements edss.interf.Gui{
 		mainFrame.setSize(WIDTH, HEIGHT);
 		
 		centerPanel = new JDesktopPane();
-		// centerPanel.setLayout(new GridLayout(0, 1));
+		// centerPanel.add
 		
 		mainMenu();
 		
@@ -248,10 +251,15 @@ public class GuiImpl implements edss.interf.Gui{
 				fNew.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
-					NewInternalFrame newInternalFrame = new NewInternalFrame("New project", coordonates++, mediator, null);
+					NewInternalFrame newInternalFrame = new NewInternalFrame("New project", coordonates++, null);
 					centerPanel.add(newInternalFrame);
 					w.add(newInternalFrame);
+					// if(w.size() == 1)
+					//	centerPanel.getDesktopManager().activateFrame(newInternalFrame);
+					// else
 					centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
+					mediator = newInternalFrame.getMediator();
+					register();
 					mediator.enterState(StateConstant.PIECESTATE);
 					//System.out.println(mediator);
 					
@@ -291,7 +299,9 @@ public class GuiImpl implements edss.interf.Gui{
 									JOptionPane.showMessageDialog(null, "File missing", "ERROR!", JOptionPane.ERROR_MESSAGE);
 								else
 								{
-									NewInternalFrame n = new NewInternalFrame("New project", coordonates++, mediator, auxTBO);
+									NewInternalFrame n = new NewInternalFrame("New project", coordonates++, auxTBO);
+									mediator = n.getMediator();
+									register();
 									centerPanel.add(n);
 									w.add(n);
 									centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
@@ -321,6 +331,7 @@ public class GuiImpl implements edss.interf.Gui{
 						{
 							// System.out.println(getActiveFrame().fileName);
 							String aux = getActiveFrame().fileName.substring(0, getActiveFrame().fileName.lastIndexOf('.'));
+							mediator = getActiveFrame().getMediator();
 							mediator.save(aux);
 						}
 						else
@@ -342,7 +353,10 @@ public class GuiImpl implements edss.interf.Gui{
 								{
 									getActiveFrame().fileName = chSave.getSelectedFile().getAbsolutePath() + ".svg";
 								}
+								mediator = getActiveFrame().getMediator();
 								mediator.save(chSave.getSelectedFile().getAbsolutePath());
+								getActiveFrame().setTitle(getActiveFrame().fileName);
+								
 							}
 						}
 					}
@@ -367,7 +381,9 @@ public class GuiImpl implements edss.interf.Gui{
 						if(chSave.getSelectedFile() != null)
 						{
 							System.out.println(chSave.getSelectedFile().getAbsolutePath());
+							mediator = getActiveFrame().getMediator();
 							mediator.save(chSave.getSelectedFile().getAbsolutePath());
+							getActiveFrame().setTitle(getActiveFrame().fileName);
 						}
 					}
 					else JOptionPane.showMessageDialog(null, "There is no file to save!", "ERROR!", JOptionPane.ERROR_MESSAGE);
@@ -449,6 +465,7 @@ public class GuiImpl implements edss.interf.Gui{
 						default : y=3; break;
 						}
 						((NewInternalFrame) centerPanel.getSelectedFrame()).zoomSlider.setValue(y);
+						mediator = getActiveFrame().getMediator();
 						mediator.scale(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 						System.out.println("Zoom = " + ((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 					}	
@@ -480,6 +497,7 @@ public class GuiImpl implements edss.interf.Gui{
 						default : y=3; break;
 						}
 						((NewInternalFrame) centerPanel.getSelectedFrame()).zoomSlider.setValue(y);
+						mediator = getActiveFrame().getMediator();
 						mediator.scale(((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 						System.out.println("Zoom = " + ((NewInternalFrame) centerPanel.getSelectedFrame()).getZoomFactor());
 					}
@@ -636,7 +654,8 @@ public class GuiImpl implements edss.interf.Gui{
 				public void actionPerformed(ActionEvent e)
 				{
 					System.out.println("Rotate left");
-					mediator.rotate(-90);
+					mediator = getActiveFrame().getMediator();
+					mediator.rotate(-1);
 				}
 			});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_MASK);
@@ -648,7 +667,8 @@ public class GuiImpl implements edss.interf.Gui{
 				public void actionPerformed(ActionEvent e)
 				{
 					System.out.println("Rotate right");
-					mediator.rotate(90);
+					mediator = getActiveFrame().getMediator();
+					mediator.rotate(1);
 				}
 			});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, InputEvent.CTRL_MASK);
@@ -845,6 +865,7 @@ public class GuiImpl implements edss.interf.Gui{
 					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
 				}
 				P.setSelected(true);
+				mediator = getActiveFrame().getMediator();
 				mediator.enterState(StateConstant.PIECESTATE);
 					
 			}
@@ -861,9 +882,11 @@ public class GuiImpl implements edss.interf.Gui{
 				if(lFavorites.isSelectionEmpty() == false)
 				{
 					lCurrent.clearSelection();
+					mediator = getActiveFrame().getMediator();
 					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
 				}
 				P.setSelected(true);
+				mediator = getActiveFrame().getMediator();
 				mediator.enterState(StateConstant.PIECESTATE);
 			}
 			
@@ -957,6 +980,7 @@ public class GuiImpl implements edss.interf.Gui{
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				mediator = getActiveFrame().getMediator();
 				mediator.enterState(StateConstant.WIRESTATE);
 				
 			}
@@ -975,6 +999,7 @@ public class GuiImpl implements edss.interf.Gui{
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				mediator = getActiveFrame().getMediator();
 				mediator.enterState(StateConstant.MOUSESTATE);
 				
 			}
@@ -993,6 +1018,7 @@ public class GuiImpl implements edss.interf.Gui{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				mediator = getActiveFrame().getMediator();
 				mediator.enterState(StateConstant.PIECESTATE);			
 			}
 			
@@ -1037,6 +1063,7 @@ public class GuiImpl implements edss.interf.Gui{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				mediator = getActiveFrame().getMediator();
 				mediator.enterState(StateConstant.DELETESTATE);			
 			}
 			
@@ -1053,6 +1080,7 @@ public class GuiImpl implements edss.interf.Gui{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				mediator = getActiveFrame().getMediator();
 				mediator.enterState(StateConstant.DRAGSTATE);			
 			}
 			
@@ -1175,6 +1203,10 @@ public class GuiImpl implements edss.interf.Gui{
 			}
 		}
 		return r;
+	}
+	public void register()
+	{
+		mediator.registerGui(this);
 	}
 	
 }
