@@ -47,6 +47,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
@@ -262,38 +264,65 @@ public class GuiImpl implements edss.interf.Gui{
 					centerPanel.add(newInternalFrame);
 					w.add(newInternalFrame);
 					// if(w.size() == 1)
-					newInternalFrame.addMouseListener(new MouseListener()
+					newInternalFrame.addInternalFrameListener(new InternalFrameListener()
 					{
 
 						@Override
-						public void mouseClicked(MouseEvent e) {
+						public void internalFrameActivated(InternalFrameEvent e) {
 							mediator = newInternalFrame.getMediator();
+							if(P.isSelected())
+								mediator.enterState(StateConstant.PIECESTATE);
+							if(D.isSelected())
+								mediator.enterState(StateConstant.DELETESTATE);
+							if(M.isSelected())
+								mediator.enterState(StateConstant.MOUSESTATE);
+							if(N.isSelected())
+								mediator.enterState(StateConstant.WIRESTATE);
+							if(G.isSelected())
+								mediator.enterState(StateConstant.DRAGSTATE);
 							if(getSelectedPiece() != null)
 								mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
-							P.setSelected(true);
-							mediator.enterState(StateConstant.PIECESTATE);
+							if(J.isSelected())
+							{
+								mediator.setPiece("node", "node" , "node");
+								mediator.enterState(StateConstant.PIECESTATE);
+							}
 						}
 
 						@Override
-						public void mouseEntered(MouseEvent e) {
+						public void internalFrameClosed(InternalFrameEvent e) {
 							// TODO Auto-generated method stub
 							
 						}
 
 						@Override
-						public void mouseExited(MouseEvent e) {
+						public void internalFrameClosing(InternalFrameEvent e) {
 							// TODO Auto-generated method stub
 							
 						}
 
 						@Override
-						public void mousePressed(MouseEvent e) {
+						public void internalFrameDeactivated(
+								InternalFrameEvent e) {
 							// TODO Auto-generated method stub
 							
 						}
 
 						@Override
-						public void mouseReleased(MouseEvent e) {
+						public void internalFrameDeiconified(
+								InternalFrameEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void internalFrameIconified(InternalFrameEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void internalFrameOpened(InternalFrameEvent e) {
 							// TODO Auto-generated method stub
 							
 						}
@@ -893,45 +922,45 @@ public class GuiImpl implements edss.interf.Gui{
 			}
 			
 		});
-		centerPanel.addMouseListener(new MouseListener()
-		{
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.out.println("in");
-				if(getActiveFrame() != null)
-				{
-					System.out.println("click!");
-					mediator = getActiveFrame().getMediator();
-				}
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+//		centerPanel.addMouseListener(new MouseListener()
+//		{
+//
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				System.out.println("in");
+//				if(getActiveFrame() != null)
+//				{
+//					System.out.println("click!");
+//					mediator = getActiveFrame().getMediator();
+//				}
+//				
+//			}
+//
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mouseReleased(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//		});
 	} 
 	
 	private void leftPanel()
