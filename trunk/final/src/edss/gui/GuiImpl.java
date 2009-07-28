@@ -125,7 +125,7 @@ public class GuiImpl implements edss.interf.Gui{
 	final JToggleButton D = new JToggleButton("Delete");
 	final JToggleButton G = new JToggleButton("Drag");
 	final JToggleButton J = new JToggleButton("Junction");
-	
+	NewInternalFrame newInternalFrame;
 	Vector <GuiMediator> mediatorVector = new Vector <GuiMediator> ();
 	GuiMediator mediator; 
 	
@@ -199,7 +199,6 @@ public class GuiImpl implements edss.interf.Gui{
 		mainFrame.setSize(WIDTH, HEIGHT);
 		
 		centerPanel = new JDesktopPane();
-		// centerPanel.add
 		
 		mainMenu();
 		
@@ -259,10 +258,47 @@ public class GuiImpl implements edss.interf.Gui{
 				fNew.addActionListener(new ActionListener() 
 				{	public void actionPerformed(ActionEvent e)
 					{
-					NewInternalFrame newInternalFrame = new NewInternalFrame("New project", coordonates++, null);
+					newInternalFrame = new NewInternalFrame("New project", coordonates++, null);
 					centerPanel.add(newInternalFrame);
 					w.add(newInternalFrame);
 					// if(w.size() == 1)
+					newInternalFrame.addMouseListener(new MouseListener()
+					{
+
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							mediator = newInternalFrame.getMediator();
+							if(getSelectedPiece() != null)
+								mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
+							P.setSelected(true);
+							mediator.enterState(StateConstant.PIECESTATE);
+						}
+
+						@Override
+						public void mouseEntered(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void mouseExited(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void mousePressed(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void mouseReleased(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+					});
 						centerPanel.getDesktopManager().activateFrame(newInternalFrame);
 					// else
 						 //centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
@@ -1034,8 +1070,11 @@ public class GuiImpl implements edss.interf.Gui{
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mediator = getActiveFrame().getMediator();
-				mediator.enterState(StateConstant.WIRESTATE);
+				if(getActiveFrame() != null)
+				{
+					mediator = getActiveFrame().getMediator();
+					mediator.enterState(StateConstant.WIRESTATE);
+				}
 				
 			}
 			
@@ -1053,8 +1092,11 @@ public class GuiImpl implements edss.interf.Gui{
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mediator = getActiveFrame().getMediator();
-				mediator.enterState(StateConstant.MOUSESTATE);
+				if(getActiveFrame() != null)
+				{
+					mediator = getActiveFrame().getMediator();
+					mediator.enterState(StateConstant.MOUSESTATE);
+				}
 				
 			}
 			
@@ -1072,8 +1114,11 @@ public class GuiImpl implements edss.interf.Gui{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				mediator = getActiveFrame().getMediator();
-				mediator.enterState(StateConstant.PIECESTATE);			
+				if(getActiveFrame() != null)
+				{
+					mediator = getActiveFrame().getMediator();
+					mediator.enterState(StateConstant.PIECESTATE);
+				}
 			}
 			
 		});
@@ -1117,8 +1162,11 @@ public class GuiImpl implements edss.interf.Gui{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				mediator = getActiveFrame().getMediator();
-				mediator.enterState(StateConstant.DELETESTATE);			
+				if(getActiveFrame() != null)
+				{
+					mediator = getActiveFrame().getMediator();
+					mediator.enterState(StateConstant.DELETESTATE);			
+				}
 			}
 			
 		});
@@ -1134,8 +1182,11 @@ public class GuiImpl implements edss.interf.Gui{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				mediator = getActiveFrame().getMediator();
-				mediator.enterState(StateConstant.DRAGSTATE);			
+				if(getActiveFrame() != null)
+				{
+					mediator = getActiveFrame().getMediator();
+					mediator.enterState(StateConstant.DRAGSTATE);	
+				}
 			}
 			
 		});
