@@ -33,11 +33,12 @@ public class InsertState extends State {
 		System.out.println(canvas);
 		int roundX = MyMath.roundAtStep(arg0.getX() / canvas.matrix.scale, PointMatrix.CELL_SIZE);
 		int roundY = MyMath.roundAtStep(arg0.getY() / canvas.matrix.scale, PointMatrix.CELL_SIZE);
-		String id = canvas.mediator.addPiece(roundX, roundY);
-		if (id != null) {
+		edss.interf.Piece piece = canvas.mediator.addPiece(roundX, roundY);
+		System.out.println("val de la mole:  " + piece.getValue());
+		if (piece.getId() != null) {
 			String fileName = canvas.mediator.getSVG();
 			try {
-				canvas.addPiece(canvas.domFactory, fileName, roundX, roundY, id);
+				canvas.addPiece(canvas.domFactory, fileName, roundX, roundY, piece.getId(), piece.getValue());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -100,7 +100,7 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 	}
 
 	@Override
-	public String addPiece(int x, int y) {
+	public edss.interf.Piece addPiece(int x, int y) {
 		return model.addPiece(x, y);
 	}
 

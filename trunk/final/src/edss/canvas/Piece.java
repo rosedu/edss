@@ -64,28 +64,27 @@ public class Piece extends SchematicElement {
 
 				
 				((Element) domElement.getParentNode()).setAttribute("transform", transform.toString());
+				
 				List<WireInfo> listPin = canvas.mediator.getWiresInfo(domElement.getAttribute("id"));
 				Iterator<WireInfo> it = listPin.iterator();
 				WireInfo info;
 				Element wireElement;
-				int roundX = MyMath.roundAtStep(x/canvas.matrix.scale, PointMatrix.CELL_SIZE);
-				int roundY = MyMath.roundAtStep(y/canvas.matrix.scale, PointMatrix.CELL_SIZE);
 				while(it.hasNext())
 				{
 					info = it.next();
-					wireElement = canvas.domFactory.getElementById(info.getWireId());
+					wireElement = (Element) canvas.domFactory.getElementById(info.getWireId()).getFirstChild();
+					System.out.println("id fir " + info.getWireId());
 					wire = new Wire(canvas, wireElement);
 					if(info.getEnd() == WireInfo.END)
-						wire.points.addPoint(roundX, roundY);
+						wire.points.addPoint(dx + wire.points.pointList.getLast().x, dy + wire.points.pointList.getLast().y);
 					else
-						wire.points.addPointFront(roundX, roundY);
-						
+						wire.points.addPointFront(dx + wire.points.pointList.getFirst().x, dy + wire.points.pointList.getFirst().y);
 					
-					
+					wireElement.setAttribute("points", wire.points.toString());
 				}
 				
 				
-				// canvas.setDoubleBuffered(true);
+				
 				// canvas.setDoubleBufferedRendering(true);
 				crtPoint.setLocation(x, y);
 				try {

@@ -34,7 +34,6 @@ import org.w3c.dom.svg.SVGDocument;
 
 import edss.interf.Canvas;
 import edss.interf.CanvasMediator;
-import edss.interf.Piece;
 
 
 @SuppressWarnings("serial")
@@ -87,7 +86,7 @@ public class CanvasImpl extends Constant implements Canvas {
 		canvas.addMouseListener(eventListener.mouseCanvas);
 		canvas.addMouseMotionListener(eventListener.mouseMotionCanvas);
 		canvas.addKeyListener(eventListener.keyListener);
-		
+//		 canvas.setDoubleBuffered(true);
 		
 
 		// init matrix
@@ -265,7 +264,7 @@ public class CanvasImpl extends Constant implements Canvas {
 	}
 	
 	//TODO scos document	
-	public void addPiece(SVGDocument document, String fileName, int cursorX, int cursorY, String id) throws IOException {
+	public void addPiece(SVGDocument document, String fileName, int cursorX, int cursorY, String id, String value) throws IOException {
 		SVGDocument doc1 = (SVGDocument) Constant.saxFactory.createDocument(fileName);
 
 		doc1.getRootElement().setAttribute("id", id);
@@ -282,7 +281,7 @@ public class CanvasImpl extends Constant implements Canvas {
 		
 		
 		//conventie piesa de intrare: 2 copii <g>: primul: piesa + textLabel; alDoilea: pinii
-		setTextTag(x,id,"ceva");
+		setTextTag(x, id, value);
 		
 		EventTarget target = (EventTarget) document.getElementById(id);
 		target.addEventListener("mousedown", eventListener.mouseDownListener, true);
@@ -292,16 +291,23 @@ public class CanvasImpl extends Constant implements Canvas {
 	
 	private static void setTextTag(Node x, String text1, String text2) {
 		NodeList nl = ((Element) x).getElementsByTagName("text");
+		
 		if(nl.getLength() == 0)
 			return;
+		System.out.println("texte: " +text1 + text2);
+		for (int i = 0; i < nl.getLength(); i++) {
+			if(((Element)(nl.item(i).getFirstChild())).getAttribute("id").equals("name"))
+				((Element)nl.item(i)).setTextContent(text1);
+			else 
+				((Element)nl.item(i)).setTextContent(text2);
+				
+		}	
 		
-		((Element)nl.item(0)).setTextContent(text1);
-		System.out.println(1);
+	//	System.out.println(1);
 		if(nl.getLength() == 1)
 			return;
 		
-		((Element)nl.item(1)).setTextContent("");//text2);
-		System.out.println(1);
+		//System.out.println(1);
 	}
 	
 	@Override

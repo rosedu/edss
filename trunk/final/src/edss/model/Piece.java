@@ -42,7 +42,6 @@ public class Piece implements Serializable, edss.interf.Piece {
 	public Piece(Schematic scheme, String category, String subCategory, String model, int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.model = model;
 		this.scheme = scheme;
 		
 		pins = new HashMap<String, Pin>();
@@ -159,7 +158,7 @@ public class Piece implements Serializable, edss.interf.Piece {
 		
 		//----------------------------------------------------------------
 		//----------------------------------------------------------------
-		model = null;
+		this.model = null;
 		if (type.equals("R"))
 			this.model = properties.get("resistance");
 		if (type.equals("C"))

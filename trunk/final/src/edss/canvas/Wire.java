@@ -4,6 +4,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.svg.SVGDocument;
 
+import edss.main.Main;
+
 public class Wire extends SchematicElement{
 	WirePoints points;
 	Segment selectedSegment;
@@ -45,6 +47,7 @@ public class Wire extends SchematicElement{
 	public Wire(CanvasImpl canvas, Element element) {
 		super(canvas,element);
 		points = new WirePoints(element.getAttribute("points"));
+		System.out.println(points);
 	}
 
 

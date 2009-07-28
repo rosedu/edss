@@ -70,6 +70,8 @@ public class WirePoints {
 		
 	}
 	
+
+	
 	public void addPointFront(int x, int y) {
 		Collections.reverse(pointList);
 		addPoint(x, y);

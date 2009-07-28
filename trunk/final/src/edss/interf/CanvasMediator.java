@@ -14,7 +14,7 @@ public interface CanvasMediator {
 	 */
 	public void editPieceProperties(String id);
 	public void registerCanvas(Canvas canvas);
-	public String addPiece(int x, int y);
+	public edss.interf.Piece addPiece(int x, int y);
 	public String getSVG();
 	public void delete();
 	public String addWire(List<? extends Point> pointList,
