@@ -173,5 +173,12 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 		model = new ModelImpl(this);
 	}
 
+	public void setPreview()
+	{
+		gui.getLeftPreview().removeAll();
+		gui.getLeftPreview().add(canvas.getPreview(getSVG()));
+		gui.getLeftPreview().repaint();
+		gui.getLeftPreview().validate();
+	}
 
 }
