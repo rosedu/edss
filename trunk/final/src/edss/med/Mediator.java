@@ -189,8 +189,8 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 	}
 
 	@Override
-	public List<WireInfo> getWiresInfo() {
-		return model.getWiresInfo();
+	public List<WireInfo> getWiresInfo(String pieceId) {
+		return model.getWiresInfo(pieceId);
 	}
 
 }
