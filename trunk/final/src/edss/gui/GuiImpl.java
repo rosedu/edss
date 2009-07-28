@@ -697,10 +697,13 @@ public class GuiImpl implements edss.interf.Gui{
 			tPiece.setAccelerator(key);
 			
 			JMenuItem tJunction = new JMenuItem("Junction",new ImageIcon("Icons/daniel.jpg"));
-			tPiece.addActionListener(new ActionListener()
+			tJunction.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e)
 					{
+						 mediator = getActiveFrame().getMediator();
+						 mediator.enterState(StateConstant.PIECESTATE);
+						 mediator.setPiece("node", "node", "node");
 						J.setSelected(true);
 					}
 				});
@@ -952,6 +955,7 @@ public class GuiImpl implements edss.interf.Gui{
 					if(getActiveFrame() != null)
 					{
 						mediator = getActiveFrame().getMediator();
+						// System.out.println("Piesa este " + getSelectedPiece().getName());
 						mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
 					}
 				}
