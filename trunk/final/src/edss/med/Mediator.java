@@ -24,7 +24,7 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 	private Gui gui;
 	private Model model;
 	private Canvas canvas;
-	
+	public int state;
 	
 	@Override
 	public void registerGui(Gui g)
@@ -77,16 +77,21 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 		{
 		case StateConstant.PIECESTATE :
 			canvas.enterInsertState();
+			state = 0;
 			break;
 		case StateConstant.DELETESTATE :
 			canvas.enterDeleteState();
+			state = 2;
 			break;
 		case StateConstant.DRAGSTATE :
+			state = 3;
 			break;
 		case StateConstant.MOUSESTATE :
+			state = 1;
 			canvas.enterPieceState();
 			break;
 		case StateConstant.WIRESTATE :
+			state = 4;
 			canvas.enterWireState();
 			break;
 		default : break;
