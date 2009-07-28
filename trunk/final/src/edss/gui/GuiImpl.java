@@ -680,6 +680,7 @@ public class GuiImpl implements edss.interf.Gui{
 				{
 					System.out.println("Rotate right");
 					mediator = getActiveFrame().getMediator();
+					mediator.rotate(90);
 				}
 			});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, InputEvent.CTRL_MASK);
