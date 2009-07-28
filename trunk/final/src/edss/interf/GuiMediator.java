@@ -13,4 +13,5 @@ public interface GuiMediator {
 	public void rotate(int angle);
 	public void init();
 	public void setPreview();
+	void repaint();
 }
