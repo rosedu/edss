@@ -950,7 +950,10 @@ public class GuiImpl implements edss.interf.Gui{
 				{
 					lCurrent.clearSelection();
 					if(getActiveFrame() != null)
+					{
+						mediator = getActiveFrame().getMediator();
 						mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
+					}
 				}
 				P.setSelected(true);
 				if(getActiveFrame() != null)
