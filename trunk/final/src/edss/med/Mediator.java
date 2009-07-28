@@ -174,6 +174,12 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 		gui.getLeftPreview().validate();
 		//}
 	}
+	
+	public void repaint()
+	{
+		if(gui.getCenterPanel() != null)
+			{ canvas.scale(gui.getActiveFrame().getZoomFactor()); }
+	}
 
 	@Override
 	public String addWire(List<? extends Point> pointList, String idStartPiece, String idStartPin,
