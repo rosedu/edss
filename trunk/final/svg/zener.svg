@@ -34,9 +34,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="4.9497475"
-     inkscape:cx="112.5132"
+     inkscape:cx="89.279692"
      inkscape:cy="43.621822"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer7"
      showgrid="true"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
@@ -74,25 +74,6 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     inkscape:groupmode="layer"
-     id="layer7"
-     inkscape:label="Pini">
-    <rect
-       style="fill:#000000;fill-opacity:0;stroke:none;stroke-width:2.35500002;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pin2"
-       width="23.285713"
-       height="43.999996"
-       x="73.357147"
-       y="26.57143" />
-    <rect
-       style="fill:#000000;fill-opacity:0;stroke:none;stroke-width:2.35500002;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pin1"
-       width="23.285713"
-       height="43.999996"
-       x="0.42857143"
-       y="25.857143" />
-  </g>
   <g
      id="layer1"
      inkscape:label="Layer 1"
@@ -148,5 +129,24 @@
        d="M 55.67022,33.1847 L 49.045765,33.1847"
        id="path3997"
        sodipodi:nodetypes="cc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer7"
+     inkscape:label="Pini">
+    <rect
+       style="fill:#000000;fill-opacity:0;stroke:none;stroke-width:2.35500002;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pin2"
+       width="23.285713"
+       height="43.999996"
+       x="73.357147"
+       y="26.57143" />
+    <rect
+       style="fill:#000000;fill-opacity:0;stroke:none;stroke-width:2.35500002;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pin1"
+       width="23.285713"
+       height="43.999996"
+       x="0.42857143"
+       y="25.857143" />
   </g>
 </svg>

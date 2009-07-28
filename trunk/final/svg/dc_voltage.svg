@@ -13,30 +13,9 @@
    id="svg4364"
    sodipodi:version="0.32"
    inkscape:version="0.46"
-   sodipodi:docname="dc_voltage_source.svg"
+   sodipodi:docname="dc_voltage.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0">
-  <g
-     inkscape:groupmode="layer"
-     id="layer8"
-     inkscape:label="Pini">
-    <rect
-       style="fill:#000000;fill-opacity:0;stroke:none"
-       id="pin1"
-       width="23.883396"
-       height="42.986153"
-       x="-0.13589096"
-       y="25.983027"
-       inkscape:label="#rect4395" />
-    <rect
-       inkscape:label="#rect4395"
-       y="25.983027"
-       x="71.864105"
-       height="42.986153"
-       width="23.883396"
-       id="pin2"
-       style="fill:#000000;fill-opacity:0;stroke:none" />
-  </g>
   <defs
      id="defs4366">
     <inkscape:perspective
@@ -55,7 +34,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="7"
-     inkscape:cx="24.31022"
+     inkscape:cx="7.8816486"
      inkscape:cy="54.493743"
      inkscape:current-layer="layer8"
      showgrid="true"
@@ -63,8 +42,8 @@
      inkscape:document-units="px"
      inkscape:window-width="1280"
      inkscape:window-height="740"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
      showguides="true"
      inkscape:guide-bbox="true">
     <sodipodi:guide
@@ -142,7 +121,7 @@
          sodipodi:role="line"
          id="name"
          x="1.7142851"
-         y="16"></tspan></text>
+         y="16" /></text>
     <text
        xml:space="preserve"
        style="font-size:15px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
@@ -153,6 +132,28 @@
          sodipodi:role="line"
          id="value"
          x="4.8364954"
-         y="89.1875"></tspan></text>
+         y="89.1875" /></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer8"
+     inkscape:label="Pini"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill:#000000;fill-opacity:0;stroke:none"
+       id="pin1"
+       width="23.883396"
+       height="42.986153"
+       x="-0.13589096"
+       y="25.983027"
+       inkscape:label="#rect4395" />
+    <rect
+       inkscape:label="#rect4395"
+       y="25.983027"
+       x="71.864105"
+       height="42.986153"
+       width="23.883396"
+       id="pin2"
+       style="fill:#000000;fill-opacity:0;stroke:none" />
   </g>
 </svg>

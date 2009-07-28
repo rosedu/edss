@@ -34,7 +34,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="7.7781746"
-     inkscape:cx="32"
+     inkscape:cx="17.21504"
      inkscape:cy="37.880072"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -44,8 +44,8 @@
      inkscape:guide-bbox="true"
      inkscape:window-width="1280"
      inkscape:window-height="740"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4">
+     inkscape:window-x="0"
+     inkscape:window-y="26">
     <sodipodi:guide
        orientation="0,1"
        position="38,48"
@@ -134,7 +134,7 @@
            y="16.418346"
            x="0.89995414"
            id="name"
-           sodipodi:role="line"></tspan></text>
+           sodipodi:role="line" /></text>
       <text
          sodipodi:linespacing="125%"
          id="text3384"
@@ -145,8 +145,12 @@
            y="82.856331"
            x="0.30400711"
            id="value"
-           sodipodi:role="line"></tspan></text>
+           sodipodi:role="line" /></text>
     </g>
+    <path
+       style="fill:#ffffff;fill-opacity:0;stroke:none;stroke-opacity:1"
+       d="M 38.531095,48.081154 C 38.531095,41.120693 38.577366,36.773247 38.651167,36.799588 C 38.717203,36.823159 42.185449,39.388027 46.358369,42.499296 C 53.429861,47.771694 53.930673,48.170411 53.727206,48.365976 C 53.44426,48.63794 38.688925,59.405577 38.599195,59.405577 C 38.561744,59.405577 38.531095,54.309587 38.531095,48.081155 L 38.531095,48.081154 z"
+       id="path3095" />
   </g>
   <g
      inkscape:groupmode="layer"
