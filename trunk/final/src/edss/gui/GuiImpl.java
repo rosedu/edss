@@ -6,8 +6,14 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedWriter;
@@ -255,11 +261,13 @@ public class GuiImpl implements edss.interf.Gui{
 					centerPanel.add(newInternalFrame);
 					w.add(newInternalFrame);
 					// if(w.size() == 1)
-					//	centerPanel.getDesktopManager().activateFrame(newInternalFrame);
+						centerPanel.getDesktopManager().activateFrame(newInternalFrame);
 					// else
-					centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
+						 //centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
 					mediator = newInternalFrame.getMediator();
 					register();
+					if(getSelectedPiece() != null)
+						mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
 					mediator.enterState(StateConstant.PIECESTATE);
 					//System.out.println(mediator);
 					
@@ -834,6 +842,45 @@ public class GuiImpl implements edss.interf.Gui{
 			}
 			
 		});
+		centerPanel.addMouseListener(new MouseListener()
+		{
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("in");
+				if(getActiveFrame() != null)
+				{
+					System.out.println("click!");
+					mediator = getActiveFrame().getMediator();
+				}
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	} 
 	
 	private void leftPanel()
@@ -879,15 +926,17 @@ public class GuiImpl implements edss.interf.Gui{
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
+				if(getActiveFrame() != null)
+					mediator = getActiveFrame().getMediator();
 				if(lFavorites.isSelectionEmpty() == false)
 				{
 					lCurrent.clearSelection();
-					mediator = getActiveFrame().getMediator();
-					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
+					if(getActiveFrame() != null)
+						mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
 				}
 				P.setSelected(true);
-				mediator = getActiveFrame().getMediator();
-				mediator.enterState(StateConstant.PIECESTATE);
+				if(getActiveFrame() != null)
+					mediator.enterState(StateConstant.PIECESTATE);
 			}
 			
 		});
@@ -1188,7 +1237,9 @@ public class GuiImpl implements edss.interf.Gui{
 	{
 		if(lCurrent.getSelectedValue() != null)
 			return	currentVector.get(lCurrent.getSelectedIndex());
-		return favoritesVector.get(lFavorites.getSelectedIndex());
+		if(lFavorites.getSelectedValue() != null)
+			return favoritesVector.get(lFavorites.getSelectedIndex());
+		return null;
 	}
 	
 	public NewInternalFrame getActiveFrame()
@@ -1208,6 +1259,22 @@ public class GuiImpl implements edss.interf.Gui{
 	{
 		mediator.registerGui(this);
 	}
+	
+//	public Piece getPiece()
+//	{
+//		Piece p = null;
+//		if(lCurrent.getSelectedValue() != null)
+//		{
+//			p = (Piece) ((DefaultListModel) lCurrent.getModel()).elementAt(lCurrent.getSelectedIndex());
+//			return p;
+//		}
+//		if(lFavorites.getSelectedValue() != null)
+//		{
+//			p = (Piece) ((DefaultListModel) lFavorites.getModel()).elementAt(lFavorites.getSelectedIndex());
+//			return p;
+//		}
+//		return p;
+//	}
 	
 }
 
