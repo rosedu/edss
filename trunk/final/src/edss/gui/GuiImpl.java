@@ -355,7 +355,8 @@ public class GuiImpl implements edss.interf.Gui{
 									} catch (PropertyVetoException e1) {
 										e1.printStackTrace();
 									}
-									//centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
+									// centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
+									mediator.enterState(StateConstant.PIECESTATE);
 									mediator.open(auxTBO);
 									// mediator.addPanel();
 								}
