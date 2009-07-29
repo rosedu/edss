@@ -263,7 +263,7 @@ public class NewInternalFrame extends JInternalFrame {
 					saveDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				}
 				else getThis().dispose();
-				
+				modified = false;
 			}
 
 			@Override
