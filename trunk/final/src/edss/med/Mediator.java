@@ -219,4 +219,10 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 		
 	}
 
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
