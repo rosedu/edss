@@ -1,15 +1,25 @@
 package edss.gui;
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyVetoException;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import edss.canvas.StateConstant;
 import edss.interf.GuiMediator;
@@ -23,6 +33,7 @@ public class NewInternalFrame extends JInternalFrame {
 	private int zoomFactor = 100;
 	private GuiImpl gui;
 	private int state;
+	private boolean modified = false;
 //	private JSVGCanvas canvas;
 	
 	GuiMediator mediator; // = new Mediator(); 
@@ -30,12 +41,13 @@ public class NewInternalFrame extends JInternalFrame {
 	public NewInternalFrame(String s, int i, String file)
 	{
 		super(s + " " + i, true, true, true, true);
+		setDefaultCloseOperation(JInternalFrame.DO_NOTHING_ON_CLOSE);
 		state = StateConstant.PIECESTATE;
 		fileName = file;
 		this.mediator =   new edss.med.Mediator();		
 		mediator.init();
 		setBounds(i*10, i*10, 300, 300);
-		setDefaultCloseOperation(HIDE_ON_CLOSE);
+		// setDefaultCloseOperation(HIDE_ON_CLOSE);
 		internalPanel = new JPanel(new BorderLayout());
 		zoomSlider = new JSlider(1, 5);
 		zoomSlider.setValue(3);
@@ -174,7 +186,79 @@ public class NewInternalFrame extends JInternalFrame {
 
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
-				// TODO Auto-generated method stub
+				if(modified == false)
+				{
+					final JDialog saveDialog = new JDialog();
+					saveDialog.setModal(true);
+					saveDialog.setLocationRelativeTo(getThis());
+					saveDialog.setLayout(new BorderLayout());
+					saveDialog.add(new JLabel("Project has been modified, save first?"), BorderLayout.CENTER);
+					JButton bs = new JButton("Save");
+						bs.addActionListener(new ActionListener()
+						{
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								if(fileName != null)
+								{
+									String aux = fileName.substring(0, fileName.lastIndexOf('.'));
+									mediator.save(aux);
+								}
+								else
+								{
+									JFileChooser chSave = new JFileChooser();
+									chSave.setDialogType(JFileChooser.SAVE_DIALOG);
+									FileFilter myFilter = new FileNameExtensionFilter("*.svg", "svg");
+									chSave.addChoosableFileFilter(myFilter);
+									chSave.showSaveDialog(getThis());
+								
+									if(chSave.getSelectedFile() != null)
+									{
+										System.out.println(chSave.getSelectedFile().getAbsolutePath());
+										if(chSave.getSelectedFile().getAbsolutePath().contains(".svg"))
+										{
+											fileName = chSave.getSelectedFile().getAbsolutePath();
+										}
+										else
+										{
+											fileName = chSave.getSelectedFile().getAbsolutePath() + ".svg";
+										}
+										mediator.save(chSave.getSelectedFile().getAbsolutePath());
+										setTitle(fileName);
+										
+									}
+								}
+								saveDialog.dispose();
+								dispose();
+							}	
+						});
+					JButton bq = new JButton("Quit");
+						bq.addActionListener(new ActionListener()
+						{
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								getThis().dispose();
+								saveDialog.dispose();
+								
+							}
+						});
+					JButton bc = new JButton("Cancel");
+						bc.addActionListener(new ActionListener()
+						{
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								saveDialog.dispose();						
+							}
+						});
+					JPanel px = new JPanel(new GridLayout(1,0));
+					px.add(bs);
+					px.add(bq);
+					px.add(bc);
+					saveDialog.add(px, BorderLayout.SOUTH);
+					saveDialog.setSize(250, 80);
+					saveDialog.setVisible(true);
+					// saveDialog.setLocationRelativeTo(null);
+					saveDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				}
 				
 			}
 
@@ -226,6 +310,20 @@ public class NewInternalFrame extends JInternalFrame {
 	public GuiMediator getMediator()
 	{
 		return mediator;
+	}
+	
+	public boolean wasModified()
+	{
+		return modified;
+	}
+	
+	public void modify(boolean b)
+	{
+		modified = b;
+	}
+	public NewInternalFrame getThis()
+	{
+		return this;
 	}
 	
 }
