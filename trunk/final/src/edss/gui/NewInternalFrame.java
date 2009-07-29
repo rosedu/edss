@@ -239,7 +239,8 @@ public class NewInternalFrame extends JInternalFrame {
 							public void actionPerformed(ActionEvent e) {
 								getThis().dispose();
 								saveDialog.dispose();
-								gui.mediator = null;
+								if(gui != null)
+									gui.mediator = null;
 							}
 						});
 					JButton bc = new JButton("Cancel");
