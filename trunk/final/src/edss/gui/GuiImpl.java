@@ -345,13 +345,19 @@ public class GuiImpl implements edss.interf.Gui{
 									JOptionPane.showMessageDialog(null, "File missing", "ERROR!", JOptionPane.ERROR_MESSAGE);
 								else
 								{
-									NewInternalFrame n = new NewInternalFrame("New project", coordonates++, auxTBO);
+									NewInternalFrame n = new NewInternalFrame(auxTBO + ".svg", coordonates++, auxTBO);
 									mediator = n.getMediator();
 									register();
 									centerPanel.add(n);
 									w.add(n);
-									centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
+									try {
+										n.setSelected(true);
+									} catch (PropertyVetoException e1) {
+										e1.printStackTrace();
+									}
+									//centerPanel.getDesktopManager().activateFrame(w.get(coordonates - 2));
 									mediator.open(auxTBO);
+									// mediator.addPanel();
 								}
 								
 							}
