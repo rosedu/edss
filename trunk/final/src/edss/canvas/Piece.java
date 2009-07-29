@@ -87,15 +87,6 @@ public class Piece extends SchematicElement {
 				
 				// canvas.setDoubleBufferedRendering(true);
 				crtPoint.setLocation(x, y);
-				try {
-					CanvasImpl.writeSvg(canvas.domFactory, "export.svg");
-				} catch (TransformerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 		}
 
