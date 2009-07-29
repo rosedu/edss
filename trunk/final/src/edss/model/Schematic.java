@@ -196,7 +196,7 @@ public class Schematic implements Serializable {
 	
 	public String splitWire(String splitId, int x, int y, List<? extends Point> list1, List<? extends Point> list2, String idStartPiece, String idStartPin,
 				List<? extends Point> newWireList) {
-		AddWireWithJunctionCommand com = new AddWireWithJunctionCommand(newWireList, this, idStartPiece, idStartPin, splitId, x, y);
+		AddWireWithJunctionCommand com = new AddWireWithJunctionCommand(newWireList, x, y, list1, list2, this, idStartPiece, idStartPin, splitId, x, y);
 		commandManager.doCommand(com);
 		
 		return com.getNewWire().getId(); 

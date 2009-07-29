@@ -19,8 +19,12 @@ public class AddWireWithJunctionCommand implements Command {
 	private String piece1;
 	private String pin1;
 	private List<? extends Point> points;
+	private List<? extends Point> splitList1;
+	private List<? extends Point> splitList2;
 	
-	public AddWireWithJunctionCommand(List<? extends Point> points, Schematic scheme, String piece1, String pin1, String idWire, int x, int y) {
+	public AddWireWithJunctionCommand(List<? extends Point> points, int x, int y, 
+			     List<? extends Point> splitList1, List<? extends Point> splitList2,
+			     Schematic scheme, String piece1, String pin1, String idWire) {
 		w = scheme.getWires().get(idWire);
 		this.scheme = scheme;
 		this.x = x;
@@ -28,13 +32,13 @@ public class AddWireWithJunctionCommand implements Command {
 		this.piece1 = piece1;
 		this.pin1 = pin1;
 		this.points = points;
+		this.splitList1 = splitList1;
+		this.splitList2 = splitList2;
 	}
 	
 	@Override
 	public void execute() {
 		List<? extends Point> list = w.getPoints();
-		List<? extends Point> splitList1 = new LinkedList<Point>();
-		List<? extends Point> splitList2 = new LinkedList<Point>();
 		
 		scheme.getWires().remove(w.getId());
 		

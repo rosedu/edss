@@ -38,7 +38,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="5.6"
      inkscape:cx="59.997645"
-     inkscape:cy="31.216279"
+     inkscape:cy="74.073422"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -135,7 +135,8 @@
          style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:1.77165353;stroke-linecap:square;stroke-linejoin:miter;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
     </g>
     <g
-       id="g4822">
+       id="g4822"
+       transform="translate(-54.821429,-3.3928572)">
       <text
          sodipodi:linespacing="125%"
          id="text4814"
@@ -146,7 +147,7 @@
            y="15.464286"
            x="58.035717"
            id="name"
-           sodipodi:role="line" /></text>
+           sodipodi:role="line"></tspan></text>
       <text
          sodipodi:linespacing="125%"
          id="text4818"

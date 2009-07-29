@@ -134,7 +134,7 @@
            y="16.418346"
            x="0.89995414"
            id="name"
-           sodipodi:role="line" /></text>
+           sodipodi:role="line"></tspan></text>
       <text
          sodipodi:linespacing="125%"
          id="text3384"
@@ -145,7 +145,7 @@
            y="82.856331"
            x="0.30400711"
            id="value"
-           sodipodi:role="line" /></text>
+           sodipodi:role="line"></tspan></text>
     </g>
     <path
        style="fill:#ffffff;fill-opacity:0;stroke:none;stroke-opacity:1"

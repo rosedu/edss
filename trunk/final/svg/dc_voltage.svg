@@ -33,10 +33,10 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7"
-     inkscape:cx="7.8816486"
-     inkscape:cy="54.493743"
-     inkscape:current-layer="layer8"
+     inkscape:zoom="3.5"
+     inkscape:cx="5.1239005"
+     inkscape:cy="68.121212"
+     inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
@@ -111,28 +111,31 @@
        width="8.1428576"
        id="rect4382"
        style="fill:#000000;fill-opacity:1" />
-    <text
-       xml:space="preserve"
-       style="font-size:15px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="1.7142851"
-       y="16"
-       id="text5241"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="name"
+    <g
+       id="g2396">
+      <text
+         sodipodi:linespacing="125%"
+         id="text5241"
+         y="16"
          x="1.7142851"
-         y="16" /></text>
-    <text
-       xml:space="preserve"
-       style="font-size:15px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="4.8364954"
-       y="89.1875"
-       id="text5237"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="value"
+         style="font-size:15px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="16"
+           x="1.7142851"
+           id="name"
+           sodipodi:role="line"></tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5237"
+         y="89.1875"
          x="4.8364954"
-         y="89.1875" /></text>
+         style="font-size:15px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="89.1875"
+           x="4.8364954"
+           id="value"
+           sodipodi:role="line"></tspan></text>
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"

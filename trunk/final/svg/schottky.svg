@@ -44,8 +44,8 @@
      inkscape:guide-bbox="true"
      inkscape:window-width="1280"
      inkscape:window-height="740"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4">
+     inkscape:window-x="0"
+     inkscape:window-y="26">
     <sodipodi:guide
        orientation="0,1"
        position="-57.636364,64"
@@ -123,7 +123,7 @@
            y="87.043411"
            x="2.691988"
            id="value"
-           sodipodi:role="line"></tspan></text>
+           sodipodi:role="line" /></text>
     </g>
   </g>
   <g
