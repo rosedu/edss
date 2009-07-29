@@ -155,9 +155,9 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 		// }
 	}
 
-	public void delete() {
+	public void delete(String id) {
 		// canvas sterge aici dupa click!! -> enterState(int state)
-		// model.delete();
+		model.delete(id);
 	}
 
 	public void init() {
@@ -186,14 +186,33 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 			String idEndPiece, String idEndPin) {
 		return model.addWire(idStartPiece, idStartPin, idEndPiece, idEndPin, pointList);
 	}
-
+	
 	@Override
 	public List<WireInfo> getWiresInfo(String pieceId) {
 		return model.getWiresInfo(pieceId);
 	}
 	
-	public String splitWire(String splitId, List<? extends Point> list1, List<? extends Point> list2, String idStartPiece, String idStartPin,
-			List<? extends Point> newWireList) {
+	public String splitWire(String splitId, int x, int y, List<? extends Point> list1, 
+			                List<? extends Point> list2, String idStartPiece, String idStartPin,
+			                List<? extends Point> newWireList) {
+		return model.splitWire(splitId, x, y, list1, list2, idStartPiece, idStartPin, newWireList);
+	}
+
+	@Override
+	public void addNode(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addWire(String id, List<? extends Point> points) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeWire(String id) {
+		// TODO Auto-generated method stub
 		
 	}
 
