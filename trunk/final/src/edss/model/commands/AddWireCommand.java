@@ -27,15 +27,13 @@ public class AddWireCommand implements Command, Serializable {
 		this.points = points;
 	}
 	
-	public AddWireCommand(Schematic scheme, Wire w) {
-		this.w = w;
-		this.scheme = scheme;
-	}
-	
 	@Override
 	public void execute() {
-		//w = scheme.addWireWithoutUndo(piece1, pin1, piece2, pin2, points);
+		w = new Wire(scheme.getComponents().get(piece1).getPins().get(pin1),
+					 scheme.getComponents().get(piece2).getPins().get(pin2),
+					 points);
 		scheme.addWireWithoutUndo(w);
+		//scheme.addWireWithoutUndo(w);
 	}
 	
 	@Override
@@ -48,5 +46,9 @@ public class AddWireCommand implements Command, Serializable {
 	public void unExecute() {
 		scheme.removeWireWithoutUndo(w.getId());
 		//scheme.getMediator().removeWireFromCanvas(w.getId());
+	}
+	
+	public Wire getWire() {
+		return w;
 	}
 }

@@ -16,6 +16,8 @@ import java.util.Map;
 import edss.interf.ModelMediator;
 import edss.model.commands.AddComponentCommand;
 import edss.model.commands.AddWireCommand;
+import edss.model.commands.AddWireWithJunctionCommand;
+import edss.model.commands.Command;
 import edss.model.commands.CommandManager;
 import edss.model.commands.RemoveComponentCommand;
 import edss.model.commands.RemoveMultipleComponentsCommand;
@@ -70,12 +72,12 @@ public class Schematic implements Serializable {
 		List<String> selected = new LinkedList<String>();
 		
 		selected.add(id);
-		Iterator itp = piece.getPins().values().iterator();
+		Iterator<Pin> itp = piece.getPins().values().iterator();
 		
 		while (itp.hasNext()) {
 			Pin pin = (Pin)itp.next();
 			
-			Iterator itc = pin.getConnections().iterator();
+			Iterator<Connection> itc = pin.getConnections().iterator();
 			
 			while (itc.hasNext()) {
 				selected.add(((Connection)itc.next()).getWire().getId());
@@ -125,16 +127,19 @@ public class Schematic implements Serializable {
 		}
 	}
 
-	public void addWire(String piece1, String pin1, String piece2, String pin2, List<? extends Point> points) {
-		commandManager.doCommand(new AddWireCommand(this, piece1, pin1, piece2, pin2, points));
+	public String addWire(String piece1, String pin1, String piece2, String pin2, List<? extends Point> points) {
+		AddWireCommand com = new AddWireCommand(this, piece1, pin1, piece2, pin2, points);
+		commandManager.doCommand(com);
+		System.out.println("added wire: " + com.getWire().toString());
+		return com.getWire().getId();
 	}
 	
-	public void addWire(Wire w) {
-/*		addWire(w.getPin1().getPiece().getId(), w.getPin1().getId(),
-				w.getPin2().getPiece().getId(), w.getPin2().getId(), w.getPoints());*/
+/*	public void addWire(Wire w) {
+		addWire(w.getPin1().getPiece().getId(), w.getPin1().getId(),
+				w.getPin2().getPiece().getId(), w.getPin2().getId(), w.getPoints());
 		commandManager.doCommand(new AddWireCommand(this, w));
 		System.out.println("added wire: " + w.toString());
-	}
+	}*/
 	
 	public Wire addWireWithoutUndo(String piece1, String pin1, String piece2, String pin2, List<? extends Point> points) {
 		Piece pm1 = components.get(piece1);
@@ -187,6 +192,14 @@ public class Schematic implements Serializable {
 		w.getPin2().removeConnection(w.getPin1());
 		wires.remove(id);
 		wireInstances.remove(id);
+	}
+	
+	public String splitWire(String splitId, int x, int y, List<? extends Point> list1, List<? extends Point> list2, String idStartPiece, String idStartPin,
+				List<? extends Point> newWireList) {
+		AddWireWithJunctionCommand com = new AddWireWithJunctionCommand(newWireList, this, idStartPiece, idStartPin, splitId, x, y);
+		commandManager.doCommand(com);
+		
+		return com.getNewWire().getId(); 
 	}
 	
 	public void rotateComponent(int r, String id){

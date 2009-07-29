@@ -85,14 +85,15 @@ public class ModelImpl implements Model {
 
 	@Override
 	public String addWire(String piece1, String pin1, String piece2, String pin2, List<? extends Point> points) {
-		Piece pm1 = scheme.getComponents().get(piece1);
-		Piece pm2 = scheme.getComponents().get(piece2);
-		Pin p1 = pm1.getPins().get(pin1);
-		Pin p2 = pm2.getPins().get(pin2);
-
-		Wire w = new Wire(p1, p2, points);
-		scheme.addWire(w);
-		return w.getId();
+		return scheme.addWire(piece1, pin1, piece2, pin2, points);
+	}
+	
+	@Override
+	public String splitWire(String splitId, int x, int y, List<? extends Point> list1, 
+							List<? extends Point> list2, String idStartPiece, String idStartPin,
+							List<? extends Point> newWireList) {
+		return scheme.splitWire(splitId, x, y, list1, list2, idStartPiece, idStartPin, newWireList);
+		
 	}
 
 	@Override
@@ -130,5 +131,13 @@ public class ModelImpl implements Model {
 			}
 		}
 		return wi;
+	}
+
+	@Override
+	public void delete(String id) {
+		if (scheme.getWires().get(id) != null)
+			scheme.removeWire(id);
+		else
+			scheme.removeComponent(id);
 	}
 }
