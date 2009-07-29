@@ -137,9 +137,10 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 		// gui.getCenterPanel().add(canvas.getCanvas());
 
 		try {
-			System.out.println(file);
+			System.out.println("fisierrr: "+file);
 			canvas.openSVG(gui.getCenterPanel(), file + ".svg");
-			model.openScheme(file, this);
+			gui.getCenterPanel().add(canvas.getCanvas());
+		//	model.openScheme(file, this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

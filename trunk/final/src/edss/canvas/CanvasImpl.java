@@ -77,9 +77,11 @@ public class CanvasImpl extends Constant implements Canvas {
 //		this.panel = guiPanel;
 //		panel = guiPanel;
 		this.guiPanel = guiPanel;
-		guiPanel.add(panel);
-//		frame.add(panel);
-		canvas.setPreferredSize(new Dimension(700, 700));
+		this.guiPanel.add(panel);
+		System.out.println("!!!gui: " + guiPanel.getParent().getParent());
+		System.out.println("!!!domFact: " + domFactory.getDocumentURI());
+		
+		canvas.setPreferredSize(new Dimension(1000, 1000));
 		canvas.setDocumentState(JSVGCanvas.ALWAYS_DYNAMIC);
 		canvas.setDocument(domFactory);
 		canvas.setBorder(BorderFactory.createTitledBorder("THE canvas"));
@@ -90,7 +92,7 @@ public class CanvasImpl extends Constant implements Canvas {
 		canvas.addMouseListener(eventListener.mouseCanvas);
 		canvas.addMouseMotionListener(eventListener.mouseMotionCanvas);
 		canvas.addKeyListener(eventListener.keyListener);
-//		 canvas.setDoubleBuffered(true);
+//		canvas.setDoubleBuffered(true);
 		
 
 		// init matrix
@@ -169,28 +171,6 @@ public class CanvasImpl extends Constant implements Canvas {
 	matrix.repaint();
 	}
 	
-//	@Override
-//	public void scale(int factor) {
-//		// zoom out
-//		matrix.scale = factor/100.0;
-//
-//		AffineTransform at = new AffineTransform();
-//		at.scale(matrix.scale, matrix.scale);
-//		canvas.setRenderingTransform(at);
-//		canvas.repaint();
-//
-//
-//		int canvH = (int) Math.round(canvas.getHeight() / matrix.ratio);
-//		int canvW = (int) Math.round(canvas.getWidth() / matrix.ratio);
-//		System.out.println(canvW + " " + canvH);
-//		canvas.setSize(canvW, canvH);
-//		guiPanel.validate();
-//		canvas.repaint();
-//		matrix.repaint();
-//	}
-	
-	
-
 	@Override
 	public void enterInsertState() {
 		stateManager.enterInsertState();
@@ -221,8 +201,6 @@ public class CanvasImpl extends Constant implements Canvas {
 		if (stateManager.crtState == stateManager.pieceState)
 		{
 			Element selected = (Element) stateManager.pieceState.selectedElement.domElement.getElementsByTagName("g").item(0);
-				//domFactory.getElementById(lastSelectedId);
-			System.out.println(selected.getFirstChild().getNodeName());
 			if (selected != null) {
 				String attr = selected.getAttribute("transform");
 				TransformTag tr = new TransformTag(attr);
@@ -250,14 +228,17 @@ public class CanvasImpl extends Constant implements Canvas {
 		System.out.println(guiPanel);
 		domFactory = (SVGDocument) saxFactory.createDocument("file:///" + fileName);
 		setCanvasVariables(guiPanel, domFactory);
-//		setCanvasVariables(guiPanel, ((JSVGCanvas) getPreview(fileName)).getSVGDocument());
+		
+		
+//		canvas.createNewCanvas(gui.getCenterPanel());
+		
 	}
 
 	@Override
 	public void saveSVG(String fileName) throws TransformerException, IOException {
-		SVGRect bbox = ((SVGLocatable)domFactory.getDocumentElement()).getBBox();
-		domFactory.getRootElement().setAttribute("height", ""+bbox.getHeight());
-		domFactory.getRootElement().setAttribute("width",""+bbox.getWidth());
+//		SVGRect bbox = ((SVGLocatable)domFactory.getDocumentElement()).getBBox();
+//		domFactory.getRootElement().setAttribute("height", ""+bbox.getHeight());
+//		domFactory.getRootElement().setAttribute("width",""+bbox.getWidth());
 		TransformerFactory transFactory = TransformerFactory.newInstance();
 		Transformer trans = transFactory.newTransformer();
 		trans.setOutputProperty(OutputKeys.INDENT, "yes");
