@@ -10,7 +10,6 @@ import javax.xml.transform.TransformerException;
 
 import edss.canvas.CanvasImpl;
 import edss.canvas.StateConstant;
-import edss.canvas.StateConstant;
 import edss.interf.Canvas;
 import edss.interf.CanvasMediator;
 import edss.interf.Gui;
@@ -191,6 +190,11 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 	@Override
 	public List<WireInfo> getWiresInfo(String pieceId) {
 		return model.getWiresInfo(pieceId);
+	}
+	
+	public String splitWire(String splitId, List<? extends Point> list1, List<? extends Point> list2, String idStartPiece, String idStartPin,
+			List<? extends Point> newWireList) {
+		
 	}
 
 }
