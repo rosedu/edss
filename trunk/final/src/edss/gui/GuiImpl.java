@@ -849,7 +849,7 @@ public class GuiImpl implements edss.interf.Gui{
 				{
 					System.out.println("About");
 					JOptionPane.showMessageDialog(
-							null, "EDSS Summer Project", "About", JOptionPane.INFORMATION_MESSAGE);
+							null, "EDSS Summer Project\n\nMihnea Moraru\nOctavian Rinciog\nRosner Daniel\n\nMole\nAdriana\nEmilia\nRadu\nMircea\nCatalin\nElena", "About", JOptionPane.INFORMATION_MESSAGE);
 				}
 			});
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_BACK_QUOTE, InputEvent.CTRL_MASK);
