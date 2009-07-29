@@ -376,6 +376,7 @@ public class GuiImpl implements edss.interf.Gui{
 							String aux = getActiveFrame().fileName.substring(0, getActiveFrame().fileName.lastIndexOf('.'));
 							mediator = getActiveFrame().getMediator();
 							mediator.save(aux);
+							getActiveFrame().modify(false);
 						}
 						else
 						{
@@ -399,6 +400,7 @@ public class GuiImpl implements edss.interf.Gui{
 								mediator = getActiveFrame().getMediator();
 								mediator.save(chSave.getSelectedFile().getAbsolutePath());
 								getActiveFrame().setTitle(getActiveFrame().fileName);
+								getActiveFrame().modify(false);
 								
 							}
 						}
@@ -427,6 +429,7 @@ public class GuiImpl implements edss.interf.Gui{
 							mediator = getActiveFrame().getMediator();
 							mediator.save(chSave.getSelectedFile().getAbsolutePath());
 							getActiveFrame().setTitle(getActiveFrame().fileName);
+							getActiveFrame().modify(false);
 						}
 					}
 					else JOptionPane.showMessageDialog(null, "There is no file to save!", "ERROR!", JOptionPane.ERROR_MESSAGE);
@@ -1384,21 +1387,6 @@ public class GuiImpl implements edss.interf.Gui{
 		return this;
 	}
 	
-//	public Piece getPiece()
-//	{
-//		Piece p = null;
-//		if(lCurrent.getSelectedValue() != null)
-//		{
-//			p = (Piece) ((DefaultListModel) lCurrent.getModel()).elementAt(lCurrent.getSelectedIndex());
-//			return p;
-//		}
-//		if(lFavorites.getSelectedValue() != null)
-//		{
-//			p = (Piece) ((DefaultListModel) lFavorites.getModel()).elementAt(lFavorites.getSelectedIndex());
-//			return p;
-//		}
-//		return p;
-//	}
 	
 }
 
