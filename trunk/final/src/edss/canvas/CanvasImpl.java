@@ -47,6 +47,10 @@ public class CanvasImpl extends Constant implements Canvas {
 	EventListenerImpl eventListener = new EventListenerImpl(this);
 	
 	
+	public static final int WIDTH =2000;
+	public static final int HEIGHT =2000;
+	
+	
 	public JPanel panel = new PanelScroll() {
 		public boolean isOptimizedDrawingEnabled() {
 			return false;
@@ -81,7 +85,7 @@ public class CanvasImpl extends Constant implements Canvas {
 		System.out.println("!!!gui: " + guiPanel.getParent().getParent());
 		System.out.println("!!!domFact: " + domFactory.getDocumentURI());
 		
-		canvas.setPreferredSize(new Dimension(1000, 1000));
+		canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		canvas.setDocumentState(JSVGCanvas.ALWAYS_DYNAMIC);
 		canvas.setDocument(domFactory);
 		canvas.setBorder(BorderFactory.createTitledBorder("THE canvas"));
@@ -148,8 +152,8 @@ public class CanvasImpl extends Constant implements Canvas {
 	canvas.repaint();
 
 
-	int canvH = (int) Math.round(2000 * matrix.scale);
-	int canvW = (int) Math.round(2000 * matrix.scale);
+	int canvH = (int) Math.round(HEIGHT * matrix.scale);
+	int canvW = (int) Math.round(WIDTH * matrix.scale);
 	System.out.println("#### Width"+canvW + "Height " + canvH + "Ratio="+ matrix.scale);
 
 	canvas.setPreferredSize(new Dimension(canvW, canvH));
@@ -236,9 +240,11 @@ public class CanvasImpl extends Constant implements Canvas {
 
 	@Override
 	public void saveSVG(String fileName) throws TransformerException, IOException {
-//		SVGRect bbox = ((SVGLocatable)domFactory.getDocumentElement()).getBBox();
-//		domFactory.getRootElement().setAttribute("height", ""+bbox.getHeight());
-//		domFactory.getRootElement().setAttribute("width",""+bbox.getWidth());
+	SVGRect bbox = ((SVGLocatable)domFactory.getDocumentElement()).getBBox();
+	System.out.println("wi: " + bbox.getWidth() + "  hei: "+ bbox.getHeight());
+		domFactory.getRootElement().setAttribute("height", ""+(bbox.getHeight()+200));
+		domFactory.getRootElement().setAttribute("width",""+(bbox.getWidth()+200));
+	
 		TransformerFactory transFactory = TransformerFactory.newInstance();
 		Transformer trans = transFactory.newTransformer();
 		trans.setOutputProperty(OutputKeys.INDENT, "yes");
