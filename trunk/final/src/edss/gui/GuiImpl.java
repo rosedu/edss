@@ -247,7 +247,7 @@ public class GuiImpl implements edss.interf.Gui{
 		mainFrame.add(leftPanel, BorderLayout.WEST);
 			NewInternalFrame nif = new NewInternalFrame("New project", 0, null);
 			mediator = nif.getMediator();
-			if (mediator!=null) System.out.println("####Nu e null###");
+			// if (mediator!=null) System.out.println("####Nu e null###");
 			w.add(nif);
 			centerPanel.add(nif);
 			try {
@@ -265,7 +265,12 @@ public class GuiImpl implements edss.interf.Gui{
 			mediator.enterState(StateConstant.PIECESTATE);
 			if(getSelectedPiece() != null)
 				mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
-			else mediator.setPiece(favoritesVector.get(0).getName(), favoritesVector.get(0).getCategory(), favoritesVector.get(0).getSubCategory());
+			else	{
+						if(favoritesVector.size() > 0)
+							mediator.setPiece(favoritesVector.get(0).getName(), favoritesVector.get(0).getCategory(), favoritesVector.get(0).getSubCategory());
+						if(currentVector.size() > 0)
+							mediator.setPiece(currentVector.get(0).getName(), currentVector.get(0).getCategory(), currentVector.get(0).getSubCategory());
+					}
 			P.setSelected(true);
 			lFavorites.setSelectedIndex(0);
 			mediator.addPanel();
