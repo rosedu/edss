@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -277,6 +279,7 @@ public class GuiImpl implements edss.interf.Gui{
 			
 		mainFrame.add(centerPanel,BorderLayout.CENTER);
 		mainFrame.add(rightPanel, BorderLayout.EAST);
+		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("Icons/edss2.gif"));
 		mainFrame.setVisible(true);
 		
 	}
