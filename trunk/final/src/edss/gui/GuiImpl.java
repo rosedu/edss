@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.beans.PropertyVetoException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -241,9 +242,33 @@ public class GuiImpl implements edss.interf.Gui{
 		leftPanel = new JPanel(new BorderLayout());
 		leftPanel();
 		
-
+		
 		
 		mainFrame.add(leftPanel, BorderLayout.WEST);
+			NewInternalFrame nif = new NewInternalFrame("New project", 0, null);
+			mediator = nif.getMediator();
+			w.add(nif);
+			centerPanel.add(nif);
+			try {
+				nif.setSelected(true);
+			} catch (PropertyVetoException e) {
+				e.printStackTrace();
+			}
+			try {
+				nif.setMaximum(true);
+			} catch (PropertyVetoException e) {
+				e.printStackTrace();
+			}
+			centerPanel.getDesktopManager().activateFrame(nif);
+			register();
+			mediator.enterState(StateConstant.PIECESTATE);
+			if(getSelectedPiece() != null)
+				mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
+			else mediator.setPiece(favoritesVector.get(0).getName(), favoritesVector.get(0).getCategory(), favoritesVector.get(0).getSubCategory());
+			P.setSelected(true);
+			lFavorites.setSelectedIndex(0);
+			mediator.addPanel();
+			
 		mainFrame.add(centerPanel,BorderLayout.CENTER);
 		mainFrame.add(rightPanel, BorderLayout.EAST);
 		mainFrame.setVisible(true);
@@ -271,7 +296,7 @@ public class GuiImpl implements edss.interf.Gui{
 					mediator = newInternalFrame.getMediator();
 					register();
 					if(getSelectedPiece() != null)
-					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
+						mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
 					mediator.enterState(StateConstant.PIECESTATE);
 					//System.out.println(mediator);
 					
@@ -985,8 +1010,8 @@ public class GuiImpl implements edss.interf.Gui{
 		});
 		
 		preview = new JPanel();
-		preview.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 4, true)); 
-		preview.setBackground(Color.BLACK);
+		// preview.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 4, true)); 
+		preview.setBackground(Color.WHITE);
 		preview.setSize(2*WIDTH/10,2*HEIGHT/10);
 		previewLabel = new JLabel("preview");
 		previewLabel.setForeground(Color.WHITE);
