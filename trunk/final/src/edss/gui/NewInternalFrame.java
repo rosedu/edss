@@ -111,6 +111,7 @@ public class NewInternalFrame extends JInternalFrame {
 				// System.out.println(getTitle() + " <<<<");
 				if(gui != null)
 				{
+					modified = true;
 					gui.mediator = mediator;
 					if(gui.M.isSelected())
 					{
@@ -186,7 +187,7 @@ public class NewInternalFrame extends JInternalFrame {
 
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
-				if(modified == false)
+				if(modified == true)
 				{
 					final JDialog saveDialog = new JDialog();
 					saveDialog.setModal(true);
@@ -261,6 +262,7 @@ public class NewInternalFrame extends JInternalFrame {
 					// saveDialog.setLocationRelativeTo(null);
 					saveDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				}
+				else getThis().dispose();
 				
 			}
 
