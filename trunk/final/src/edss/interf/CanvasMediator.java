@@ -16,12 +16,17 @@ public interface CanvasMediator {
 	public void registerCanvas(Canvas canvas);
 	public edss.interf.Piece addPiece(int x, int y);
 	public String getSVG();
-	public void delete();
+//	public void delete();
 	public String addWire(List<? extends Point> pointList,
 			String idStartPiece, String idStartPin, String idEndPiece,
 			String idEndPin);
 	
 	
 	public List<WireInfo> getWiresInfo(String pieceId);
+	public String splitWire(String splitId, int x, int y, List<? extends Point> list1, List<? extends Point> list2, String idStartPiece, String idStartPin,
+			List<? extends Point> newWireList);
+	
+	// TODO delete
+	public void delete(String id);
 	 
 }

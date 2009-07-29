@@ -1,7 +1,9 @@
 package edss.interf;
 
 import java.awt.Component;
+import java.awt.Point;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.xml.transform.TransformerException;
@@ -36,6 +38,9 @@ public interface Canvas {
 	
 	public void createNewCanvas(JPanel guiPanel);
 	public void openSVG(JPanel guiPanel, String fileName) throws IOException;
+	
+	public void addWire(String id, List<? extends Point> pointList);
+	public void removeWire(String id);
 
 
 }

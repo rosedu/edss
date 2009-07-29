@@ -2,6 +2,7 @@ package edss.canvas;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
@@ -10,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -30,6 +32,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGLocatable;
+import org.w3c.dom.svg.SVGRect;
 
 
 import edss.interf.Canvas;
@@ -116,33 +120,9 @@ public class CanvasImpl extends Constant implements Canvas {
 
 		});
 
-		// init frame
-
-//		frame.setVisible(true);
-//		frame.setSize(800, 800);
-//		frame.setContentPane(scrollPane);
-		
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 	
-	static void writeSvg(Document doc, String fileName)
-	throws TransformerException, IOException {
-		TransformerFactory transFactory = TransformerFactory.newInstance();
-		Transformer trans = transFactory.newTransformer();
-		trans.setOutputProperty(OutputKeys.INDENT, "yes");
-
-		StringWriter stringWriter = new StringWriter();
-		StreamResult result = new StreamResult(stringWriter);
-		DOMSource source = new DOMSource(doc);
-		trans.transform(source, result);
-		String xmlString = stringWriter.toString();
-
-		BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
-		out.write(xmlString);
-		out.close();
-	}
-
 	//JScrollPane
 	public Component getCanvas() {
 		return scrollPane;
@@ -154,25 +134,60 @@ public class CanvasImpl extends Constant implements Canvas {
 
 	}
 
+	
 	@Override
 	public void scale(int factor) {
-		// zoom out
-		matrix.scale = factor/100.0;
+	// zoom out
+	matrix.scale = factor/100.0;
 
-		AffineTransform at = new AffineTransform();
-		at.scale(matrix.scale, matrix.scale);
-		canvas.setRenderingTransform(at);
-		canvas.repaint();
+	AffineTransform at = new AffineTransform();
+	at.scale(matrix.scale, matrix.scale);
+	canvas.setRenderingTransform(at);
+	canvas.repaint();
 
 
-		int canvH = (int) Math.round(canvas.getHeight() / matrix.ratio);
-		int canvW = (int) Math.round(canvas.getWidth() / matrix.ratio);
-		System.out.println(canvW + " " + canvH);
-		canvas.setSize(canvW, canvH);
-		guiPanel.validate();
-		canvas.repaint();
-		matrix.repaint();
+	int canvH = (int) Math.round(2000 * matrix.scale);
+	int canvW = (int) Math.round(2000 * matrix.scale);
+	System.out.println("#### Width"+canvW + "Height " + canvH + "Ratio="+ matrix.scale);
+
+	canvas.setPreferredSize(new Dimension(canvW, canvH));
+	canvas.revalidate();
+
+
+	panel.setPreferredSize(new Dimension(canvW, canvH));
+	panel.revalidate();
+
+	//guiPanel.setPreferredSize(new Dimension(canvW, canvH));
+
+
+	guiPanel.validate();
+
+
+
+
+	canvas.repaint();
+	matrix.repaint();
 	}
+	
+//	@Override
+//	public void scale(int factor) {
+//		// zoom out
+//		matrix.scale = factor/100.0;
+//
+//		AffineTransform at = new AffineTransform();
+//		at.scale(matrix.scale, matrix.scale);
+//		canvas.setRenderingTransform(at);
+//		canvas.repaint();
+//
+//
+//		int canvH = (int) Math.round(canvas.getHeight() / matrix.ratio);
+//		int canvW = (int) Math.round(canvas.getWidth() / matrix.ratio);
+//		System.out.println(canvW + " " + canvH);
+//		canvas.setSize(canvW, canvH);
+//		guiPanel.validate();
+//		canvas.repaint();
+//		matrix.repaint();
+//	}
 	
 	
 
@@ -240,6 +255,9 @@ public class CanvasImpl extends Constant implements Canvas {
 
 	@Override
 	public void saveSVG(String fileName) throws TransformerException, IOException {
+		SVGRect bbox = ((SVGLocatable)domFactory.getDocumentElement()).getBBox();
+		domFactory.getRootElement().setAttribute("height", ""+bbox.getHeight());
+		domFactory.getRootElement().setAttribute("width",""+bbox.getWidth());
 		TransformerFactory transFactory = TransformerFactory.newInstance();
 		Transformer trans = transFactory.newTransformer();
 		trans.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -303,7 +321,16 @@ public class CanvasImpl extends Constant implements Canvas {
 		return preview.getPreview(fileName);
 	}
 
+	@Override
+	public void addWire(String id, List<? extends Point> pointList) {
+		Wire wire = new Wire(this, pointList, id);
+	}
 
+	@Override
+	public void removeWire(String id) {
+		Wire wire = new Wire(this, domFactory.getElementById(id));
+		wire.delete();
+	}
 }
 
 @SuppressWarnings("serial")

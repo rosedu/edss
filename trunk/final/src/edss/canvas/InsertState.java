@@ -36,7 +36,6 @@ public class InsertState extends State {
 		edss.interf.Piece piece = canvas.mediator.addPiece(roundX, roundY);
 		if(piece != null)
 		{
-			System.out.println("val de la mole:  " + piece.getValue());
 			if (piece.getId() != null) 
 			{
 				String fileName = canvas.mediator.getSVG();

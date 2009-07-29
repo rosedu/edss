@@ -23,11 +23,12 @@ public abstract class SchematicElement {
 
 		System.out.println("ss");
 		if (domElement != null) {
+			String id = domElement.getAttribute("id");
 			System.out.println("ss");
 			System.out.println(domElement.getNodeName());
 			domElement.getParentNode().removeChild(domElement);
 			domElement = null;
-			canvas.mediator.delete();
+			canvas.mediator.delete(id);
 		} else {
 			System.out.println("null");
 		}

@@ -164,6 +164,7 @@ public class Schematic implements Serializable {
 		p2.addConnection(p1, w);
 		
 		wires.put(w.getId(), w);
+		System.out.println("Added wire: " + w.toString());
 	}
 	
 	public void removeWire(String id) {

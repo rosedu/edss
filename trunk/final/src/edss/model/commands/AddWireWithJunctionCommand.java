@@ -1,6 +1,7 @@
 package edss.model.commands;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import edss.model.Pin;
 import edss.model.Schematic;
 import edss.model.Wire;
 
-public class AddWireWithJunctionCommand implements Command {
+public class AddWireWithJunctionCommand implements Command, Serializable {
 	private Wire w;
 	private Wire newWire;
 	private Wire split1, split2;
@@ -40,7 +41,7 @@ public class AddWireWithJunctionCommand implements Command {
 	public void execute() {
 		List<? extends Point> list = w.getPoints();
 		
-		scheme.getWires().remove(w.getId());
+		scheme.removeWireWithoutUndo(w.getId());
 		
 		n = new Node(scheme, x, y);
 		Pin nodePin = (Pin)n.getPins().values().toArray()[0];

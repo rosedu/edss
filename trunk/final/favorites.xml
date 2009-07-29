@@ -50,4 +50,14 @@
 		<subcategory>bjt_npn</subcategory>
 		<name>generic_npn</name>
 	</piece>
+	<piece>
+		<category>sources</category>
+		<subcategory>ground</subcategory>
+		<name>ground</name>
+	</piece>
+	<piece>
+		<category>diodes</category>
+		<subcategory>schottky</subcategory>
+		<name>1N5711</name>
+	</piece>
 </favorites>

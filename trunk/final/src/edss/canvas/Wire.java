@@ -1,5 +1,9 @@
 package edss.canvas;
 
+import java.awt.Point;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.svg.SVGDocument;
@@ -18,7 +22,7 @@ public class Wire extends SchematicElement{
 	String idEndPiece;
 	
 	
-	public Wire(CanvasImpl canvas, SVGDocument document,int cursorX, int cursorY, String id)
+	public Wire(CanvasImpl canvas, SVGDocument document, int cursorX, int cursorY, String id)
 	{
 		super(canvas);
 		// add <g> <polyline ...>
@@ -41,6 +45,12 @@ public class Wire extends SchematicElement{
 		
 		//TODO anunt mediatorul ca am desenat linie
 		//canvas.mediator.drawLine(cursorX, cursorY);
+	}
+	
+	public Wire(CanvasImpl canvas, List<? extends Point> pointList, String id) {
+		this(canvas, canvas.domFactory, 0, 0, id);
+		points.pointList = (LinkedList<MyPoint>) pointList; 
+		line.setAttributeNS(null, "points", points.toString());
 	}
 
 

@@ -139,7 +139,7 @@ public class ModelImpl implements Model {
 	public void delete(String id) {
 		if (scheme.getWires().get(id) != null)
 			scheme.removeWire(id);
-		else
+		else if (scheme.getComponents().get(id) != null)
 			scheme.removeComponent(id);
 	}
 }

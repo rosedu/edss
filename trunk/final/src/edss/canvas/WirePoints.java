@@ -1,7 +1,6 @@
 package edss.canvas;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -10,6 +9,9 @@ import java.util.StringTokenizer;
 
 public class WirePoints {
 	LinkedList<MyPoint> pointList = new LinkedList<MyPoint>();
+	LinkedList<MyPoint> splitList1;
+	LinkedList<MyPoint> splitList2;
+	
 	public WirePoints(String text) {
 		int i = 0;
 		StringTokenizer tok = new StringTokenizer(text, ", ");
@@ -111,9 +113,22 @@ public class WirePoints {
 		return result;
 	}
 	
+	void splitLine(int x, int y) {
+		Segment seg = getSegment(x, y);
+		int index;
+		for (index = 0; index < pointList.size() - 1; index++) {
+			if (pointList.get(index).equals(seg.a) && pointList.get(index + 1).equals(seg.b)) {
+				break;
+			}
+		}
+		
+		splitList1 = new LinkedList<MyPoint>(pointList.subList(0, index + 1));
+		splitList2 = new LinkedList<MyPoint>(pointList.subList(index + 1, pointList.size()));
+	}
 
 }
 
+@SuppressWarnings("serial")
 class MyPoint extends Point {
 
 	MyPoint(int x, int y) {
