@@ -97,68 +97,71 @@ public class NewInternalFrame extends JInternalFrame {
 			@Override
 			public void internalFrameActivated(InternalFrameEvent e) {
 				// System.out.println(getTitle() + " <<<<");
-				gui.mediator = mediator;
-				if(gui.M.isSelected())
+				if(gui != null)
 				{
-					state = StateConstant.MOUSESTATE;
-					gui.mediator.enterState(StateConstant.MOUSESTATE);
-					if(gui.getSelectedPiece() != null)
-						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
-				}
-				if(gui.P.isSelected())
-				{
-					state = StateConstant.PIECESTATE;
-					gui.mediator.enterState(StateConstant.PIECESTATE);
-					if(gui.getSelectedPiece() != null)
-						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
-				}
-				if(gui.D.isSelected())
-				{
-					state = StateConstant.DELETESTATE;
-					gui.mediator.enterState(StateConstant.DELETESTATE);
-					if(gui.getSelectedPiece() != null)
-						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
-				}
-				if(gui.G.isSelected())
-				{
-					state = StateConstant.DRAGSTATE;
-					gui.mediator.enterState(StateConstant.DRAGSTATE);
-					if(gui.getSelectedPiece() != null)
-						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
-				}
-				if(gui.N.isSelected())
-				{
-					state = StateConstant.WIRESTATE;
-					gui.mediator.enterState(StateConstant.WIRESTATE);
-					if(gui.getSelectedPiece() != null)
-						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
-				}
-				if(gui.J.isSelected())
-				{
-					state = StateConstant.PIECESTATE;
-					gui.mediator.enterState(StateConstant.PIECESTATE);
-					gui.mediator.setPiece("node", "node", "node");
-				}
-				else
-				{
-					gui.mediator.enterState(state);
-					if(gui.getSelectedPiece() != null)
-						gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
-					else 
+					gui.mediator = mediator;
+					if(gui.M.isSelected())
 					{
-						gui.M.setSelected(true);
-						gui.mediator.enterState(state);
+						state = StateConstant.MOUSESTATE;
+						gui.mediator.enterState(StateConstant.MOUSESTATE);
+						if(gui.getSelectedPiece() != null)
+							gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
 					}
-					if(state == StateConstant.PIECESTATE)
-						gui.P.setSelected(true);
-					if(state == StateConstant.DRAGSTATE)
-						gui.G.setSelected(true);
-					if(state == StateConstant.WIRESTATE)
-						gui.N.setSelected(true);	
-					if(state == StateConstant.DELETESTATE)
-						gui.D.setSelected(true);	
-					if(state == StateConstant.MOUSESTATE)
-						gui.M.setSelected(true);	
+					if(gui.P.isSelected())
+					{
+						state = StateConstant.PIECESTATE;
+						gui.mediator.enterState(StateConstant.PIECESTATE);
+						if(gui.getSelectedPiece() != null)
+							gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
+					}
+					if(gui.D.isSelected())
+					{
+						state = StateConstant.DELETESTATE;
+						gui.mediator.enterState(StateConstant.DELETESTATE);
+						if(gui.getSelectedPiece() != null)
+							gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
+					}
+					if(gui.G.isSelected())
+					{
+						state = StateConstant.DRAGSTATE;
+						gui.mediator.enterState(StateConstant.DRAGSTATE);
+						if(gui.getSelectedPiece() != null)
+							gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
+					}
+					if(gui.N.isSelected())
+					{
+						state = StateConstant.WIRESTATE;
+						gui.mediator.enterState(StateConstant.WIRESTATE);
+						if(gui.getSelectedPiece() != null)
+							gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
+					}
+					if(gui.J.isSelected())
+					{
+						state = StateConstant.PIECESTATE;
+						gui.mediator.enterState(StateConstant.PIECESTATE);
+						gui.mediator.setPiece("node", "node", "node");
+					}
+					else
+					{
+						gui.mediator.enterState(state);
+						if(gui.getSelectedPiece() != null)
+							gui.mediator.setPiece(gui.getSelectedPiece().getName(), gui.getSelectedPiece().getCategory(), gui.getSelectedPiece().getSubCategory());
+						else 
+						{
+							gui.M.setSelected(true);
+							gui.mediator.enterState(state);
+						}
+						if(state == StateConstant.PIECESTATE)
+							gui.P.setSelected(true);
+						if(state == StateConstant.DRAGSTATE)
+							gui.G.setSelected(true);
+						if(state == StateConstant.WIRESTATE)
+							gui.N.setSelected(true);	
+						if(state == StateConstant.DELETESTATE)
+							gui.D.setSelected(true);	
+						if(state == StateConstant.MOUSESTATE)
+							gui.M.setSelected(true);	
+					}
 				}
 				
 			}
