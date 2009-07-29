@@ -23,7 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import edss.canvas.StateConstant;
 import edss.interf.GuiMediator;
-
+// modificare variabila modificat!!!
 
 public class NewInternalFrame extends JInternalFrame {
 	
