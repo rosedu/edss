@@ -228,6 +228,7 @@ public class NewInternalFrame extends JInternalFrame {
 										
 									}
 								}
+								modified = false;
 								saveDialog.dispose();
 								dispose();
 								gui.mediator = null;
@@ -238,6 +239,7 @@ public class NewInternalFrame extends JInternalFrame {
 						{
 							@Override
 							public void actionPerformed(ActionEvent e) {
+								modified = false;
 								getThis().dispose();
 								saveDialog.dispose();
 								if(gui != null)
@@ -262,8 +264,8 @@ public class NewInternalFrame extends JInternalFrame {
 					// saveDialog.setLocationRelativeTo(null);
 					saveDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				}
-				else getThis().dispose();
-				modified = false;
+				else { getThis().dispose(); modified = false;}
+				
 			}
 
 			@Override
