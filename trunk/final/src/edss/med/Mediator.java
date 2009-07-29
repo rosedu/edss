@@ -158,6 +158,9 @@ public class Mediator implements CanvasMediator, GuiMediator, ModelMediator, Ser
 	public void delete(String id) {
 		// canvas sterge aici dupa click!! -> enterState(int state)
 		model.delete(id);
+		
+		
+		
 	}
 
 	public void init() {
