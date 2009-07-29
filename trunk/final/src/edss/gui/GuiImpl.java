@@ -247,6 +247,7 @@ public class GuiImpl implements edss.interf.Gui{
 		mainFrame.add(leftPanel, BorderLayout.WEST);
 			NewInternalFrame nif = new NewInternalFrame("New project", 0, null);
 			mediator = nif.getMediator();
+			if (mediator!=null) System.out.println("####Nu e null###");
 			w.add(nif);
 			centerPanel.add(nif);
 			try {
@@ -967,16 +968,20 @@ public class GuiImpl implements edss.interf.Gui{
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if(lCurrent.isSelectionEmpty() == false)
-				{
-					lFavorites.clearSelection();
-					mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
-				}
 				P.setSelected(true);
-				mediator = getActiveFrame().getMediator();
-				mediator.setPreview();
-				mediator.enterState(StateConstant.PIECESTATE);
+				
+				if (mediator!=null)
+				{	
+					//mediator = getActiveFrame().getMediator();
+					mediator.setPreview();
+					mediator.enterState(StateConstant.PIECESTATE);
 					
+					if(lCurrent.isSelectionEmpty() == false)
+					{
+						lFavorites.clearSelection();
+						mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
+					}
+				}
 			}
 			
 		});
@@ -993,18 +998,19 @@ public class GuiImpl implements edss.interf.Gui{
 				if(lFavorites.isSelectionEmpty() == false)
 				{
 					lCurrent.clearSelection();
-					if(getActiveFrame() != null)
+					if(mediator!=null)
 					{
-						mediator = getActiveFrame().getMediator();
+					//	mediator = getActiveFrame().getMediator();
 						// System.out.println("Piesa este " + getSelectedPiece().getName());
 						mediator.setPiece(getSelectedPiece().getName(), getSelectedPiece().getCategory(), getSelectedPiece().getSubCategory());
 					}
 				}
 				P.setSelected(true);
-				if(getActiveFrame() != null)
-					mediator.enterState(StateConstant.PIECESTATE);
 				if(mediator != null)
+				{
+					mediator.enterState(StateConstant.PIECESTATE);
 					mediator.setPreview();
+				}
 			}
 			
 		});
