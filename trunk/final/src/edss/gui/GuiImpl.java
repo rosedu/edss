@@ -102,7 +102,7 @@ public class GuiImpl implements edss.interf.Gui{
 	JFrame mainFrame;
 	JMenuBar mainMenu;
 	
-	JPanel customPanel;
+	JPanel customPanel = new JPanel(new GridLayout(1,0));
 	JPanel leftPanel;
 	JPanel buttonPanel;
 	JToolBar current;
@@ -212,7 +212,7 @@ public class GuiImpl implements edss.interf.Gui{
 		Configuration config = new Configuration(CONFIG_FILE);
 		// config.show();
 		
-		customPanel = new JPanel(new GridLayout(1,0));
+//		customPanel = new JPanel(new GridLayout(1,0));
 		
 		for(int i=0; i<config.toolbarsNr; i++)
 		{
@@ -234,6 +234,12 @@ public class GuiImpl implements edss.interf.Gui{
 			}
 			customPanel.add(customToolBar);
 		}
+		
+// 		in progress!
+//		if(config.toolbarsNr == 0)
+//		{
+//			customPanel.add(new JLabel(" "));
+//		}
 		
 		mainFrame.add(customPanel, BorderLayout.NORTH);
 		// panel definition
@@ -676,8 +682,10 @@ public class GuiImpl implements edss.interf.Gui{
 						customPanel.add(customToolBar);
 					}
 					customPanel.validate();
+					mainFrame.validate();
 					}					
 				});
+			
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_K, InputEvent.CTRL_MASK);
 			eCustomize.setAccelerator(key);
 			

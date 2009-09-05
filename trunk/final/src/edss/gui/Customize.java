@@ -129,9 +129,13 @@ public class Customize {
 		for(int i = 0 ; i<v.size(); i++)
 		{
 			cb = new Checkbox(((JMenuItem) v.get(i)).getText());
+			cb.setForeground(Color.BLACK);
 			allButtons.add(cb);
 		}
-		allButtons.add(new Checkbox("Separator"));
+		cb = new Checkbox("Separator");
+		cb.setForeground(Color.BLACK);
+		allButtons.add(cb);
+		// allButtons.add(new Checkbox("Separator"));
 		
 		selectedButtons.setBorder(BorderFactory.createLoweredBevelBorder());
 		selectedButtons.setBackground(Color.LIGHT_GRAY);
@@ -139,35 +143,6 @@ public class Customize {
 		selectedButtons.setSize(w, h); 
 		selectedButtons.setBounds(5, 5, w, h);
 		selectedButtons.validate();
-		  		    	
-		
-//		for(int i=0; i<config.toolbarsNr; i++)
-//		{ 	JToolBar customToolBar = new JToolBar();
-//			Vector <Integer> aux = config.toolButtons.get(i);
-//			
-//			if(i==0) 	bn[i] = "Default Toolbar";
-//			else bn[i] = "Toolbar " + i;
-//			combo = new JComboBox(bn);
-//			
-//			for(int j=0; j<v.size(); j++)
-//			{	
-//				if(v.get(j).intValue() == -1)
-//					continue;
-//				System.out.println("Astea ar trebui sa fie valorile " + aux.get(j).intValue());
-//				//JButton auxiliaryButton = new JButton(((JMenuItem)v.get(aux.get(j).intValue())).getIcon());
-//				//customToolBar.add(auxiliaryButton);
-//				//p.add(customToolBar);
-//				cb = new Checkbox((((JMenuItem)v.get(aux.get(j).intValue())).getText()));
-//				allButtons.add(cb);
-//			}
-//		}
-			
-//(((JMenuItem)v.get(aux.get(i).intValue())).getText());						
-//bn[j] = (((JMenuItem)v.get(aux.get(j).intValue())).getIcon()).toString();
-// bn[j] = (((JMenuItem)v.get(aux.get(j).intValue())).getText());
-
-				 
-   
 		
 		final Configuration config = new Configuration(CONFIG_FILE);
 					
