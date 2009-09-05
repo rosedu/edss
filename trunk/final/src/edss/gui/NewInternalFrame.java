@@ -33,7 +33,7 @@ public class NewInternalFrame extends JInternalFrame {
 	private int zoomFactor = 100;
 	private GuiImpl gui;
 	private int state;
-	private boolean modified = false;
+	private boolean modified = true; // false TO DO
 //	private JSVGCanvas canvas;
 	
 	GuiMediator mediator; // = new Mediator(); 
