@@ -1,0 +1,15 @@
+	TODO list
+- zoom(wow merge setPreferredSize pe Linux?!)
+- rotate (capteaza evenimente pe vechea pozitie a pinilor)
+- mod trasare fire -> mai soft:P
+- bug la save (dispar chestii)
+- actualizari cu modelul
+- drag: indepartare mouse de piesa 
+- dispar piese, nu se redeseneaza, doubleBuffering, sa faca repaint candva
+- preview centrat
+- preview la library
+- getSegment de reparat (ultimul punct)
+- editare textLabel (piese)
+
+- jonctiune fire cizelata:) + reparata
+- manual de utilizare siii DOCUMENTARE COD ENGLEZA o.O :O
